@@ -1,4 +1,4 @@
-import { XProp, RDTType, Period } from "../general";
+import { XProp, RDTType, Period } from '../general';
 
 type TimeZone = {
     tzid: string

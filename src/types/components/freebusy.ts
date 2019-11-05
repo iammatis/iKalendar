@@ -1,4 +1,4 @@
-import { Organizer, Attendee, XProp, FreeBusyType, Period } from "../general";
+import { Organizer, Attendee, XProp, FreeBusyType, Period } from '../general';
 
 type FreeBusy = {
     dtStamp?: Date

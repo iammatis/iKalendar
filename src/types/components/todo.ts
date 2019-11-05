@@ -1,5 +1,5 @@
-import { Classification, GeoPosition, Organizer, Duration, Attachment, Attendee, XProp, Status, Relation, RDTType, Period } from "../general";
-import Alarm from "./alarm";
+import { Classification, GeoPosition, Organizer, Duration, Attachment, Attendee, XProp, Status, Relation, RDTType, Period } from '../general';
+import Alarm from './alarm';
 
 type Todo = {
     dtStamp: Date

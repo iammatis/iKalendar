@@ -1,4 +1,4 @@
-import { Attachment, XProp, Attendee, ActionType, RelativeTrigger, AbsoluteTrigger, Duration } from "../general"
+import { Attachment, XProp, Attendee, ActionType, RelativeTrigger, AbsoluteTrigger, Duration } from '../general'
 
 type Alarm = AudioAlarm | DisplayAlarm | EmailAlarm
 

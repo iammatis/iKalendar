@@ -1,4 +1,4 @@
-import { Classification, Organizer, Status, Attachment, Attendee, XProp, RDTType, Period } from "../general";
+import { Classification, Organizer, Status, Attachment, Attendee, XProp, RDTType, Period } from '../general';
 
 type Journal = {
     dtStamp: Date
