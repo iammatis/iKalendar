@@ -1,7 +1,7 @@
-import { Classification, GeoPosition, Organizer, Duration, Attachment, Attendee, XProp, Status, Relation } from "../general";
-import { Alarm } from "./alarm";
+import { Classification, GeoPosition, Organizer, Duration, Attachment, Attendee, XProp, Status, Relation, RDTType, Period } from "../general";
+import Alarm from "./alarm";
 
-export type Todo = {
+type Todo = {
     dtStamp: Date
     uid: string
     class?: Classification
@@ -31,7 +31,9 @@ export type Todo = {
     rStatus?: string
     relatedTo?: Relation[]
     resources?: string[]
-    rDate?: Date
+    rDate?: { type?: RDTType; value: (Date | Period)[]; tzId?: string; }
     xProps?: XProp[]
     alarm?: Alarm[]
 }
+
+export default Todo

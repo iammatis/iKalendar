@@ -1,6 +1,6 @@
 import { Organizer, Attendee, XProp, FreeBusyType, Period } from "../general";
 
-export type FreeBusy = {
+type FreeBusy = {
     dtStamp?: Date
     uid?: string
     contact?: string
@@ -14,3 +14,5 @@ export type FreeBusy = {
     rStatus?: string
     xProps?: XProp[]
 }
+
+export default FreeBusy

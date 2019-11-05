@@ -1,6 +1,6 @@
 import { Attachment, XProp, Attendee, ActionType, RelativeTrigger, AbsoluteTrigger, Duration } from "../general"
 
-export type Alarm = AudioAlarm | DisplayAlarm | EmailAlarm
+type Alarm = AudioAlarm | DisplayAlarm | EmailAlarm
 
 export type AudioAlarm = {
     action: ActionType
@@ -31,3 +31,5 @@ export type EmailAlarm = {
     attach?: Attachment[]
     xProps?: XProp[]
 }
+
+export default Alarm

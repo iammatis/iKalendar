@@ -1,6 +1,6 @@
 import { XProp, RDTType, Period } from "../general";
 
-export type TimeZone = {
+type TimeZone = {
     tzid: string
     lastModified?: Date
     tzUrl?: string
@@ -14,3 +14,5 @@ export type TimeZone = {
     tzName?: string
     xProps?: XProp[]
 }
+
+export default TimeZone

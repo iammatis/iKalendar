@@ -1,7 +1,7 @@
-import {Classification, GeoPosition, Organizer, Transparency, Duration, Attachment, Attendee, Relation, XProp, Status} from '../general';
-import {Alarm} from './alarm';
+import {Classification, GeoPosition, Organizer, Transparency, Duration, Attachment, Attendee, Relation, XProp, Status, RDTType, Period} from '../general';
+import Alarm from './alarm';
 
-export type Event = {
+type Event = {
     dtStamp: Date;
     uid: string;
     start?: string;
@@ -30,7 +30,9 @@ export type Event = {
     exdate?: Date;
     relatedTo?: Relation[];
     resources?: string[];
-    rdate?: Date;
+    rdate?: { type?: RDTType; value: (Date | Period)[]; tzId?: string; };
     xProps?: XProp[];
     alarm?: Alarm[];
 }
+
+export default Event
