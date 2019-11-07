@@ -1,4 +1,4 @@
-import { XProp, RDTType, Period } from '../general';
+import { RecurrenceDate, XProp } from '../general'
 
 type TimeZone = {
     tzid: string
@@ -10,7 +10,7 @@ type TimeZone = {
     offsetFrom: string
     rrule?: string
     comment?: string
-    rDate?: { type?: RDTType; value: (Date | Period)[]; tzId?: string; }
+    rDate?: RecurrenceDate
     tzName?: string
     xProps?: XProp[]
 }

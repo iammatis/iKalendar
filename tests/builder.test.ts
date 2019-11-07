@@ -1,8 +1,8 @@
-import Builder from '../src/builder';
-import { Organizer, Duration, Attachment, Attendee, Relation, Trigger, XProp } from '../src/types/general';
-import { Event } from '../src/types/components';
+import Builder from '../src/builder'
+import { Event } from '../src/types/components'
+import { Attachment, Attendee, Duration, Organizer, Relation, Trigger, XProp } from '../src/types/general'
 
-let builder: Builder;
+let builder: Builder
 
 describe('Test Builder Class', () => {
 
@@ -14,7 +14,7 @@ describe('Test Builder Class', () => {
     
         it('Test append', () => {
             builder.append('test string')
-            expect(builder.array).toStrictEqual(['test string']);
+            expect(builder.array).toStrictEqual(['test string'])
         })
     
         it('Test append empty string', () => {

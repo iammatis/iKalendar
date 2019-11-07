@@ -1,4 +1,4 @@
-import { Classification, Organizer, Status, Attachment, Attendee, XProp, RDTType, Period } from '../general';
+import { Attachment, Attendee, Classification, Organizer, RecurrenceDate, Status, XProp } from '../general'
 
 type Journal = {
     dtStamp: Date
@@ -22,7 +22,7 @@ type Journal = {
     description?: string
     exDate?: Date
     related?: string
-    rDate?: { type?: RDTType; value: (Date | Period)[]; tzId?: string; }
+    rDate?: RecurrenceDate
     rStatus?: string
     xProps?: XProp[]
 }

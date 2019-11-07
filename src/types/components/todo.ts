@@ -1,5 +1,5 @@
-import { Classification, GeoPosition, Organizer, Duration, Attachment, Attendee, XProp, Status, Relation, RDTType, Period } from '../general';
-import Alarm from './alarm';
+import { Attachment, Attendee, Classification, Duration, GeoPosition, Organizer, RecurrenceDate, Relation, Status, XProp } from '../general'
+import Alarm from './alarm'
 
 type Todo = {
     dtStamp: Date
@@ -31,7 +31,7 @@ type Todo = {
     rStatus?: string
     relatedTo?: Relation[]
     resources?: string[]
-    rDate?: { type?: RDTType; value: (Date | Period)[]; tzId?: string; }
+    rDate?: RecurrenceDate
     xProps?: XProp[]
     alarm?: Alarm[]
 }

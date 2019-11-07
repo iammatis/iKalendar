@@ -1,4 +1,4 @@
-import { XProp } from './general';
+import { XProp } from './general'
 
 type Calendar = {
     prodId: string

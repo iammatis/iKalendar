@@ -1,5 +1,5 @@
-import {Event, Todo, Journal, FreeBusy, TimeZone} from '../components';
-import Calendar from '../calendar';
+import Calendar from '../calendar'
+import { Event, FreeBusy, Journal, TimeZone, Todo } from '../components'
 
 interface IKalendarInterface {
     calendar: Calendar

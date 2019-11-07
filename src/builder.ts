@@ -1,38 +1,38 @@
 import * as moment from 'moment'
-import { GeoPosition, Organizer, Duration, Attachment, Attendee, Relation, XProp, Trigger, ComplexDate, RecurrenceDate } from "./types/general"
-import { Todo, Journal, FreeBusy, TimeZone, Alarm, Event } from "./types/components"
 import BuilderInterface from "./types/classes/builder"
+import { Alarm, Event, FreeBusy, Journal, TimeZone, Todo } from "./types/components"
+import { Attachment, Attendee, ComplexDate, Duration, GeoPosition, Organizer, RecurrenceDate, Relation, Trigger, XProp } from "./types/general"
 
 class Builder implements BuilderInterface {
-    array: string[];
+    public array: string[]
 
     constructor() {
         this.array = []
     }
 
-    build(): string {
+    public build(): string {
         return this.array.join('\r\n')
     }
 
-    append(value: string): void {
+    public append(value: string): void {
         if (value !== '') {
             this.array.push(value)
         }
     }
 
-    appendString(attrName: string, value?: string): void {
+    public appendString(attrName: string, value?: string): void {
         this.append(value ? `${attrName}:${value}` : '')
     }
     
-    appendStrings(attrName: string, values?: string[], sep: string = ','): void {
+    public appendStrings(attrName: string, values?: string[], sep: string = ','): void {
         this.append(values && values.length ? `${attrName}:${values.filter(Boolean).join(sep)}` : '')
     }
 
-    appendNumber(attrName: string, value?: number): void {
+    public appendNumber(attrName: string, value?: number): void {
         this.append(value !== undefined ? `${attrName}:${value}` : '')
     }
     
-    appendDate(attrName: string, date?: string | ComplexDate): void {
+    public appendDate(attrName: string, date?: string | ComplexDate): void {
         if (date) {
             if (typeof date === 'string') {
                 this.append(`${attrName}:${moment(date).format('YYYYMMDDTHHmmss')}`)
@@ -53,7 +53,7 @@ class Builder implements BuilderInterface {
         }
     }
 
-    appendRDate(rDate?: RecurrenceDate): void {
+    public appendRDate(rDate?: RecurrenceDate): void {
         if (rDate) {
             const { type, tzId, dates, periods } = rDate
             const tzIdValue = tzId ? `;TZID=${tzId}` : ''
@@ -85,11 +85,11 @@ class Builder implements BuilderInterface {
         }
     }
     
-    appendGeoPosition(geo?: GeoPosition): void {
+    public appendGeoPosition(geo?: GeoPosition): void {
         this.append(geo ? `GEO:${geo.lat};${geo.lon}` : '')
     }
     
-    appendOrganizer(organizer?: Organizer): void {
+    public appendOrganizer(organizer?: Organizer): void {
         if (organizer) {
             const { address, cn, dir, sentBy } = organizer
             const optionals = [
@@ -104,13 +104,13 @@ class Builder implements BuilderInterface {
         }
     }
     
-    appendDuration(duration?: Duration): void {
+    public appendDuration(duration?: Duration): void {
         if (duration) {
             this.appendString('DURATION', this.formatDuration(duration))
         }
     }
     
-    appendAttachment(attachment?: Attachment): void {
+    public appendAttachment(attachment?: Attachment): void {
         if (attachment) {
             this.append(attachment.type
                 ? `ATTACH;FMPTYPE=${attachment.type}:${attachment.value}`
@@ -118,11 +118,11 @@ class Builder implements BuilderInterface {
         }
     }
     
-    appendAttachments(attachments: Attachment[] = []): void {
+    public appendAttachments(attachments: Attachment[] = []): void {
         attachments.forEach(attachment => this.appendAttachment(attachment))
     }
     
-    appendAttendee(attendee?: Attendee): void {
+    public appendAttendee(attendee?: Attendee): void {
         if (attendee) {
             const { address, cn, dir, sentBy, cu, member, role, partstat, rsvp, delegatedTo, delegatedFrom } = attendee
             const optionals = [
@@ -144,11 +144,11 @@ class Builder implements BuilderInterface {
         }
     }
     
-    appendAttendees(attendees: Attendee[] = []): void {
+    public appendAttendees(attendees: Attendee[] = []): void {
         attendees.forEach(attendee => this.appendAttendee(attendee))
     }
     
-    appendRelation(relation?: Relation): void {
+    public appendRelation(relation?: Relation): void {
         if (relation) {
             this.append(relation.type
                 ? `RELATED-TO;RELTYPE=${relation.type}:${relation.value}`
@@ -156,15 +156,15 @@ class Builder implements BuilderInterface {
         }
     }
     
-    appendRelations(relations: Relation[] = []): void {
+    public appendRelations(relations: Relation[] = []): void {
         relations.forEach(relation => this.appendRelation(relation))
     }
 
-    appendTrigger(trigger?: Trigger): void {
+    public appendTrigger(trigger?: Trigger): void {
         if (trigger) {
             const optional = trigger.related ? `RELATED=${trigger.related}` : null
 
-            let value;
+            let value
             if (typeof trigger.value === 'string') { // DateTime
                 // TODO: DateTime
                 value = moment(trigger.value).format('YYYYMMDDTHHmmss')
@@ -177,15 +177,15 @@ class Builder implements BuilderInterface {
         }
     }
     
-    appendXprop(xProp?: XProp): void {
+    public appendXprop(xProp?: XProp): void {
         this.append(xProp ? `X-${xProp.name}:${xProp.value}` : '')
     }
     
-    appendXprops(xProps: XProp[] = []): void {
+    public appendXprops(xProps: XProp[] = []): void {
         xProps.forEach(xProp => this.appendXprop(xProp))
     }
     
-    appendEvent(event?: Event): void {
+    public appendEvent(event?: Event): void {
         if (event) {
             this.append('BEGIN:VEVENT')
             this.appendDate('DTSTAMP', event.dtStamp)
@@ -224,43 +224,43 @@ class Builder implements BuilderInterface {
         }
     }
     
-    appendEvents(events: Event[] = []): void {
+    public appendEvents(events: Event[] = []): void {
         events.forEach(event => this.appendEvent(event))
     }
     
-    appendTodo(todo?: Todo): void {
-        throw new Error("Method not implemented.");
+    public appendTodo(todo?: Todo): void {
+        throw new Error("Method not implemented.")
     }
     
-    appendTodos(todo?: Todo[]): void {
-        throw new Error("Method not implemented.");
+    public appendTodos(todo?: Todo[]): void {
+        throw new Error("Method not implemented.")
     }
     
-    appendJournal(journal?: Journal): void {
-        throw new Error("Method not implemented.");
+    public appendJournal(journal?: Journal): void {
+        throw new Error("Method not implemented.")
     }
     
-    appendJournals(journals?: Journal[]): void {
-        throw new Error("Method not implemented.");
+    public appendJournals(journals?: Journal[]): void {
+        throw new Error("Method not implemented.")
     }
     
-    appendFreeBusy(freebusy?: FreeBusy): void {
-        throw new Error("Method not implemented.");
+    public appendFreeBusy(freebusy?: FreeBusy): void {
+        throw new Error("Method not implemented.")
     }
     
-    appendFreeBusys(freebusy?: FreeBusy[]): void {
-        throw new Error("Method not implemented.");
+    public appendFreeBusys(freebusy?: FreeBusy[]): void {
+        throw new Error("Method not implemented.")
     }
     
-    appendTimeZone(timeZone?: TimeZone): void {
-        throw new Error("Method not implemented.");
+    public appendTimeZone(timeZone?: TimeZone): void {
+        throw new Error("Method not implemented.")
     }
     
-    appendTimeZones(timeZones?: TimeZone[]): void {
-        throw new Error("Method not implemented.");
+    public appendTimeZones(timeZones?: TimeZone[]): void {
+        throw new Error("Method not implemented.")
     }
     
-    appendAlarm(alarm?: Alarm): void {
+    public appendAlarm(alarm?: Alarm): void {
         if (alarm) {
             this.append('BEGIN:VALARM')
             this.appendString('ACTION', alarm.action)
@@ -276,7 +276,7 @@ class Builder implements BuilderInterface {
         }
     }
     
-    appendAlarms(alarms: Alarm[] = []): void {
+    public appendAlarms(alarms: Alarm[] = []): void {
         alarms.forEach(alarm => this.appendAlarm(alarm))
     }
 

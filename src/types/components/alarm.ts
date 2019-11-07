@@ -1,4 +1,4 @@
-import { Attachment, XProp, Attendee, ActionType, Duration, Trigger } from '../general'
+import { ActionType, Attachment, Attendee, Duration, Trigger, XProp } from '../general'
 
 type Alarm = {
     action: ActionType

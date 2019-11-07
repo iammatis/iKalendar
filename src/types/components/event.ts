@@ -1,38 +1,38 @@
-import {Classification, GeoPosition, Organizer, Transparency, Duration, Attachment, Attendee, Relation, XProp, Status, RDTType, Period, ComplexDate, RecurrenceDate} from '../general';
-import Alarm from './alarm';
+import { Attachment, Attendee, Classification, ComplexDate, Duration, GeoPosition, Organizer, RecurrenceDate, Relation, Status, Transparency, XProp } from '../general'
+import Alarm from './alarm'
 
 type Event = {
-    dtStamp: string | ComplexDate;
-    uid: string;
-    start?: string;
-    class?: Classification;
-    created?: string;
-    description?: string;
-    geo?: GeoPosition;
-    lastModified?: string;
-    location?: string;
-    organizer?: Organizer;
-    priority?: number;
-    sequnce?: number;
-    status?: Status;
-    summary?: string;
-    transp?: Transparency;
-    url?: string;
-    recurrenceId?: string;
-    rrule?: string;
-    end?: string | ComplexDate;
-    duration?: Duration;
-    attachments?: Attachment[];
-    attendees?: Attendee[];
-    categories?: string[];
-    comment?: string;
-    contact?: string;
-    exdate?: string | ComplexDate;
-    relatedTo?: Relation[];
-    resources?: string[];
+    dtStamp: string | ComplexDate
+    uid: string
+    start?: string
+    class?: Classification
+    created?: string
+    description?: string
+    geo?: GeoPosition
+    lastModified?: string
+    location?: string
+    organizer?: Organizer
+    priority?: number
+    sequnce?: number
+    status?: Status
+    summary?: string
+    transp?: Transparency
+    url?: string
+    recurrenceId?: string
+    rrule?: string
+    end?: string | ComplexDate
+    duration?: Duration
+    attachments?: Attachment[]
+    attendees?: Attendee[]
+    categories?: string[]
+    comment?: string
+    contact?: string
+    exdate?: string | ComplexDate
+    relatedTo?: Relation[]
+    resources?: string[]
     rdate?: RecurrenceDate
-    xProps?: XProp[];
-    alarms?: Alarm[];
+    xProps?: XProp[]
+    alarms?: Alarm[]
 }
 
 export default Event

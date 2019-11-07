@@ -1,5 +1,5 @@
-import { GeoPosition, Organizer, Duration, Attachment, Attendee, Relation, XProp, Trigger, RecurrenceDate } from "../general";
-import { Todo, Journal, FreeBusy, TimeZone, Alarm, Event } from "../components";
+import { Alarm, Event, FreeBusy, Journal, TimeZone, Todo } from "../components"
+import { Attachment, Attendee, Duration, GeoPosition, Organizer, RecurrenceDate, Relation, Trigger, XProp } from "../general"
 
 interface BuilderInterface {
     array: string[]
@@ -56,8 +56,6 @@ interface BuilderInterface {
 
     appendAlarm(alarm?: Alarm): void
     appendAlarms(alarms?: Alarm[]): void
-
-    formatDuration(duration: Duration): string
 }
 
 export default BuilderInterface

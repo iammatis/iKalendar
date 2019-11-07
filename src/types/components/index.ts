@@ -1,9 +1,9 @@
-import Event from './event';
-import Todo from './todo';
-import Journal from './journal';
-import FreeBusy from './freebusy';
-import TimeZone from './timezone';
-import Alarm from './alarm';
+import Alarm from './alarm'
+import Event from './event'
+import FreeBusy from './freebusy'
+import Journal from './journal'
+import TimeZone from './timezone'
+import Todo from './todo'
 
 export {
     Event,
