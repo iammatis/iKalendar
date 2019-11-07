@@ -1,15 +1,15 @@
-import {Classification, GeoPosition, Organizer, Transparency, Duration, Attachment, Attendee, Relation, XProp, Status, RDTType, Period} from '../general';
+import {Classification, GeoPosition, Organizer, Transparency, Duration, Attachment, Attendee, Relation, XProp, Status, RDTType, Period, ComplexDate, RecurrenceDate} from '../general';
 import Alarm from './alarm';
 
 type Event = {
-    dtStamp: Date;
+    dtStamp: string | ComplexDate;
     uid: string;
     start?: string;
     class?: Classification;
-    created?: Date;
-    description?: Date;
+    created?: string;
+    description?: string;
     geo?: GeoPosition;
-    lastModified?: Date;
+    lastModified?: string;
     location?: string;
     organizer?: Organizer;
     priority?: number;
@@ -18,21 +18,21 @@ type Event = {
     summary?: string;
     transp?: Transparency;
     url?: string;
-    recurencceId?: string;
+    recurrenceId?: string;
     rrule?: string;
-    end?: Date;
+    end?: string | ComplexDate;
     duration?: Duration;
-    attach?: Attachment[];
-    attendee?: Attendee[];
+    attachments?: Attachment[];
+    attendees?: Attendee[];
     categories?: string[];
     comment?: string;
     contact?: string;
-    exdate?: Date;
+    exdate?: string | ComplexDate;
     relatedTo?: Relation[];
     resources?: string[];
-    rdate?: { type?: RDTType; value: (Date | Period)[]; tzId?: string; };
+    rdate?: RecurrenceDate
     xProps?: XProp[];
-    alarm?: Alarm[];
+    alarms?: Alarm[];
 }
 
 export default Event

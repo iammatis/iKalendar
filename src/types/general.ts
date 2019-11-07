@@ -1,7 +1,7 @@
 // Descriptive Component Properties
 
 export type Attachment = {
-    type: string
+    type?: string
     value: string
 }
 
@@ -34,12 +34,34 @@ export type JournalStatus =
 // Date and Time Component Properties
 
 export type Duration = {
+    before?: boolean
     week?: number
     day?: number
     hour?: number
     minute?: number
     second?: number
 }
+
+export type ComplexDate = {
+    type?: 'DATE-TIME' | 'DATE'
+    tzId?: string
+    value: string
+}
+
+export type RecurrenceDate = {
+    type?: RDTType
+    tzId?: string
+    dates?: string[]
+    periods?: Period[]
+}
+
+export type Period = {
+    start: string
+    end?: string
+    duration?: Duration
+}
+
+export type RDTType = 'DATE-TIME' | 'DATE' | 'PERIOD'
 
 export type Transparency = 'OPAQUE' | 'TRANSPARENT'
 
@@ -48,6 +70,7 @@ export type Transparency = 'OPAQUE' | 'TRANSPARENT'
 // Relationship Component Properties
 
 export type Person = {
+    address: string
     cn?: string
     dir?: string
     sentBy?: string
@@ -65,12 +88,12 @@ export type PartstatJournal = PartstatBase
 
 export type Attendee = {
     cu?: CUType
-    member?: string | string[]
+    member?: string[]
     role?: Role
     partstat?: Partstat
     rsvp?: boolean
-    delegatedTo?: string | string[]
-    delegatedFrom?: string | string[]
+    delegatedTo?: string[]
+    delegatedFrom?: string[]
 } & Person
 
 export type Organizer = Person
@@ -78,7 +101,7 @@ export type Organizer = Person
 export type RelationType = 'PARENT' | 'CHILD' | 'SIBLING'
 
 export type Relation = {
-    type: RelationType
+    type?: RelationType
     value: string
 }
 
@@ -88,13 +111,9 @@ export type Relation = {
 
 export type ActionType = 'AUDIO' | 'DISPLAY' | 'EMAIL'
 
-export type RelativeTrigger = {
-    type?: 'START' | 'END'
+export type Trigger = {
+    related?: 'START' | 'END'
     value: string | Duration
-}
-
-export type AbsoluteTrigger = {
-    value: Date
 }
 
 
@@ -111,17 +130,3 @@ export type XProp = {
 // Other Properties
 
 export type FreeBusyType = 'FREE' | 'BUSY' | 'BUSY-UNAVAILABLE' | 'BUSY-TENTATIVE'
-
-export type PeriodExplicit = {
-    start: Date
-    end: Date
-}
-
-export type PeriodStart = {
-    start: Date
-    duration: string | Duration
-}
-
-export type Period = PeriodExplicit | PeriodStart
-
-export type RDTType = 'DATE-TIME' | 'DATE' | 'PERIOD'

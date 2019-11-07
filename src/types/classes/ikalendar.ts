@@ -1,6 +1,9 @@
 import {Event, Todo, Journal, FreeBusy, TimeZone} from '../components';
+import Calendar from '../calendar';
 
 interface IKalendarInterface {
+    calendar: Calendar
+    
     createEvent(event: Event): string
 
     createEvents(events: Event[]): string

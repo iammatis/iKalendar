@@ -1,56 +1,60 @@
-import IKalendarInterface from './types/classes/ikalendar';
-import { Event, Todo, Journal, FreeBusy, TimeZone } from './types/components';
-import Calendar from './types/calendar';
+import Builder from './builder'
+import Calendar from './types/calendar'
+import IKalendarInterface from './types/classes/ikalendar'
+import { Event, FreeBusy, Journal, TimeZone, Todo } from './types/components'
 
 const defaultCalendar: Calendar = {
-    version: '2.0',
-    prodId: 'iKalendar'
+    prodId: 'iKalendar',
+    version: '2.0'
 }
 
 export class IKalendar implements IKalendarInterface {
-    calendar: Calendar;
+    public calendar: Calendar
+    public builder: Builder
 
     constructor(calendar: Calendar = defaultCalendar) {
         this.calendar = calendar
+        this.builder = new Builder()
     }
 
-    createEvent(event: Event): string {
-        throw new Error('Method not implemented.');
+    public createEvent(event: Event): string {
+        return this.createEvents([event])
     }
 
-    createEvents(events: Event[]): string {
-        throw new Error('Method not implemented.');
+    public createEvents(events: Event[]): string {
+        this.builder.appendEvents(events)
+        return this.builder.build()
     }
 
-    createTodo(todo: Todo): string {
-        throw new Error('Method not implemented.');
+    public createTodo(todo: Todo): string {
+        return this.createTodos([todo])
     }
 
-    createTodos(todos: Todo[]): string {
-        throw new Error('Method not implemented.');
+    public createTodos(todos: Todo[]): string {
+        throw new Error('Method not implemented.')
     }
 
-    createJournal(journal: Journal): string {
-        throw new Error('Method not implemented.');
+    public createJournal(journal: Journal): string {
+        return this.createJournals([journal])
     }
 
-    createJournals(journals: Journal[]): string {
-        throw new Error('Method not implemented.');
+    public createJournals(journals: Journal[]): string {
+        throw new Error('Method not implemented.')
     }
 
-    createFreeBusy(freebusy: FreeBusy): string {
-        throw new Error('Method not implemented.');
+    public createFreeBusy(freebusy: FreeBusy): string {
+        return this.createFreeBusys([freebusy])
     }
 
-    createFreeBusys(freebusy: FreeBusy[]): string {
-        throw new Error('Method not implemented.');
+    public createFreeBusys(freebusy: FreeBusy[]): string {
+        throw new Error('Method not implemented.')
     }
 
-    createTimeZone(timezone: TimeZone): string {
-        throw new Error('Method not implemented.');
+    public createTimeZone(timezone: TimeZone): string {
+        return this.createTimeZones([timezone])
     }
 
-    createTimeZones(timezones: TimeZone[]): string {
-        throw new Error('Method not implemented.');
+    public createTimeZones(timezones: TimeZone[]): string {
+        throw new Error('Method not implemented.')
     }
 }
