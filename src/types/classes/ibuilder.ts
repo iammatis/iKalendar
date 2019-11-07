@@ -1,9 +1,6 @@
-import Calendar from '../calendar'
 import { Event, FreeBusy, Journal, TimeZone, Todo } from '../components'
 
-interface IKalendarInterface {
-    calendar: Calendar
-    
+interface IBuilder {
     createEvent(event: Event): string
 
     createEvents(events: Event[]): string
@@ -25,4 +22,4 @@ interface IKalendarInterface {
     createTimeZones(timezones: TimeZone[]): string
 }
 
-export default IKalendarInterface
+export default IBuilder
