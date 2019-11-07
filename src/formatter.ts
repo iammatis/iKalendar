@@ -6,33 +6,27 @@ import { Attachment, Attendee, ComplexDate, Duration, GeoPosition, Organizer, Re
 
 class Formatter implements IFormatter {
     private array: string[]
-    private withCalendar: boolean
     private calendar: Calendar
 
 
-    constructor(calendar: Calendar, withCalendar: boolean = true) {
+    constructor(calendar: Calendar) {
         this.array = []
         this.calendar = calendar
-        this.withCalendar = withCalendar
     }
 
     public format(): string {
         const data = this.array.join('\r\n')
 
-        if (this.withCalendar) {
-            const { version, prodId, calscale, method } = this.calendar
-            return [
-                'BEGIN:VCALENDAR',
-                `VERSION:${version}`,
-                `PRODID:${prodId}`,
-                calscale ? `CALSCALE:${calscale}` : '',
-                method ? `METHOD:${method}` : '',
-                data,
-                'END:VCALENDAR'
-            ].filter(Boolean).join('\r\n')
-        }
-
-        return data
+        const { version, prodId, calscale, method } = this.calendar
+        return [
+            'BEGIN:VCALENDAR',
+            `VERSION:${version}`,
+            `PRODID:${prodId}`,
+            calscale ? `CALSCALE:${calscale}` : '',
+            method ? `METHOD:${method}` : '',
+            data,
+            'END:VCALENDAR'
+        ].filter(Boolean).join('\r\n')
     }
     
     public addEvent(event?: Event): void {
@@ -98,7 +92,7 @@ class Formatter implements IFormatter {
         throw new Error("Method not implemented.")
     }
     
-    public addFreeBusys(freebusy?: FreeBusy[]): void {
+    public addFreeBusyTimes(freebusy?: FreeBusy[]): void {
         throw new Error("Method not implemented.")
     }
     
@@ -134,8 +128,6 @@ class Formatter implements IFormatter {
         if (value !== '') {
             const lines = this.foldLine(value)
             this.array.push(lines)
-            // for (const line of lines) {
-            // }
         }
     }
 
@@ -315,9 +307,7 @@ class Formatter implements IFormatter {
             hour ? `${hour}H` : '',
             minute ? `${minute}M` : '',
             second ? `${second}S` : '',
-        ]
-          .filter(Boolean)
-          .join('')
+        ].filter(Boolean).join('')
     }
 
     private foldLine(line: string): string {

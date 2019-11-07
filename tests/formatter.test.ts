@@ -14,7 +14,7 @@ const defaultCalendar: Calendar = {
 describe('Test Formatter Class', () => {
 
     beforeEach(() => {
-        formatter = new Formatter(defaultCalendar, false)
+        formatter = new Formatter(defaultCalendar)
     })
 
     describe('Test general properties', () => {

@@ -13,7 +13,7 @@ interface IFormatter {
     addJournals(journals?: Journal[]): void
 
     addFreeBusy(freebusy?: FreeBusy): void
-    addFreeBusys(freebusy?: FreeBusy[]): void
+    addFreeBusyTimes(freebusy?: FreeBusy[]): void
 
     addTimeZone(timeZone?: TimeZone): void
     addTimeZones(timeZones?: TimeZone[]): void

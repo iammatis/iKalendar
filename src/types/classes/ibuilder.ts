@@ -1,25 +1,25 @@
 import { Event, FreeBusy, Journal, TimeZone, Todo } from '../components'
 
 interface IBuilder {
-    createEvent(event: Event): string
+    addEvent(event: Event): void
 
-    createEvents(events: Event[]): string
+    addEvents(events: Event[]): void
 
-    createTodo(todo: Todo): string
+    addTodo(todo: Todo): void
 
-    createTodos(todos: Todo[]): string
+    addTodos(todos: Todo[]): void
 
-    createJournal(journal: Journal): string
+    addJournal(journal: Journal): void
 
-    createJournals(journals: Journal[]): string
+    addJournals(journals: Journal[]): void
 
-    createFreeBusy(freebusy: FreeBusy): string
+    addFreeBusy(freebusy: FreeBusy): void
 
-    createFreeBusys(freebusy: FreeBusy[]): string
+    addFreeBusyTimes(freebusy: FreeBusy[]): void
 
-    createTimeZone(timezone: TimeZone): string
+    addTimeZone(timezone: TimeZone): void
 
-    createTimeZones(timezones: TimeZone[]): string
+    addTimeZones(timezones: TimeZone[]): void
 }
 
 export default IBuilder

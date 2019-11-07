@@ -11,48 +11,47 @@ const defaultCalendar: Calendar = {
 export class Builder implements IBuilder {
     private formatter: Formatter
 
-    constructor(calendar: Calendar = defaultCalendar, withCalendar: boolean = true) {
-        this.formatter = new Formatter(calendar, withCalendar)
+    constructor(calendar: Calendar = defaultCalendar) {
+        this.formatter = new Formatter(calendar)
     }
 
-    public createEvent(event: Event): string {
-        return this.createEvents([event])
+    public addEvent(event: Event): void {
+        this.addEvents([event])
     }
 
-    public createEvents(events: Event[]): string {
+    public addEvents(events: Event[]): void {
         this.formatter.addEvents(events)
-        return this.formatter.format()
     }
 
-    public createTodo(todo: Todo): string {
-        return this.createTodos([todo])
+    public addTodo(todo: Todo): void {
+        this.addTodos([todo])
     }
 
-    public createTodos(todos: Todo[]): string {
+    public addTodos(todos: Todo[]): void {
         throw new Error('Method not implemented.')
     }
 
-    public createJournal(journal: Journal): string {
-        return this.createJournals([journal])
+    public addJournal(journal: Journal): void {
+        this.addJournals([journal])
     }
 
-    public createJournals(journals: Journal[]): string {
+    public addJournals(journals: Journal[]): void {
         throw new Error('Method not implemented.')
     }
 
-    public createFreeBusy(freebusy: FreeBusy): string {
-        return this.createFreeBusys([freebusy])
+    public addFreeBusy(freebusy: FreeBusy): void {
+        this.addFreeBusyTimes([freebusy])
     }
 
-    public createFreeBusys(freebusy: FreeBusy[]): string {
+    public addFreeBusyTimes(freebusy: FreeBusy[]): void {
         throw new Error('Method not implemented.')
     }
 
-    public createTimeZone(timezone: TimeZone): string {
-        return this.createTimeZones([timezone])
+    public addTimeZone(timezone: TimeZone): void {
+        this.addTimeZones([timezone])
     }
 
-    public createTimeZones(timezones: TimeZone[]): string {
+    public addTimeZones(timezones: TimeZone[]): void {
         throw new Error('Method not implemented.')
     }
 }
