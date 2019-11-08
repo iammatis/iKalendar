@@ -20,14 +20,15 @@ export class Builder implements IBuilder {
     }
 
     public build(): string {
-        const data = this.data.join('\r\n')
-
+        
         const { version, prodId, calscale, method, timezones, events, journals, freebusy, todos } = this.calendar
         // this.addTimeZones(timezones)
         this.addEvents(events)
         // this.addJournals(journals)
         // this.addTodos(todos)
         // this.addFreeBusyTimes(freebusy)
+        
+        const data = this.data.join('\r\n')
 
         return [
             'BEGIN:VCALENDAR',
@@ -36,26 +37,14 @@ export class Builder implements IBuilder {
             calscale ? `CALSCALE:${calscale}` : '',
             method ? `METHOD:${method}` : '',
             data,
-            'END:VCALENDAR',
+            'END:VCALENDAR\r\n',
         ].filter(Boolean).join('\r\n')
     }
 
     private add(value: string): void {
         if (value !== '') {
-            const lines = this.foldLine(value)
-            this.data.push(lines)
+            this.data.push(value)
         }
-    }
-
-    private foldLine(line: string): string {
-        const MAX_LENGTH = 75
-        const lines = []
-        while (line.length > MAX_LENGTH) {
-            lines.push(line.slice(0, MAX_LENGTH))
-            line = line.slice(MAX_LENGTH)
-        }
-        lines.push(line)
-        return lines.join('\r\n\t')
     }
 
     private addEvent(event: Event, fmt: Formatter): void {
@@ -78,9 +67,10 @@ export class Builder implements IBuilder {
         this.add(fmt.formatString('URL', event.url))
         this.add(fmt.formatString('RECURRENCE-ID', event.recurrenceId))
         // TODO: Rule
-        this.add(fmt.formatString('STATUS', event.rrule))
+        this.add(fmt.formatString('RRULE', event.rrule))
         this.add(fmt.formatDate('DTEND', event.end))
-        this.add('DURATION:' + fmt.formatDuration(event.duration))
+        // TODO: Redo this
+        this.add(fmt.formatString('DURATION', event.duration ? fmt.formatDuration(event.duration) : ''))
         this.add(fmt.formatAttachments(event.attachments))
         this.add(fmt.formatAttendees(event.attendees))
         this.add(fmt.formatStrings('CATEGORIES', event.categories))

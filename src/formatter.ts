@@ -1,32 +1,37 @@
-import * as moment from 'moment'
+import * as moment from 'moment-timezone'
 import IFormatter from "./types/classes/iformatter"
 import { Attachment, Attendee, ComplexDate, Duration, GeoPosition, Organizer, RecurrenceDate, Relation, Trigger, XProp } from "./types/general"
 
 class Formatter implements IFormatter {
     public formatString(attrName: string, value?: string | number): string {
-        return value !== undefined ? `${attrName}:${value}` : ''
+        return value !== undefined && value !== ''
+            ? this.foldLine(`${attrName}:${value}`)
+            : ''
     }
     
     public formatStrings(attrName: string, values?: string[], sep: string = ','): string {
-        return values && values.length ? `${attrName}:${values.filter(Boolean).join(sep)}` : ''
+        return values && values.length
+            ? this.foldLine(`${attrName}:${values.filter(Boolean).join(sep)}`)
+            : ''
     }
     
     public formatDate(attrName: string, date?: string | ComplexDate): string {
         if (date) {
             if (typeof date === 'string') {
-                return `${attrName}:${moment(date).format('YYYYMMDDTHHmmss')}`
+                // return this.foldLine(`${attrName}:${moment(date).format('YYYYMMDDTHHmmss')}`)
+                return this.foldLine(`${attrName}:${moment.utc(date).format('YYYYMMDDTHHmmss')}Z`)
             } else {
                 const { value, type, tzId } = date
                 
                 if (type && type === 'DATE') {
                     const typeValue = `VALUE=DATE`
                     const tz = tzId ? `;TZID=${tzId}` : ''
-                    const momentDate = moment(value).format('YYYYMMDD')
-                    return `${attrName};${typeValue}${tz}:${momentDate}`
+                    const momentDate = moment(value).tz(tzId || 'UTC').format('YYYYMMDD')
+                    return this.foldLine(`${attrName};${typeValue}${tz}:${momentDate}`)
                 } else {
                     const tz = tzId ? `;TZID=${tzId}` : ''
-                    const momentDate = moment(value).format('YYYYMMDDTHHmmss')
-                    return `${attrName}${tz}:${momentDate}`
+                    const momentDate = moment(value).tz(tzId || 'UTC').format('YYYYMMDDTHHmmss')
+                    return this.foldLine(`${attrName}${tz}:${momentDate}${tzId ? '' : 'Z'}`)
                 }
             }
         }
@@ -61,13 +66,13 @@ class Formatter implements IFormatter {
                     break
             }
 
-            return `RDATE${tzIdValue}${typeValue}:${values}`
+            return this.foldLine(`RDATE${tzIdValue}${typeValue}:${values}`)
         }
         return ''
     }
     
     public formatGeo(geo?: GeoPosition): string {
-        return geo ? `GEO:${geo.lat};${geo.lon}` : ''
+        return geo ? this.foldLine(`GEO:${geo.lat};${geo.lon}`) : ''
     }
     
     public formatOrganizer(organizer?: Organizer): string {
@@ -79,9 +84,10 @@ class Formatter implements IFormatter {
                 sentBy ? `CN=${sentBy}` : ''
             ].filter(Boolean).join(';')
 
-            return optionals
+            const line = optionals
                 ? `ORGANIZER;${optionals}:${address}`
                 : `ORGANIZER:${address}`
+            return this.foldLine(line)
         }
         return ''
     }
@@ -89,7 +95,7 @@ class Formatter implements IFormatter {
     public formatDuration(duration?: Duration): string {
         if (duration) {
             const { isNegative, week, day, hour, minute, second } = duration
-            return [
+            const line = [
                 isNegative ? '-' : '',
                 'P',
                 week ? `${week}W` : '',
@@ -99,15 +105,17 @@ class Formatter implements IFormatter {
                 minute ? `${minute}M` : '',
                 second ? `${second}S` : '',
             ].filter(Boolean).join('')
+            return this.foldLine(line)
         }
         return ''
     }
     
     public formatAttachment(attachment?: Attachment): string {
         if (attachment) {
-            return attachment.type
+            const line = attachment.type
                 ? `ATTACH;FMPTYPE=${attachment.type}:${attachment.value}`
                 : `ATTACH:${attachment.value}`
+            return this.foldLine(line)
         }
         return ''
     }
@@ -132,9 +140,10 @@ class Formatter implements IFormatter {
                 delegatedFrom ? `DELEGATED-FROM=${delegatedFrom.join(',')}` : ''
             ].filter(Boolean).join(';')
 
-            return optionals
+            const line = optionals
                 ? `ATTENDEE;${optionals}:${address}`
                 : `ATTENDEE:${address}`
+            return this.foldLine(line)
         }
         return ''
     }
@@ -145,9 +154,10 @@ class Formatter implements IFormatter {
     
     public formatRelation(relation?: Relation): string {
         if (relation) {
-            return relation.type
+            const line = relation.type
                 ? `RELATED-TO;RELTYPE=${relation.type}:${relation.value}`
                 : `RELATED-TO:${relation.value}`
+            return this.foldLine(line)
         }
         return ''
     }
@@ -167,19 +177,31 @@ class Formatter implements IFormatter {
             } else { // Duration
                 value = this.formatDuration(trigger.value)
             }
-            return optional
+            const line = optional
                 ? `TRIGGER;${optional}:${value}`
                 : `TRIGGER:${value}`
+            return this.foldLine(line)
         }
         return ''
     }
     
     public formatXprop(xProp?: XProp): string {
-        return xProp ? `X-${xProp.name}:${xProp.value}` : ''
+        return xProp ? this.foldLine(`X-${xProp.name}:${xProp.value}`) : ''
     }
     
     public formatXprops(xProps: XProp[] = []): string {
         return xProps.map(xProp => this.formatXprop(xProp)).join('\r\n')
+    }
+
+    private foldLine(line: string): string {
+        const MAX_LENGTH = 75
+        const lines = []
+        while (line.length > MAX_LENGTH) {
+            lines.push(line.slice(0, MAX_LENGTH))
+            line = line.slice(MAX_LENGTH)
+        }
+        lines.push(line)
+        return lines.join('\r\n ')
     }
 }
 

@@ -41,7 +41,7 @@ describe('Test Formatter Class', () => {
     
         it('Test format simple date-time', () => {
             const data = fmt.formatDate('ATTRNAME', '2019-11-06T16:08:03Z')
-            expect(data).toEqual('ATTRNAME:20191106T170803')
+            expect(data).toEqual('ATTRNAME:20191106T160803Z')
         })
 
         it('Test format complex date-time', () => {
@@ -91,7 +91,7 @@ describe('Test Formatter Class', () => {
                     { start: '19960404T010000Z', duration: { hour: 3 }}
                 ]
             })
-            expect(data).toEqual('RDATE;TZID=Europe/Bratislava;VALUE=PERIOD:19960403T040000/19960403T060000,19960404T030000/PT3H')
+            expect(data).toEqual('RDATE;TZID=Europe/Bratislava;VALUE=PERIOD:19960403T040000/19960403T060000,1\r\n 9960404T030000/PT3H')
         })
 
         it('Test format duration', () => {
@@ -196,7 +196,7 @@ describe('Test Formatter Class', () => {
                 sentBy: '"mailto:jane_doe@example.com"'
             }
             const data = fmt.formatOrganizer(organizer)
-            expect(data).toEqual('ORGANIZER;CN=JohnSmith;DIR=ldap://example.com:6666/o=DC%20Associates,c=US???(cn=John%20Smith);CN="mailto:jane_doe@example.com":mailto:jsmith@example.com')
+            expect(data).toEqual('ORGANIZER;CN=JohnSmith;DIR=ldap://example.com:6666/o=DC%20Associates,c=US??\r\n ?(cn=John%20Smith);CN="mailto:jane_doe@example.com":mailto:jsmith@example.c\r\n om')
         })
     
         it('Test format simple attendee', () => {
@@ -222,7 +222,7 @@ describe('Test Formatter Class', () => {
                 delegatedFrom: ['"mailto:jsmith@example.com"']
             }
             const data = fmt.formatAttendee(attendee)
-            expect(data).toEqual('ATTENDEE;CN=Henry Cabot;CUTYPE=GROUP;MEMBER="mailto:projectA@example.com","mailto:projectB@example.com";ROLE=REQ-PARTICIPANT;PARTSTAT=ACCEPTED;RSVP=true;DELEGATED-TO="mailto:jdoe@example.com","mailto:jqpublic@example.com";DELEGATED-FROM="mailto:jsmith@example.com":mailto:john_public@example.com')
+            expect(data).toEqual('ATTENDEE;CN=Henry Cabot;CUTYPE=GROUP;MEMBER="mailto:projectA@example.com","\r\n mailto:projectB@example.com";ROLE=REQ-PARTICIPANT;PARTSTAT=ACCEPTED;RSVP=tr\r\n ue;DELEGATED-TO="mailto:jdoe@example.com","mailto:jqpublic@example.com";DEL\r\n EGATED-FROM="mailto:jsmith@example.com":mailto:john_public@example.com')
         })
     
         it('Test format multiple simple attendees', () => {
