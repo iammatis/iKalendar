@@ -10,12 +10,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "moment": "^2.24.0"
+    "moment-timezone": "^0.5.27"
   },
   "devDependencies": {
     "@types/common-tags": "^1.8.0",
     "@types/jest": "^24.0.22",
-    "common-tags": "^1.8.0",
+    "@types/moment-timezone": "^0.5.12",
+    "@types/node": "^12.12.6",
     "jest": "^24.9.0",
     "prettier": "^1.18.2",
     "ts-jest": "^24.1.0",

@@ -7,8 +7,8 @@ type Alarm = {
     repeat?: number
     description?: string
     summary?: string
-    attendee?: Attendee[]
-    attach?: Attachment[]
+    attendees?: Attendee[]
+    attachments?: Attachment[]
     xProps?: XProp[]
 }
 

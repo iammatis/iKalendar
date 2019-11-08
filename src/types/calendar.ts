@@ -1,3 +1,4 @@
+import { Event, FreeBusy, Journal, TimeZone, Todo } from './components'
 import { XProp } from './general'
 
 type Calendar = {
@@ -6,6 +7,12 @@ type Calendar = {
     calscale?: string
     method?: string
     xProps?: XProp[]
+    
+    events?: Event[]
+    todos?: Todo[]
+    journals?: Journal[]
+    freebusy?: FreeBusy[]
+    timezones?: TimeZone[]
 }
 
 export default Calendar

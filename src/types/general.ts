@@ -34,7 +34,7 @@ export type JournalStatus =
 // Date and Time Component Properties
 
 export type Duration = {
-    before?: boolean
+    isNegative?: boolean
     week?: number
     day?: number
     hour?: number
