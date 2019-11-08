@@ -3,6 +3,7 @@
   "rules": {
     "interface-over-type-literal": false,
     "semicolon": [true, "never"],
-    "whitespace": [true, "check-module"]
+    "whitespace": [true, "check-module"],
+    "object-literal-sort-keys": false
   }
 }
