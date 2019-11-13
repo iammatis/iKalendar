@@ -1,6 +1,6 @@
 import * as moment from 'moment-timezone'
-import IFormatter from "./types/classes/iformatter"
-import { Attachment, Attendee, ComplexDate, Duration, GeoPosition, Organizer, RecurrenceDate, Relation, Trigger, XProp } from "./types/general"
+import IFormatter from './types/classes/iformatter'
+import { Attachment, Attendee, ComplexDate, Duration, GeoPosition, Organizer, RecurrenceDate, Relation, Trigger, XProp } from './types/general'
 
 class Formatter implements IFormatter {
     public formatString(attrName: string, value?: string | number): string {

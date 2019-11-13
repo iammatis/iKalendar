@@ -113,6 +113,7 @@ export type ActionType = 'AUDIO' | 'DISPLAY' | 'EMAIL'
 
 export type Trigger = {
     related?: 'START' | 'END'
+    type?: 'DATE-TIME' | 'DURATION'
     value: string | Duration
 }
 

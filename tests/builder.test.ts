@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from 'fs'
+import { readFileSync } from 'fs'
 import { join } from 'path'
 
 import Builder from '../src/builder'
