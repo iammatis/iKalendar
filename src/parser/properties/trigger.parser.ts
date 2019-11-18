@@ -10,30 +10,21 @@ const validParameters: Parameters = {
 }
 
 class TriggerParser extends BaseParser<Trigger> {
-    public parse(iCalValue: string): Trigger {
-        if (!iCalValue) {
+    public parse(value: string, params: string = ''): Trigger {
+        if (!value) {
             throw new ParsingError('Empty iCalendar trigger value')
         }
 
-        let temp = iCalValue
-        let params = ''
-        let optionals: Parameters = {}
-        if (iCalValue.includes(':')) { // With Parameters
-            [params, temp] = iCalValue.split(':')
-
-            optionals = this.parseParams(params, validParameters)
-        }
-
-        let value: (string | Duration) = temp
-        if (temp.includes('P')) { // Duration
+        let triggerValue: (string | Duration) = value
+        if (value.includes('P')) { // Duration
             const durationParser = new DurationParser()
-            value = durationParser.parse(temp)
+            triggerValue = durationParser.parse(value)
         }
 
         return {
-            value,
-            ...optionals
-        }
+			value: triggerValue,
+			...this.parseParams('trigger', params, validParameters),
+		}
     }
 }
 

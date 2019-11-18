@@ -33,13 +33,13 @@ describe('Test Trigger Parser', () => {
     })
 
     it('Test trigger with type and date-time', () => {
-        const trigger = parser.parse('VALUE=DATE-TIME:19970317T133000Z')
+        const trigger = parser.parse('19970317T133000Z', 'VALUE=DATE-TIME')
 
         expect(trigger).toEqual({type: 'DATE-TIME', value: '19970317T133000Z'})
     })
 
     it('Test complex trigger', () => {
-        const trigger = parser.parse('RELATED=END;VALUE=DATE-TIME:19970317T133000Z')
+        const trigger = parser.parse('19970317T133000Z', 'RELATED=END;VALUE=DATE-TIME')
 
         expect(trigger).toEqual({related: 'END', type: 'DATE-TIME', value: '19970317T133000Z'})
     })

@@ -2,7 +2,7 @@ import ParsingError from '../../exceptions/parser.error'
 import BaseParser from './base.parser'
 
 class NumberParser extends BaseParser<number> {
-    public parse(iCalValue: string): number {
+    public parse(iCalValue: string, params: string = ''): number {
         if (!iCalValue) {
             throw new ParsingError('Empty iCalendar number value')
         }

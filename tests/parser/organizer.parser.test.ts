@@ -14,36 +14,30 @@ describe('Test Organizer Parser', () => {
         }).toThrow()
     })
 
-    it('Test fail - invalid parameter', () => {
-        expect(() => {
-            parser.parse('CN=Jane Doe;ROLE=REQ-PARTICIPANT:mailto:ildoit@example.com')
-        }).toThrow()
-    })
-
     it('Test simple organizer', () => {
         const organizer = parser.parse('mailto:hcabot@example.com')
 
         expect(organizer).toEqual({
-            address: 'hcabot@example.com'
+            address: 'mailto:hcabot@example.com'
         })
     })
 
     it('Test simple organizer with params', () => {
-        const organizer = parser.parse('CN=Henry Cabot:mailto:hcabot@example.com')
+        const organizer = parser.parse('mailto:hcabot@example.com', 'CN=Henry Cabot')
 
         expect(organizer).toEqual({
             cn: 'Henry Cabot',
-            address: 'hcabot@example.com'
+            address: 'mailto:hcabot@example.com'
         })
     })
 
     it('Test simple organizer with multiple mails', () => {
-        const organizer = parser.parse('CN=Jane Doe;DIR="ldap://example.com:6666/o=DC%20Associates,c=US???(cn=John%20Smith)":mailto:ildoit@example.com')
+        const organizer = parser.parse('mailto:ildoit@example.com', 'CN=Jane Doe;DIR="ldap://example.com:6666/o=DC%20Associates,c=US???(cn=John%20Smith)"')
 
         expect(organizer).toEqual({
             cn: 'Jane Doe',
             dir: '"ldap://example.com:6666/o=DC%20Associates,c=US???(cn=John%20Smith)"',
-            address: 'ildoit@example.com'
+            address: 'mailto:ildoit@example.com'
         })
     })
 

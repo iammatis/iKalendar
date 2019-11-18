@@ -4,31 +4,23 @@ import { ComplexDate } from '../../types/general'
 import BaseParser from './base.parser'
 
 const validParameters: Parameters = {
-	'TYPE': 'type',
+	'VALUE': 'type',
 	'TZID': 'tzId'
 }
 
 class DateParser extends BaseParser<string | ComplexDate> {
-    public parse(iCalValue: string): string | ComplexDate {
-        if (!iCalValue) {
+    public parse(value: string, params: string = ''): string | ComplexDate {
+        if (!value) {
             throw new ParsingError('Empty iCalendar date value')
         }
 
-        if (!iCalValue.includes(':')) {
-            return iCalValue
+        const paramsParsed = this.parseParams('date', params, validParameters)
+        if (Object.entries(paramsParsed).length === 0) {
+            return value
         } else {
-            const [params, value] = iCalValue.split(':')
-
-            if (!params || !value) {
-                throw new ParsingError(`Invalid iCalendar date value: '${iCalValue}'`)
-            }
-
-            
-            const optionals = this.parseParams(params, validParameters)
-
             return {
                 value,
-                ...optionals,
+                ...this.parseParams('date', params, validParameters)
             }
         }
     }

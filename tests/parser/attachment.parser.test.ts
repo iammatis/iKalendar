@@ -14,23 +14,16 @@ describe('Test Attachment Parser', () => {
         }).toThrow()
     })
 
-    it('Test fail - wrong type format', () => {
-        expect(() => {
-            parser.parse('TYPE:wrongType;attachmentValue')
-        }).toThrow()
-    })
-
     it('Test simple attachment', () => {
-        const geo = parser.parse('attachmentValue')
+        const attachment = parser.parse('attachmentValue')
 
-        expect(geo).toEqual({value: 'attachmentValue'})
+        expect(attachment).toEqual({value: 'attachmentValue'})
     })
-
 
     it('Test complex attachment', () => {
-        const geo = parser.parse('TYPE=application/json:attachmentValue')
+        const attachment = parser.parse('attachmentValue', 'VALUE=application/json')
 
-        expect(geo).toEqual({type: 'application/json', value: 'attachmentValue'})
+        expect(attachment).toEqual({type: 'application/json', value: 'attachmentValue'})
     })
 
 })
