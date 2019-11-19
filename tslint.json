@@ -1,9 +1,12 @@
 {
-    "extends": [
-        "tslint:recommended",
-        "tslint-config-prettier"
-    ],
-    "rules": {
-        "interface-over-type-literal": false
-    }
+	"extends": ["tslint:recommended", "tslint-config-prettier"],
+	"rules": {
+		"interface-over-type-literal": false,
+		"semicolon": [true, "never"],
+		"whitespace": [true, "check-module"],
+		"object-literal-sort-keys": false,
+		"quotemark": [true, "single"],
+		"object-curly-spacing": true,
+		"array-bracket-spacing": [true, "never"]
+	}
 }

@@ -1,0 +1,11 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//xyz Corp//NONSGML PDA Calendar Version 1.0//EN
+BEGIN:VEVENT
+DTSTAMP:20101231T083000Z
+UID:uid1@example.com
+ATTENDEE;CN=Henry Cabot;ROLE=REQ-PARTICIPANT:mailto:hcabot@example.com
+ATTENDEE;CN=Jane Doe:mailto:jdoe@example.com;ROLE=REQ-PARTICIPANT;PARTSTAT=
+ ACCEPTED;DELEGATED-FROM="mailto:bob@example.com":mailto:ildoit@example.com
+END:VEVENT
+END:VCALENDAR
