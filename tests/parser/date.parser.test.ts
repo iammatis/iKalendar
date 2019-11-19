@@ -27,13 +27,13 @@ describe('Test Date Parser', () => {
     })
 
     it('Test date with type', () => {
-        const date = parser.parse('TYPE=DATE:20041207')
+        const date = parser.parse('20041207', 'VALUE=DATE')
 
         expect(date).toEqual({type: 'DATE', value: '20041207'})
     })
 
     it('Test date with tzid', () => {
-        const date = parser.parse('TZID=Europe/Bratislava:20041207T130000')
+        const date = parser.parse('20041207T130000', 'TZID=Europe/Bratislava')
 
         expect(date).toEqual({tzId: 'Europe/Bratislava', value: '20041207T130000'})
     })

@@ -12,7 +12,7 @@ const parameters: Parameters = {
 }
 
 class DurationParser extends BaseParser<Duration> {
-    public parse(iCalValue: string): Duration {
+    public parse(iCalValue: string, params: string = ''): Duration {
 
         const isNegative = iCalValue[0] === '-'
 

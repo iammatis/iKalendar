@@ -35,11 +35,11 @@ export type JournalStatus =
 
 export type Duration = {
     isNegative?: boolean
-    week?: number
-    day?: number
-    hour?: number
-    minute?: number
-    second?: number
+    weeks?: number
+    days?: number
+    hours?: number
+    minutes?: number
+    seconds?: number
 }
 
 export type ComplexDate = {

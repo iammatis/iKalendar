@@ -7,7 +7,7 @@ const validParameters: Parameters = {
     'CN': 'cn',
     'DIR': 'dir',
     'SENT-BY': 'sentBy',
-    'CU': 'cu',
+    'CUTYPE': 'cu',
     'MEMBER': 'member',
     'ROLE': 'role',
     'PARTSTAT': 'partstat',
@@ -17,42 +17,14 @@ const validParameters: Parameters = {
 }
 
 class AttendeeParser extends BaseParser<Attendee> {
-	public parse(iCalValue: string): Attendee {
-        let params: string
-        let address: string
-        let optionals: Parameters = {}
-
-        if (!iCalValue.includes(':mailto:')) {
-            [, address] = iCalValue.split(/mailto:/)
-        } else if (!iCalValue.includes(';')) {
-            const [param, addr] = iCalValue.split(/:(.+)?/)
-            if (!param || !addr) {
-                throw new ParsingError(`Invalid iCalendar attendee parameter in '${iCalValue}'`)
-            }
-
-            address = addr.split(/mailto:/)[1]
-
-            const [type, value] = param.split('=')
-
-            if (!type || !value) {
-                throw new ParsingError(`Invalid iCalendar attendee parameter in '${iCalValue}'`)
-            }
-
-            optionals[validParameters[type]] = value
-        } else {
-            [params, address] = iCalValue.split(/:mailto:/)
-
-            optionals = this.parseParams(params, validParameters)
+	public parse(value: string, params: string = ''): Attendee {
+        if (!value) {
+            throw new ParsingError('Empty iCalendar attendee value')
         }
 
-		if (!address || !address.length) {
-			throw new ParsingError(`Invalid iCalendar attendee address in: '${iCalValue}'`)
-		}
-
-
 		return {
-			address,
-			...optionals,
+			address: value,
+			...this.parseParams('attendee', params, validParameters),
 		}
 	}
 }

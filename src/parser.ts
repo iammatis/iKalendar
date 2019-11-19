@@ -1,25 +1,124 @@
+import { arrayAttributes, componentsRegistry, propertiesRegistry } from './constants'
+import ParsingError from './exceptions/parser.error'
+import {
+	AttachmentParser,
+	AttendeeParser,
+	DateParser,
+	DurationParser,
+	GeoParser,
+	NumberParser,
+	OrganizerParser,
+	RRuleParser,
+	StringArrayParser,
+	TriggerParser,
+} from './parser/properties'
 import StringParser from './parser/properties/string.parser'
 import Calendar from './types/calendar'
 import IParser from './types/classes/iparser'
+import { XProp } from './types/general'
 
-import { AttachmentParser, AttendeeParser, DateParser, DurationParser, GeoParser, NumberParser, OrganizerParser, RRuleParser, StringArrayParser, TriggerParser } from './parser/properties'
+type DecomposedLine = {
+	name: string
+	params: string
+	value: string
+}
 
 export class Parser implements IParser {
 	public parse(object: string): Calendar {
 		const lines = this.joinLongLines(this.splitLines(object))
-		let calendar: Calendar
+		return this.recursion(lines)
+	}
 
-		for (const line of lines) {
-			const [prop, value] = line.split(/[:;](.+)?/)
-			if(!this.isValidProperty(prop)) {
-				throw new Error('Invalid Property!')
+	private recursion(component: string[]): any {
+		const componentObject: Record<string, any> = {}
+		let index = 0
+		let subComponentIndex = null
+		let subComponentName = ''
+
+		for (const line of component) {
+			if (!subComponentIndex) {
+				const decomposedLine = this.decomposeLine(line)
+				let { name } = decomposedLine
+				const { value, params } = decomposedLine
+
+				if (name === 'BEGIN') {
+					subComponentIndex = index
+					subComponentName = value
+				} else if (name === 'END') {
+					continue
+				} else {
+					// Parse value
+					let parsedVal
+					if (/^X-/.test(name)) {
+						const xProp: XProp = { name: name.substr(2), value }
+						parsedVal = xProp
+						name = 'X-PROPS'
+					} else {
+						const propertyParser = this.getPropertyParser(name)
+						parsedVal = propertyParser.parse(value, params)
+					}
+
+					const calName = name in propertiesRegistry ?  propertiesRegistry[name] : ''
+					if (!calName) {
+						throw new ParsingError(`No such property '${name}'`)
+					}
+
+					this.addValue(componentObject, calName, parsedVal)
+				}
+			} else {
+				if (line === `END:${subComponentName}`) {
+					const subComponent = component.slice(subComponentIndex + 1, index)
+
+					const compName = subComponentName in componentsRegistry ?  componentsRegistry[subComponentName] : ''
+					if (!compName) {
+						throw new ParsingError(`No such component '${subComponentName}'`)
+					}
+
+					this.addValue(componentObject, compName, this.recursion(subComponent))
+
+					subComponentName = ''
+					subComponentIndex = null
+				}
 			}
-
-			const parser = this.getPropertyParser(prop)
-			parser.parse(value)
+			index++
 		}
 
-		return {}
+		return componentObject
+	}
+
+	private addValue(object: Record<string, any>, name: string, value: any): void {
+		// Create an array and push into it
+		if (arrayAttributes.includes(name)) {
+			(object[name] = object[name] || []).push(value)
+
+		// Simple property (aka not an array)
+		} else {
+			object[name] = value
+		}
+	}
+
+	private decomposeLine(line: string): DecomposedLine {
+		const NAME = '[-a-zA-Z0-9]+'
+		const QSTR = '"[^"]*"'
+		const PTEXT = '[^";:,]*'
+		const PVALUE = `(?:${QSTR}|${PTEXT})`
+		const PARAM = `(${NAME})=(${PVALUE}(?:,${PVALUE})*)`
+		const VALUE = '.*'
+		const LINE = `(?<name>${NAME})(?<params>(?:;${PARAM})*):(?<value>${VALUE})`
+		const BAD_LINE = `(?<name>${NAME})(?<params>(?:;${PARAM})*)`
+
+		const match = line.match(LINE)
+		if (match && match.groups) {
+			const { groups } = match
+			return {
+				name: groups.name,
+				params: groups.params,
+				// params: groups.params.split(';'),
+				value: groups.value
+			}
+		} else {
+			throw new Error(`Invalid iCalendar line: ${line}`)
+		}
 	}
 
 	private getPropertyParser(property: string) {
@@ -44,7 +143,7 @@ export class Parser implements IParser {
 			case 'UID':
 			case 'ACTION':
 				return new StringParser()
-			
+
 			case 'ATTACH':
 				return new AttachmentParser()
 
@@ -58,7 +157,7 @@ export class Parser implements IParser {
 			case 'PERCENT-COMPLETE':
 			case 'PRIORITY':
 			case 'SEQUENCE':
-				return new NumberParser()	
+				return new NumberParser()
 
 			case 'COMPLETED':
 			case 'DTEND':
@@ -78,28 +177,23 @@ export class Parser implements IParser {
 
 			case 'TZOFFSETFROM':
 			case 'TZOFFSETTO':
-					return new DurationParser()
+				return new DurationParser()
 
 			case 'ATTENDEE':
-					return new AttendeeParser()
+				return new AttendeeParser()
 
 			case 'ORGANIZER':
-					return new OrganizerParser()
+				return new OrganizerParser()
 
 			case 'RRULE':
-					return new RRuleParser()
+				return new RRuleParser()
 
 			case 'TRIGGER':
-					return new TriggerParser()
-		
-			default:
-				throw new Error('')
-		}
-	}
+				return new TriggerParser()
 
-	private isValidProperty(property: string): boolean {
-		const validProps = ['CALSCALE', 'METHOD', 'PRODID', 'VERSION', 'ATTACH', 'CATEGORIES', 'CLASS', 'COMMENT', 'DESCRIPTION', ' GEO', 'LOCATION', 'PERCENT-COMPLETE', 'PRIORITY', 'RESOURCES', 'STATUS', 'SUMMARY', 'COMPLETED', 'DTEND', 'DUE', ' DTSTART', 'DURATION', 'FREEBUSY', 'TRANSP', 'TZID', 'TZNAME', 'TZOFFSETFROM', 'TZOFFSETTO', 'TZURL', 'ATTENDEE', 'CONTACT', 'ORGANIZER', 'RECURRENCE-ID', 'RELATED-TO', 'URL', 'UID', 'EXDATE', 'EXRULE', 'RDATE', 'RRULE', 'ACTION', 'REPEAT', 'TRIGGER', 'CREATED', 'DTSTAMP', 'LAST-MODIFIED', 'SEQUENCE', 'REQUEST-STATUS']
-		return property in validProps
+			default:
+				throw new ParsingError(`Invalid Property '${property}'`)
+		}
 	}
 
 	private splitLines(object: string): string[] {
@@ -116,17 +210,19 @@ export class Parser implements IParser {
 		let index = 0
 
 		for (const line of lines) {
-			if (line[0] === ' ') {
+			if (line[0] === ' ' || line[0] === '\t') {
 				if (index - 1 < 0) {
 					throw new Error('Invalid object!')
 				}
+
 				res[index - 1] += line.substr(1)
 			} else {
 				res.push(line)
+				index++
 			}
-			index++
 		}
 
 		return res
 	}
 }
+

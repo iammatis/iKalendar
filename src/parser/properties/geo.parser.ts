@@ -3,7 +3,7 @@ import { GeoPosition } from '../../types/general'
 import BaseParser from './base.parser'
 
 class GeoParser extends BaseParser<GeoPosition> {
-    public parse(iCalValue: string): GeoPosition {
+    public parse(iCalValue: string, params: string = ''): GeoPosition {
         const [lat, lon] = iCalValue.split(';')
 
         if (!lat || !lon) {
