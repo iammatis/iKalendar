@@ -6,7 +6,8 @@
 		"type": "git",
 		"url": "https://github.com/iammatis/iKalendar.git"
 	},
-	"main": "lib/",
+	"main": "lib/index.js",
+	"types": "lib/index.d.ts",
 	"scripts": {
 		"test": "jest",
 		"build": "rm -r lib/ && tsc"
