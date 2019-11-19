@@ -88,7 +88,7 @@ describe('Test Formatter Class', () => {
                 tzId: 'Europe/Bratislava',
                 periods: [
                     { start: '19960403T020000Z', end: '19960403T040000Z' },
-                    { start: '19960404T010000Z', duration: { hour: 3 }}
+                    { start: '19960404T010000Z', duration: { hours: 3 }}
                 ]
             })
             expect(data).toEqual('RDATE;TZID=Europe/Bratislava;VALUE=PERIOD:19960403T040000/19960403T060000,1\r\n 9960404T030000/PT3H')
@@ -97,8 +97,8 @@ describe('Test Formatter Class', () => {
         it('Test format duration', () => {
             const duration: Duration = {
                 isNegative: true,
-                hour: 5,
-                minute: 30
+                hours: 5,
+                minutes: 30
             }
             const data = fmt.formatDuration(duration)
             expect(data).toEqual('-PT5H30M')
@@ -115,8 +115,8 @@ describe('Test Formatter Class', () => {
         it('Test format simple duration trigger', () => {
             const trigger: Trigger = {
                 value: {
-                    week: 2,
-                    day: 4
+                    weeks: 2,
+                    days: 4
                 }
             }
             const data = fmt.formatTrigger(trigger)
@@ -136,8 +136,8 @@ describe('Test Formatter Class', () => {
             const trigger: Trigger = {
                 related: 'START',
                 value: {
-                    week: 2,
-                    day: 4
+                    weeks: 2,
+                    days: 4
                 }
             }
             const data = fmt.formatTrigger(trigger)

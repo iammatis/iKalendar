@@ -17,8 +17,6 @@ import Calendar from './types/calendar'
 import IParser from './types/classes/iparser'
 import { XProp } from './types/general'
 
-import util = require('util')
-
 type DecomposedLine = {
 	name: string
 	params: string
@@ -227,72 +225,4 @@ export class Parser implements IParser {
 		return res
 	}
 }
-
-const str = `BEGIN:VCALENDAR
-CALSCALE:GREGORIAN
-VERSION:2.0
-X-WR-CALNAME:testing trigger
-METHOD:PUBLISH
-PRODID:-//Apple Inc.//Mac OS X 10.15.1//EN
-BEGIN:VEVENT
-UID:64667D10-67A5-421B-AC55-A7082CD8DDA1
-TRANSP:TRANSPARENT
-CREATED:20191112T143857Z
-ATTENDEE;CN="Lukáš Láni";CUTYPE=INDIVIDUAL;PARTSTAT=NEEDS-ACTION;ROLE=RE
- Q-PARTICIPANT:mailto:lukas.lani@touch4it.com
-ATTENDEE;CN="Matej Belluš";CUTYPE=INDIVIDUAL;PARTSTAT=ACCEPTED;ROLE=REQ-
- PARTICIPANT:mailto:matej.bellus@touch4it.com
-ATTENDEE;CN="Meeting Room 1 - Jednotka,  Holubyho 4, Bratislava";CUTYPE=
- INDIVIDUAL;PARTSTAT=NEEDS-ACTION;ROLE=REQ-PARTICIPANT:mailto:meetingroom
- 1@touch4it.com
-ATTENDEE;CN="Meeting Room 5 - Power Room - Holubyho 4, Bratislava";CUTYP
- E=INDIVIDUAL;PARTSTAT=DECLINED;ROLE=REQ-PARTICIPANT:mailto:powerroom@tou
- ch4it.com
-ATTENDEE;CN="Tomas Tibensky";CUTYPE=INDIVIDUAL;PARTSTAT=ACCEPTED;ROLE=RE
- Q-PARTICIPANT:mailto:tomas.tibensky@touch4it.com
-ATTENDEE;CN="Viktor Šulák";CUTYPE=INDIVIDUAL;PARTSTAT=ACCEPTED;ROLE=REQ-
- PARTICIPANT:mailto:sulak@touch4it.com
-DTEND;VALUE=DATE:20191117
-X-APPLE-TRAVEL-ADVISORY-BEHAVIOR:AUTOMATIC
-SUMMARY:testing trigger
-LAST-MODIFIED:20191112T144041Z
-DTSTAMP:20191112T144044Z
-DTSTART;VALUE=DATE:20191116
-SEQUENCE:0
-BEGIN:VALARM
-UID:BC6AA6FD-E8ED-4206-B8B3-CFED559829B7
-X-APPLE-LOCAL-DEFAULT-ALARM:TRUE
-TRIGGER;VALUE=DATE-TIME:19760401T005545Z
-ACTION:NONE
-X-WR-ALARMUID:BC6AA6FD-E8ED-4206-B8B3-CFED559829B7
-END:VALARM
-BEGIN:VALARM
-UID:77CB14FE-4887-4C49-844C-2FF7ECCF855B
-X-APPLE-DEFAULT-ALARM:TRUE
-TRIGGER:-PT15H
-ACTION:AUDIO
-ATTACH;VALUE=URI:Chord
-X-WR-ALARMUID:77CB14FE-4887-4C49-844C-2FF7ECCF855B
-END:VALARM
-BEGIN:VALARM
-UID:C1B7F45A-A24E-4DBC-A56D-E891D946DA7A
-ACTION:AUDIO
-TRIGGER:-P6DT15H
-ATTACH;VALUE=URI:Chord
-X-WR-ALARMUID:C1B7F45A-A24E-4DBC-A56D-E891D946DA7A
-END:VALARM
-END:VEVENT
-END:VCALENDAR`
-
-const parser = new Parser()
-// console.log(parser.parse(str))
-
-// alternative shortcut
-const cal: Calendar = parser.parse(str)
-console.log(util.inspect(cal, false, null, true))
-
-console.log('cal.calscale')
-console.log(cal.calscale)
-
-console.log(util.inspect(cal.events, false, null, true))
 

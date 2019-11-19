@@ -94,16 +94,16 @@ class Formatter implements IFormatter {
     
     public formatDuration(duration?: Duration): string {
         if (duration) {
-            const { isNegative, week, day, hour, minute, second } = duration
+            const { isNegative, weeks, days, hours, minutes, seconds } = duration
             const line = [
                 isNegative ? '-' : '',
                 'P',
-                week ? `${week}W` : '',
-                day ? `${day}D` : '',
-                (hour || minute || second) ? 'T' : '',
-                hour ? `${hour}H` : '',
-                minute ? `${minute}M` : '',
-                second ? `${second}S` : '',
+                weeks ? `${weeks}W` : '',
+                days ? `${days}D` : '',
+                (hours || minutes || seconds) ? 'T' : '',
+                hours ? `${hours}H` : '',
+                minutes ? `${minutes}M` : '',
+                seconds ? `${seconds}S` : '',
             ].filter(Boolean).join('')
             return this.foldLine(line)
         }
