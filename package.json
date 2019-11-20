@@ -21,7 +21,8 @@
 		"generator",
 		"events",
 		"alarms",
-		"journals"
+		"journals",
+		"typescript"
 	],
 	"author": "Matej Vilk <matej.vilk@gmail.com>",
 	"license": "ISC",
