@@ -18,18 +18,17 @@ class Formatter implements IFormatter {
     public formatDate(attrName: string, date?: string | ComplexDate): string {
         if (date) {
             if (typeof date === 'string') {
-                // return this.foldLine(`${attrName}:${moment(date).format('YYYYMMDDTHHmmss')}`)
-                return this.foldLine(`${attrName}:${moment.utc(date).format('YYYYMMDDTHHmmss')}Z`)
+                const momentDate = moment(date).tz('UTC').format('YYYYMMDDTHHmmss')
+                return this.foldLine(`${attrName}:${momentDate}Z`)
             } else {
                 const { value, type, tzId } = date
+                const tz = tzId ? `;TZID=${tzId}` : ''
                 
                 if (type && type === 'DATE') {
                     const typeValue = `VALUE=DATE`
-                    const tz = tzId ? `;TZID=${tzId}` : ''
                     const momentDate = moment(value).tz(tzId || 'UTC').format('YYYYMMDD')
                     return this.foldLine(`${attrName};${typeValue}${tz}:${momentDate}`)
                 } else {
-                    const tz = tzId ? `;TZID=${tzId}` : ''
                     const momentDate = moment(value).tz(tzId || 'UTC').format('YYYYMMDDTHHmmss')
                     return this.foldLine(`${attrName}${tz}:${momentDate}${tzId ? '' : 'Z'}`)
                 }
