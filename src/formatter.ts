@@ -18,19 +18,19 @@ class Formatter implements IFormatter {
     public formatDate(attrName: string, date?: string | ComplexDate): string {
         if (date) {
             if (typeof date === 'string') {
-                const momentDate = moment(date).tz('UTC').format('YYYYMMDDTHHmmss')
-                return this.foldLine(`${attrName}:${momentDate}Z`)
+                const dateString = this.formatDateTime(date)
+                return this.foldLine(`${attrName}:${dateString}`)
             } else {
-                const { value, type, tzId } = date
+                const { type, tzId } = date
                 const tz = tzId ? `;TZID=${tzId}` : ''
                 
                 if (type && type === 'DATE') {
                     const typeValue = `VALUE=DATE`
-                    const momentDate = moment(value).tz(tzId || 'UTC').format('YYYYMMDD')
-                    return this.foldLine(`${attrName};${typeValue}${tz}:${momentDate}`)
+                    const dateString = this.formatDateTime(date)
+                    return this.foldLine(`${attrName};${typeValue}${tz}:${dateString}`)
                 } else {
-                    const momentDate = moment(value).tz(tzId || 'UTC').format('YYYYMMDDTHHmmss')
-                    return this.foldLine(`${attrName}${tz}:${momentDate}${tzId ? '' : 'Z'}`)
+                    const dateString = this.formatDateTime(date)
+                    return this.foldLine(`${attrName}${tz}:${dateString}`)
                 }
             }
         }
@@ -54,14 +54,14 @@ class Formatter implements IFormatter {
                     typeValue = ';VALUE=PERIOD'
                     values = periods ? periods.map(period => {
                         const { start, end, duration } = period
-                        const startValue = moment(start).format('YYYYMMDDTHHmmss')
-                        const endValue = end ? moment(end).format('YYYYMMDDTHHmmss') : this.formatDuration(duration!)
+                        const startValue = this.formatDateTime(start)
+                        const endValue = end ? this.formatDateTime(end) : this.formatDuration(duration)
                         return `${startValue}/${endValue}`
                     }).join(',') : ''
                     break
             
                 default: // DATE-TIME
-                    values = dates ? dates.map(date => moment(date).format('YYYYMMDDTHHmmss')).join(',') : ''
+                    values = dates ? dates.map(date => this.formatDateTime({value: date, type, tzId})).join(',') : ''
                     break
             }
 
@@ -171,8 +171,7 @@ class Formatter implements IFormatter {
 
             let value
             if (typeof trigger.value === 'string') { // DateTime
-                // TODO: DateTime
-                value = moment(trigger.value).format('YYYYMMDDTHHmmss')
+                value = this.formatDateTime(trigger.value)
             } else { // Duration
                 value = this.formatDuration(trigger.value)
             }
@@ -201,6 +200,24 @@ class Formatter implements IFormatter {
         }
         lines.push(line)
         return lines.join('\r\n ')
+    }
+
+    private formatDateTime(date: string | ComplexDate): string {
+        if (typeof date === 'string') {
+            const isUTC = date.endsWith('Z')
+            const [dateString, ] = date.split('Z')
+            return moment(dateString).format('YYYYMMDDTHHmmss') + `${isUTC ? 'Z' : ''}`
+        } else {
+            const { value, type } = date
+            
+            if (type && type === 'DATE') {
+                return moment(value).format('YYYYMMDD')
+            } else {
+                const isUTC = value.endsWith('Z')
+                const [dateString, ] = value.split('Z')
+                return moment(dateString).format('YYYYMMDDTHHmmss') + `${isUTC ? 'Z' : ''}`
+            }
+        }
     }
 }
 
