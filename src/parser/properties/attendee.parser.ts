@@ -4,23 +4,23 @@ import { Attendee } from '../../types/general'
 import BaseParser from './base.parser'
 
 const validParameters: Parameters = {
-    'CN': 'cn',
-    'DIR': 'dir',
-    'SENT-BY': 'sentBy',
-    'CUTYPE': 'cu',
-    'MEMBER': 'member',
-    'ROLE': 'role',
-    'PARTSTAT': 'partstat',
-    'RSVP': 'rsvp',
+	'CN': 'cn',
+	'DIR': 'dir',
+	'SENT-BY': 'sentBy',
+	'CUTYPE': 'cu',
+	'MEMBER': 'member',
+	'ROLE': 'role',
+	'PARTSTAT': 'partstat',
+	'RSVP': 'rsvp',
 	'DELEGATED-TO': 'delegatedTo',
 	'DELEGATED-FROM': 'delegatedFrom',
 }
 
 class AttendeeParser extends BaseParser<Attendee> {
-	public parse(value: string, params: string = ''): Attendee {
-        if (!value) {
-            throw new ParsingError('Empty iCalendar attendee value')
-        }
+	public parse(value: string, params = ''): Attendee {
+		if (!value) {
+			throw new ParsingError('Empty iCalendar attendee value')
+		}
 
 		return {
 			address: value,

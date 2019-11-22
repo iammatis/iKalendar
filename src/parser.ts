@@ -25,7 +25,7 @@ type DecomposedLine = {
 
 export class Parser implements IParser {
 	public parse(object: string): Calendar {
-		const lines = this.joinLongLines(this.splitLines(object))
+		const lines = this.joinLongLines(this.splitLines(object.trim()))
 		return this.recursion(lines)
 	}
 
@@ -105,7 +105,6 @@ export class Parser implements IParser {
 		const PARAM = `(${NAME})=(${PVALUE}(?:,${PVALUE})*)`
 		const VALUE = '.*'
 		const LINE = `(?<name>${NAME})(?<params>(?:;${PARAM})*):(?<value>${VALUE})`
-		const BAD_LINE = `(?<name>${NAME})(?<params>(?:;${PARAM})*)`
 
 		const match = line.match(LINE)
 		if (match && match.groups) {
@@ -123,76 +122,76 @@ export class Parser implements IParser {
 
 	private getPropertyParser(property: string) {
 		switch (property) {
-			case 'CALSCALE':
-			case 'METHOD':
-			case 'PRODID':
-			case 'VERSION':
-			case 'CLASS':
-			case 'COMMENT':
-			case 'DESCRIPTION':
-			case 'LOCATION':
-			case 'STATUS':
-			case 'SUMMARY':
-			case 'TRANSP':
-			case 'TZID':
-			case 'TZNAME':
-			case 'TZURL':
-			case 'CONTACT':
-			case 'RECURRENCE-ID':
-			case 'URL':
-			case 'UID':
-			case 'ACTION':
-				return new StringParser()
+		case 'CALSCALE':
+		case 'METHOD':
+		case 'PRODID':
+		case 'VERSION':
+		case 'CLASS':
+		case 'COMMENT':
+		case 'DESCRIPTION':
+		case 'LOCATION':
+		case 'STATUS':
+		case 'SUMMARY':
+		case 'TRANSP':
+		case 'TZID':
+		case 'TZNAME':
+		case 'TZURL':
+		case 'CONTACT':
+		case 'RECURRENCE-ID':
+		case 'URL':
+		case 'UID':
+		case 'ACTION':
+			return new StringParser()
 
-			case 'ATTACH':
-				return new AttachmentParser()
+		case 'ATTACH':
+			return new AttachmentParser()
 
-			case 'CATEGORIES':
-			case 'RESOURCES':
-				return new StringArrayParser()
+		case 'CATEGORIES':
+		case 'RESOURCES':
+			return new StringArrayParser()
 
-			case 'GEO':
-				return new GeoParser()
+		case 'GEO':
+			return new GeoParser()
 
-			case 'PERCENT-COMPLETE':
-			case 'PRIORITY':
-			case 'SEQUENCE':
-				return new NumberParser()
+		case 'PERCENT-COMPLETE':
+		case 'PRIORITY':
+		case 'SEQUENCE':
+			return new NumberParser()
 
-			case 'COMPLETED':
-			case 'DTEND':
-			case 'DUE':
-			case 'DTSTART':
-			case 'EXDATE':
-			case 'CREATED':
-			case 'DTSTAMP':
-			case 'LAST-MODIFIED':
-				return new DateParser()
+		case 'COMPLETED':
+		case 'DTEND':
+		case 'DUE':
+		case 'DTSTART':
+		case 'EXDATE':
+		case 'CREATED':
+		case 'DTSTAMP':
+		case 'LAST-MODIFIED':
+			return new DateParser()
 
-			case 'DURATION':
-				return new DurationParser()
+		case 'DURATION':
+			return new DurationParser()
 
-			case 'FREEBUSY':
-				return new DurationParser()
+		case 'FREEBUSY':
+			return new DurationParser()
 
-			case 'TZOFFSETFROM':
-			case 'TZOFFSETTO':
-				return new DurationParser()
+		case 'TZOFFSETFROM':
+		case 'TZOFFSETTO':
+			return new DurationParser()
 
-			case 'ATTENDEE':
-				return new AttendeeParser()
+		case 'ATTENDEE':
+			return new AttendeeParser()
 
-			case 'ORGANIZER':
-				return new OrganizerParser()
+		case 'ORGANIZER':
+			return new OrganizerParser()
 
-			case 'RRULE':
-				return new RRuleParser()
+		case 'RRULE':
+			return new RRuleParser()
 
-			case 'TRIGGER':
-				return new TriggerParser()
+		case 'TRIGGER':
+			return new TriggerParser()
 
-			default:
-				throw new ParsingError(`Invalid Property '${property}'`)
+		default:
+			throw new ParsingError(`Invalid Property '${property}'`)
 		}
 	}
 

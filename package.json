@@ -1,43 +1,51 @@
 {
-	"name": "ikalendar",
-	"version": "0.0.1",
-	"description": "iKalendar iCal (ics) generator and parser",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/iammatis/iKalendar.git"
-	},
-	"main": "lib/index.js",
-	"types": "lib/index.d.ts",
-	"scripts": {
-		"test": "jest",
-		"build": "rm -r lib/ && tsc"
-	},
-	"keywords": [
-		"ics",
-		"ical",
-		"calendar",
-		"icalendar",
-		"parser",
-		"generator",
-		"events",
-		"alarms",
-		"journals"
-	],
-	"author": "Matej Vilk <matej.vilk@gmail.com>",
-	"license": "ISC",
-	"dependencies": {
-		"moment-timezone": "^0.5.27"
-	},
-	"devDependencies": {
-		"@types/common-tags": "^1.8.0",
-		"@types/jest": "^24.0.22",
-		"@types/moment-timezone": "^0.5.12",
-		"@types/node": "^12.12.6",
-		"jest": "^24.9.0",
-		"prettier": "^1.18.2",
-		"ts-jest": "^24.1.0",
-		"tslint": "^5.20.1",
-		"tslint-config-prettier": "^1.18.0",
-		"typescript": "^3.6.4"
-	}
+  "name": "ikalendar",
+  "version": "0.0.1",
+  "description": "iKalendar iCal (ics) generator and parser",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iammatis/iKalendar.git"
+  },
+  "files": [
+    "/lib"
+  ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "test": "jest",
+    "lint": "eslint 'src/**/*.ts' 'tests/**/*.ts'",
+    "lint:fix": "eslint 'src/**/*.ts' 'tests/**/*.ts' --fix",
+    "build": "rm -r lib/ && tsc"
+  },
+  "keywords": [
+    "ics",
+    "ical",
+    "calendar",
+    "icalendar",
+    "parser",
+    "generator",
+    "events",
+    "alarms",
+    "journals",
+    "typescript"
+  ],
+  "author": "Matej Vilk <matej.vilk@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "moment": "^2.24.0"
+  },
+  "devDependencies": {
+    "@types/common-tags": "^1.8.0",
+    "@types/jest": "^24.0.23",
+    "@types/node": "^12.12.11",
+    "@typescript-eslint/eslint-plugin": "^2.8.0",
+    "@typescript-eslint/parser": "^2.8.0",
+    "eslint": "^6.6.0",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "jest": "^24.9.0",
+    "prettier": "^1.19.1",
+    "ts-jest": "^24.2.0",
+    "typescript": "^3.7.2"
+  }
 }

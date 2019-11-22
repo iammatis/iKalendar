@@ -3,20 +3,20 @@ import { Attachment } from '../../types/general'
 import BaseParser from './base.parser'
 
 const validParameters = {
-    'VALUE': 'type'
+	'VALUE': 'type'
 }
 
 class AttachmentParser extends BaseParser<Attachment> {
-    public parse(value: string, params: string = ''): Attachment {
-        if (!value) {
-            throw new ParsingError(`Invalid icalendar attachment value: '${value}'`)
-        }
+	public parse(value: string, params = ''): Attachment {
+		if (!value) {
+			throw new ParsingError(`Invalid icalendar attachment value: '${value}'`)
+		}
 
-        return {
-            value,
-            ...this.parseParams('attachment', params, validParameters)
-        }
-    }
+		return {
+			value,
+			...this.parseParams('attachment', params, validParameters)
+		}
+	}
 }
 
 export default AttachmentParser
