@@ -1,4 +1,4 @@
-import * as moment from 'moment-timezone'
+import * as moment from 'moment'
 import IFormatter from './types/classes/iformatter'
 import { Attachment, Attendee, ComplexDate, Duration, GeoPosition, Organizer, RecurrenceDate, Relation, Trigger, XProp } from './types/general'
 

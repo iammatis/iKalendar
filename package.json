@@ -6,6 +6,9 @@
     "type": "git",
     "url": "https://github.com/iammatis/iKalendar.git"
   },
+  "files": [
+    "/lib"
+  ],
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
@@ -29,12 +32,11 @@
   "author": "Matej Vilk <matej.vilk@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "moment-timezone": "^0.5.27"
+    "moment": "^2.24.0"
   },
   "devDependencies": {
     "@types/common-tags": "^1.8.0",
     "@types/jest": "^24.0.23",
-    "@types/moment-timezone": "^0.5.12",
     "@types/node": "^12.12.11",
     "@typescript-eslint/eslint-plugin": "^2.8.0",
     "@typescript-eslint/parser": "^2.8.0",
