@@ -1,4 +1,4 @@
-import { Attachment, Attendee, Duration, GeoPosition, Organizer, RecurrenceDate, Relation, Trigger, XProp } from "../general"
+import { Attachment, Attendee, Duration, GeoPosition, Organizer, RecurrenceDate, Relation, Trigger, XProp } from '../general'
 
 interface IFormatter {
     formatString(attrName: string, value?: string): string

@@ -28,6 +28,7 @@
     "indent": ["error", "tab"],
     "object-curly-spacing": ["error", "always"],
     "array-bracket-spacing": ["error", "always"],
-    "no-unused-vars": ["off", { "args": "none" }]
+    "no-unused-vars": ["off", { "args": "none" }],
+    "@typescript-eslint/interface-name-prefix": 0
   }
 }

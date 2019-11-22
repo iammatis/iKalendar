@@ -9,21 +9,21 @@ const validParameters: Parameters = {
 }
 
 class DateParser extends BaseParser<string | ComplexDate> {
-    public parse(value: string, params: string = ''): string | ComplexDate {
-        if (!value) {
-            throw new ParsingError('Empty iCalendar date value')
-        }
+	public parse(value: string, params = ''): string | ComplexDate {
+		if (!value) {
+			throw new ParsingError('Empty iCalendar date value')
+		}
 
-        const paramsParsed = this.parseParams('date', params, validParameters)
-        if (Object.entries(paramsParsed).length === 0) {
-            return value
-        } else {
-            return {
-                value,
-                ...this.parseParams('date', params, validParameters)
-            }
-        }
-    }
+		const paramsParsed = this.parseParams('date', params, validParameters)
+		if (Object.entries(paramsParsed).length === 0) {
+			return value
+		} else {
+			return {
+				value,
+				...this.parseParams('date', params, validParameters)
+			}
+		}
+	}
 }
 
 export default DateParser
