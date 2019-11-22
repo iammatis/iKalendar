@@ -11,15 +11,15 @@ import StringParser from './string.parser'
 import TriggerParser from './trigger.parser'
 
 export {
-    AttachmentParser,
-    AttendeeParser,
-    DateParser,
-    DurationParser,
-    GeoParser,
-    NumberParser,
-    OrganizerParser,
-    RRuleParser,
-    StringArrayParser,
-    StringParser,
-    TriggerParser
+	AttachmentParser,
+	AttendeeParser,
+	DateParser,
+	DurationParser,
+	GeoParser,
+	NumberParser,
+	OrganizerParser,
+	RRuleParser,
+	StringArrayParser,
+	StringParser,
+	TriggerParser
 }

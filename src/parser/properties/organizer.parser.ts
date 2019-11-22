@@ -10,16 +10,16 @@ const validParameters: Parameters = {
 }
 
 class OrganizerParser extends BaseParser<Organizer> {
-    public parse(value: string, params: string = ''): Organizer {
-        if (!value) {
-            throw new ParsingError('Empty iCalendar organizer value')
-        }
+	public parse(value: string, params = ''): Organizer {
+		if (!value) {
+			throw new ParsingError('Empty iCalendar organizer value')
+		}
 
-        return {
+		return {
 			address: value,
 			...this.parseParams('organizer', params, validParameters),
 		}
-    }
+	}
 }
 
 export default OrganizerParser

@@ -6,10 +6,10 @@ import TimeZone from './timezone'
 import Todo from './todo'
 
 export {
-    Event,
-    Todo,
-    Journal,
-    FreeBusy,
-    TimeZone,
-    Alarm
+	Event,
+	Todo,
+	Journal,
+	FreeBusy,
+	TimeZone,
+	Alarm
 }

@@ -1,0 +1,26 @@
+language: node_js
+node_js:
+  - "12.12"
+
+cache:
+  - directories:
+      - node_modules
+
+install:
+  - npm install
+
+script:
+  - npm run lint
+  - npm run test
+
+before_deploy:
+  - npm --no-git-tag-version version patch
+  - npm run build
+
+deploy:
+  provider: npm
+  email: $NPM_EMAIL
+  api_key: $NPM_TOKEN
+  skip_cleanup: true
+  on:
+    branch: master
