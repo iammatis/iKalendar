@@ -1,0 +1,33 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "env": {
+    "node": true
+  },
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended",
+    "prettier/@typescript-eslint"
+  ],
+  "plugins": ["@typescript-eslint"],
+  "rules": {
+    "prettier/prettier": [
+      0,
+      {
+        "semi": "false",
+        "singleQuote": "true",
+        "printWidth": 120,
+        "tabWidth": 4,
+        "useTabs": true
+      }
+    ],
+    "semi": 0,
+    "quotes": ["error", "single"],
+    "indent": ["error", "tab"],
+    "object-curly-spacing": ["error", "always"],
+    "array-bracket-spacing": ["error", "always"],
+    "no-unused-vars": ["off", { "args": "none" }]
+  }
+}
