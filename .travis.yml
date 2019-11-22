@@ -20,7 +20,7 @@ before_deploy:
 deploy:
   provider: npm
   email: "$NPM_EMAIL"
-  api_key: "$NPM_TOKEN"
-  skip_cleanup: true
+  api_token: "$NPM_TOKEN"
+  cleanup: false
   on:
     branch: master
