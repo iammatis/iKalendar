@@ -1,6 +1,6 @@
 {
   "name": "ikalendar",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "iKalendar iCal (ics) generator and parser",
   "repository": {
     "type": "git",
