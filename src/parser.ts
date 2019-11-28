@@ -13,9 +13,8 @@ import {
 	TriggerParser,
 } from './parser/properties'
 import StringParser from './parser/properties/string.parser'
-import Calendar from './types/calendar'
+import { Calendar, XProp } from './types'
 import IParser from './types/classes/iparser'
-import { XProp } from './types/general'
 
 type DecomposedLine = {
 	name: string

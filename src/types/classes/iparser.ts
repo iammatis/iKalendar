@@ -1,4 +1,4 @@
-import Calendar from '../calendar'
+import { Calendar } from '../calendar'
 
 interface IParser {
     parse(object: string): Calendar

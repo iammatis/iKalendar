@@ -1,7 +1,6 @@
 import Formatter from './formatter'
-import { Calendar } from './types/calendar'
+import { Calendar, Alarm, Event } from './types'
 import IBuilder from './types/classes/ibuilder'
-import { Alarm, Event } from './types/components'
 
 const defaultCalendar: Calendar = {
 	prodId: 'iKalendar',
