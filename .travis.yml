@@ -24,4 +24,5 @@ deploy:
   edge: true
   cleanup: false
   on:
+    tags: true
     branch: master

@@ -1,7 +1,7 @@
 import { Event, FreeBusy, Journal, TimeZone, Todo } from './components'
 import { XProp } from './general'
 
-type Calendar = {
+export type Calendar = {
     prodId: string
     version: string
     calscale?: string
@@ -14,5 +14,3 @@ type Calendar = {
     freebusy?: FreeBusy[]
     timezones?: TimeZone[]
 }
-
-export default Calendar
