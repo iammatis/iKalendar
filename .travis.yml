@@ -14,13 +14,14 @@ script:
   - npm run test
 
 before_deploy:
-  - npm --no-git-tag-version version patch
+  # - npm --no-git-tag-version version patch
   - npm run build
 
 deploy:
   provider: npm
-  email: $NPM_EMAIL
-  api_key: $NPM_TOKEN
-  skip_cleanup: true
+  email: "$NPM_EMAIL"
+  api_token: "$NPM_TOKEN"
+  edge: true
+  cleanup: false
   on:
     branch: master
