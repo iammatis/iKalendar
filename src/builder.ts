@@ -1,5 +1,5 @@
 import Formatter from './formatter'
-import Calendar from './types/calendar'
+import { Calendar } from './types/calendar'
 import IBuilder from './types/classes/ibuilder'
 import { Alarm, Event } from './types/components'
 

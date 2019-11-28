@@ -3,7 +3,7 @@ import { join } from 'path'
 
 import Builder from '../src/builder'
 
-const loadFile = (name: string) => readFileSync(join(__dirname, `./fixtures/${name}`), 'utf-8')
+const loadFile = (name: string): string => readFileSync(join(__dirname, `./fixtures/${name}`), 'utf-8')
 
 describe('Test Builder Class', () => {
 
