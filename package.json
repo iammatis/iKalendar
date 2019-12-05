@@ -1,6 +1,6 @@
 {
   "name": "ikalendar",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "iKalendar iCal (ics) generator and parser",
   "repository": {
     "type": "git",
@@ -32,7 +32,8 @@
   "author": "Matej Vilk <matej.vilk@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "moment": "^2.24.0"
+    "moment": "^2.24.0",
+    "rrule": "^2.6.3"
   },
   "devDependencies": {
     "@types/common-tags": "^1.8.0",

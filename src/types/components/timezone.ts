@@ -1,4 +1,5 @@
 import { RecurrenceDate, XProp } from '../general'
+import { RRule } from 'rrule'
 
 type TimeZone = {
     tzid: string
@@ -8,7 +9,7 @@ type TimeZone = {
     start: Date
     offsetTo: string
     offsetFrom: string
-    rrule?: string
+    rrule?: RRule
     comment?: string
     rDate?: RecurrenceDate
     tzName?: string

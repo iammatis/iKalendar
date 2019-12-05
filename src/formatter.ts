@@ -1,6 +1,7 @@
 import * as moment from 'moment'
 import IFormatter from './types/classes/iformatter'
 import { Attachment, Attendee, ComplexDate, Duration, GeoPosition, Organizer, RecurrenceDate, Relation, Trigger, XProp } from './types/general'
+import RRule from 'rrule'
 
 class Formatter implements IFormatter {
 	public formatString(attrName: string, value?: string | number): string {
@@ -181,6 +182,10 @@ class Formatter implements IFormatter {
 			return this.foldLine(line)
 		}
 		return ''
+	}
+
+	public formatRRule(attrName: string, rrule?: RRule): string {
+		return rrule ? this.foldLine(rrule.toString()) : ''
 	}
     
 	public formatXprop(xProp?: XProp): string {
