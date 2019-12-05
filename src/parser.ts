@@ -119,7 +119,7 @@ export class Parser implements IParser {
 		}
 	}
 
-	private getPropertyParser(property: string) {
+	private getPropertyParser(property: string): any {
 		switch (property) {
 		case 'CALSCALE':
 		case 'METHOD':
@@ -210,7 +210,7 @@ export class Parser implements IParser {
 		for (const line of lines) {
 			if (line[0] === ' ' || line[0] === '\t') {
 				if (index - 1 < 0) {
-					throw new Error('Invalid object!')
+					throw new ParsingError('Invalid object! Couldn\'t join long lines.')
 				}
 
 				res[index - 1] += line.substr(1)

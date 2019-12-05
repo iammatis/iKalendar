@@ -1,5 +1,6 @@
 import { Attachment, Attendee, Classification, Duration, GeoPosition, Organizer, RecurrenceDate, Relation, Status, XProp } from '../general'
 import Alarm from './alarm'
+import { RRule } from 'rrule'
 
 type Todo = {
     dtStamp: Date
@@ -19,7 +20,7 @@ type Todo = {
     status?: Status
     summary?: number
     url?: string
-    rrule?: string
+    rrule?: RRule
     due?: Date
     duration?: Duration
     attachments?: Attachment[]

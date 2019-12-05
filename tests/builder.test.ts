@@ -2,6 +2,7 @@ import { readFileSync } from 'fs'
 import { join } from 'path'
 
 import Builder from '../src/builder'
+import RRule from 'rrule'
 
 const loadFile = (name: string): string => readFileSync(join(__dirname, `./fixtures/${name}`), 'utf-8')
 
@@ -63,6 +64,13 @@ describe('Test Builder Class', () => {
 
 			const file = loadFile('events/multiple_events.ics')
 
+			const rrule = new RRule({
+				freq: RRule.WEEKLY,
+				interval: 5,
+				byweekday: [ RRule.MO, RRule.FR ],
+				until: new Date(Date.UTC(2012, 12, 31))
+			});
+
 			const builder = new Builder({
 				version: '2.0',
 				prodId: '-//Example Corp.//CalDAV Client//EN',
@@ -79,7 +87,7 @@ describe('Test Builder Class', () => {
 						uid: '2@example.com',
 						start: '20041206T120000Z',
 						end: '20041206T130000Z',
-						rrule: 'FREQ=WEEKLY',
+						rrule,
 						summary: 'Weekly Meeting'
 					},
 					{

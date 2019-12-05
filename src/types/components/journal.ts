@@ -1,4 +1,5 @@
 import { Attachment, Attendee, Classification, Organizer, RecurrenceDate, Status, XProp } from '../general'
+import { RRule } from 'rrule'
 
 type Journal = {
     dtStamp: Date
@@ -13,7 +14,7 @@ type Journal = {
     status?: Status
     summary?: string
     url?: string
-    rrule?: string
+    rrule?: RRule
     attachments?: Attachment[]
     attendees?: Attendee[]
     categories?: string[]
