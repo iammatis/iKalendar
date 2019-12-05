@@ -65,8 +65,7 @@ export class Builder implements IBuilder {
     	this.add(fmt.formatString('TRANSP', event.transp))
     	this.add(fmt.formatString('URL', event.url))
     	this.add(fmt.formatString('RECURRENCE-ID', event.recurrenceId))
-    	// TODO: Rule
-    	this.add(fmt.formatString('RRULE', event.rrule))
+    	this.add(fmt.formatRRule('RRULE', event.rrule))
     	this.add(fmt.formatDate('DTEND', event.end))
     	// TODO: Redo this
     	this.add(fmt.formatString('DURATION', event.duration ? fmt.formatDuration(event.duration) : ''))

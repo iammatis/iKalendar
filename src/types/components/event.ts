@@ -1,5 +1,6 @@
 import { Attachment, Attendee, Classification, ComplexDate, Duration, GeoPosition, Organizer, RecurrenceDate, Relation, Status, Transparency, XProp } from '../general'
 import Alarm from './alarm'
+import { RRule } from 'rrule'
 
 type Event = {
     dtStamp: string | ComplexDate
@@ -19,7 +20,7 @@ type Event = {
     transp?: Transparency
     url?: string
     recurrenceId?: string
-    rrule?: string
+    rrule?: RRule
     end?: string | ComplexDate
     duration?: Duration
     attachments?: Attachment[]
