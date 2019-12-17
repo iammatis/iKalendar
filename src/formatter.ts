@@ -185,7 +185,7 @@ class Formatter implements IFormatter {
 	}
 
 	public formatRRule(attrName: string, rrule?: RRule): string {
-		return rrule ? this.foldLine(rrule.toString()) : ''
+		return rrule ? this.foldLine(`${attrName}:${rrule.toString()}`) : ''
 	}
     
 	public formatXprop(xProp?: XProp): string {
