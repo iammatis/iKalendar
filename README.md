@@ -2,6 +2,8 @@
 
 [![NPM](https://nodei.co/npm/ikalendar.png?compact=true)](https://nodei.co/npm/ikalendar/)
 
+[![Build Status](https://travis-ci.org/iammatis/iKalendar.svg?branch=master)](https://travis-ci.org/iammatis/iKalendar)
+
 **IMPORTANT: This is an early stage release and project structure can change greatly!**
 
 Parser and builder for iCalendar data format

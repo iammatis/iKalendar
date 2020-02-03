@@ -1,6 +1,7 @@
 import Formatter from './formatter'
 import { Calendar, Alarm, Event } from './types'
 import IBuilder from './types/classes/ibuilder'
+import BuildingError from './exceptions/builder.error'
 
 const defaultCalendar: Calendar = {
 	prodId: 'iKalendar',
@@ -65,7 +66,7 @@ export class Builder implements IBuilder {
     	this.add(fmt.formatString('TRANSP', event.transp))
     	this.add(fmt.formatString('URL', event.url))
     	this.add(fmt.formatString('RECURRENCE-ID', event.recurrenceId))
-    	this.add(fmt.formatRRule('RRULE', event.rrule))
+    	this.add(fmt.formatRRule(event.rrule))
     	this.add(fmt.formatDate('DTEND', event.end))
     	// TODO: Redo this
     	this.add(fmt.formatString('DURATION', event.duration ? fmt.formatDuration(event.duration) : ''))
@@ -98,7 +99,12 @@ export class Builder implements IBuilder {
     }
 
     private addEvents(events: Event[] = []): void {
-    	events.forEach(event => this.addEvent(event, this.formatter))
+    	events.forEach(event => {
+    		if (event.end && event.duration) {
+    			throw new BuildingError('Event can\'t contain \'end\' and \'duration\' at the same time!')
+    		}
+    		this.addEvent(event, this.formatter)
+    	})
     }
     
     private addAlarms(alarms: Alarm[] = []): void {
