@@ -80,13 +80,13 @@ class Formatter implements IFormatter {
 			const { address, cn, dir, sentBy } = organizer
 			const optionals = [
 				cn ? `CN=${cn}` : '',
-				dir ? `DIR=${dir}` : '',
-				sentBy ? `CN=${sentBy}` : ''
+				dir ? `DIR="${dir}"` : '',
+				sentBy ? `SENT-BY="mailto:${sentBy}"` : ''
 			].filter(Boolean).join(';')
 
 			const line = optionals
-				? `ORGANIZER;${optionals}:${address}`
-				: `ORGANIZER:${address}`
+				? `ORGANIZER;${optionals}:mailto:${address}`
+				: `ORGANIZER:mailto:${address}`
 			return this.foldLine(line)
 		}
 		return ''
@@ -130,20 +130,21 @@ class Formatter implements IFormatter {
 			const optionals = [
 				cn ? `CN=${cn}` : '',
 				dir ? `DIR=${dir}` : '',
-				sentBy ? `CN=${sentBy}` : '',
+				sentBy ? `SENT-BY=${sentBy}` : '',
 				cu ? `CUTYPE=${cu}` : '',
-				member ? `MEMBER=${member}` : '',
+				member ? `MEMBER=${member.map(mem => `"mailto:${mem}"`).join(',')}` : '',
 				role ? `ROLE=${role}` : '',
 				partstat ? `PARTSTAT=${partstat}` : '',
 				rsvp ? `RSVP=${rsvp}` : '',
-				delegatedTo ? `DELEGATED-TO=${delegatedTo.join(',')}` : '',
-				delegatedFrom ? `DELEGATED-FROM=${delegatedFrom.join(',')}` : ''
+				delegatedTo ? `DELEGATED-TO=${delegatedTo.map(del => `"mailto:${del}"`).join(',')}` : '',
+				delegatedFrom ? `DELEGATED-FROM=${delegatedFrom.map(del => `"mailto:${del}"`).join(',')}` : ''
 			].filter(Boolean).join(';')
 
 			const line = optionals
-				? `ATTENDEE;${optionals}:${address}`
-				: `ATTENDEE:${address}`
+				? `ATTENDEE;${optionals}:mailto:${address}`
+				: `ATTENDEE:mailto:${address}`
 			return this.foldLine(line)
+
 		}
 		return ''
 	}
@@ -184,8 +185,8 @@ class Formatter implements IFormatter {
 		return ''
 	}
 
-	public formatRRule(attrName: string, rrule?: RRule): string {
-		return rrule ? this.foldLine(`${attrName}:${rrule.toString()}`) : ''
+	public formatRRule(rrule?: RRule): string {
+		return rrule ? this.foldLine(rrule.toString()) : ''
 	}
     
 	public formatXprop(xProp?: XProp): string {
