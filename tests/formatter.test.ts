@@ -182,7 +182,7 @@ describe('Test Formatter Class', () => {
         
 		it('Test format simple organizer', () => {
 			const organizer: Organizer = {
-				address: 'mailto:jsmith@example.com'
+				address: 'jsmith@example.com'
 			}
 			const data = fmt.formatOrganizer(organizer)
 			expect(data).toEqual('ORGANIZER:mailto:jsmith@example.com')
@@ -190,18 +190,18 @@ describe('Test Formatter Class', () => {
     
 		it('Test format complex organizer', () => {
 			const organizer: Organizer = {
-				address: 'mailto:jsmith@example.com',
+				address: 'jsmith@example.com',
 				cn: 'JohnSmith',
 				dir: 'ldap://example.com:6666/o=DC%20Associates,c=US???(cn=John%20Smith)',
-				sentBy: '"mailto:jane_doe@example.com"'
+				sentBy: 'jane_doe@example.com'
 			}
 			const data = fmt.formatOrganizer(organizer)
-			expect(data).toEqual('ORGANIZER;CN=JohnSmith;DIR=ldap://example.com:6666/o=DC%20Associates,c=US??\r\n ?(cn=John%20Smith);CN="mailto:jane_doe@example.com":mailto:jsmith@example.c\r\n om')
+			expect(data).toEqual('ORGANIZER;CN=JohnSmith;DIR="ldap://example.com:6666/o=DC%20Associates,c=US?\r\n ??(cn=John%20Smith)";SENT-BY="mailto:jane_doe@example.com":mailto:jsmith@ex\r\n ample.com')
 		})
     
 		it('Test format simple attendee', () => {
 			const attendee: Attendee = {
-				address: 'mailto:john_public@example.com'
+				address: 'john_public@example.com'
 			}
 			const data = fmt.formatAttendee(attendee)
 			expect(data).toEqual('ATTENDEE:mailto:john_public@example.com')
@@ -209,17 +209,17 @@ describe('Test Formatter Class', () => {
     
 		it('Test format complex attendee', () => {
 			const attendee: Attendee = {
-				address: 'mailto:john_public@example.com',
+				address: 'john_public@example.com',
 				cn : 'Henry Cabot',
 				dir : '',
 				sentBy : '',
 				cu: 'GROUP',
-				member: [ '"mailto:projectA@example.com"', '"mailto:projectB@example.com"' ],
+				member: [ 'projectA@example.com', 'projectB@example.com' ],
 				role: 'REQ-PARTICIPANT',
 				partstat: 'ACCEPTED',
 				rsvp: true,
-				delegatedTo: [ '"mailto:jdoe@example.com"', '"mailto:jqpublic@example.com"' ],
-				delegatedFrom: [ '"mailto:jsmith@example.com"' ]
+				delegatedTo: [ 'jdoe@example.com', 'jqpublic@example.com' ],
+				delegatedFrom: [ 'jsmith@example.com' ]
 			}
 			const data = fmt.formatAttendee(attendee)
 			expect(data).toEqual('ATTENDEE;CN=Henry Cabot;CUTYPE=GROUP;MEMBER="mailto:projectA@example.com","\r\n mailto:projectB@example.com";ROLE=REQ-PARTICIPANT;PARTSTAT=ACCEPTED;RSVP=tr\r\n ue;DELEGATED-TO="mailto:jdoe@example.com","mailto:jqpublic@example.com";DEL\r\n EGATED-FROM="mailto:jsmith@example.com":mailto:john_public@example.com')
@@ -228,10 +228,10 @@ describe('Test Formatter Class', () => {
 		it('Test format multiple simple attendees', () => {
 			const attendees: Attendee[] = [
 				{
-					address: 'mailto:john_public@example.com'
+					address: 'john_public@example.com'
 				},
 				{
-					address: 'mailto:joecool@example.com'
+					address: 'joecool@example.com'
 				}
 			]
 			const data = fmt.formatAttendees(attendees)

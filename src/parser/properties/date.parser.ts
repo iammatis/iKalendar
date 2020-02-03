@@ -20,7 +20,7 @@ class DateParser extends BaseParser<string | ComplexDate> {
 		} else {
 			return {
 				value,
-				...this.parseParams('date', params, validParameters)
+				...paramsParsed
 			}
 		}
 	}

@@ -3,6 +3,7 @@ import { join } from 'path'
 
 import Builder from '../src/builder'
 import RRule from 'rrule'
+import BuildingError from '../src/exceptions/builder.error'
 
 const loadFile = (name: string): string => readFileSync(join(__dirname, `./fixtures/${name}`), 'utf-8')
 
@@ -42,15 +43,15 @@ describe('Test Builder Class', () => {
 						attendees: [
 							{
 								cn: 'Henry Cabot',
-								address: 'mailto:hcabot@example.com',
+								address: 'hcabot@example.com',
 								role: 'REQ-PARTICIPANT'
 							},
 							{
-								address: 'mailto:ildoit@example.com',
+								address: 'ildoit@example.com',
 								role: 'REQ-PARTICIPANT',
-								delegatedFrom: [ '"mailto:bob@example.com"' ],
+								delegatedFrom: [ 'bob@example.com' ],
 								partstat: 'ACCEPTED',
-								cn: 'Jane Doe:mailto:jdoe@example.com'
+								cn: 'Jane Doe'
 							}
 						]
 					}
@@ -102,6 +103,27 @@ describe('Test Builder Class', () => {
 			})
 			const data = builder.build()
 			expect(data).toEqual(file)
+		})
+
+		it('Fails with end and duration at the same time', () => {
+			const builder = new Builder({
+				version: '2.0',
+				prodId: '-//Example Corp.//CalDAV Client//EN',
+				events: [
+					{
+						dtStamp: '20041210T183904Z',
+						uid: '1@example.com',
+						start: '20041207T120000Z',
+						end: '20041207T130000Z',
+						duration: {
+							weeks: 1
+						},
+						summary: 'Two-off Meeting'
+					}
+				]
+			})
+
+			expect(() => {builder.build()}).toThrow(BuildingError);
 		})
 	})
 })
