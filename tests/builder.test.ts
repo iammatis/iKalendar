@@ -53,6 +53,12 @@ describe('Test Builder Class', () => {
 								partstat: 'ACCEPTED',
 								cn: 'Jane Doe'
 							}
+						],
+						xProps: [
+							{
+								name: 'testname',
+								value: 'random xprop value'
+							}
 						]
 					}
 				]

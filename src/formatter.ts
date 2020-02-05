@@ -190,7 +190,7 @@ class Formatter implements IFormatter {
 	}
     
 	public formatXprop(xProp?: XProp): string {
-		return xProp ? this.foldLine(`X-${xProp.name}:${xProp.value}`) : ''
+		return xProp ? this.foldLine(`X-${xProp.name.toUpperCase()}:${xProp.value}`) : ''
 	}
     
 	public formatXprops(xProps: XProp[] = []): string {

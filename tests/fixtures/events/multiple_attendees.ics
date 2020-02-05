@@ -7,5 +7,6 @@ UID:uid1@example.com
 ATTENDEE;CN=Henry Cabot;ROLE=REQ-PARTICIPANT:mailto:hcabot@example.com
 ATTENDEE;CN=Jane Doe;ROLE=REQ-PARTICIPANT;PARTSTAT=ACCEPTED;DELEGATED-FROM=
  "mailto:bob@example.com":mailto:ildoit@example.com
+X-TESTNAME:random xprop value
 END:VEVENT
 END:VCALENDAR
