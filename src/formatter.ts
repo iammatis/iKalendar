@@ -1,4 +1,4 @@
-import * as moment from 'moment'
+import * as dayjs from 'dayjs'
 import IFormatter from './types/classes/iformatter'
 import { Attachment, Attendee, ComplexDate, Duration, GeoPosition, Organizer, RecurrenceDate, Relation, Trigger, XProp } from './types/general'
 import RRule from 'rrule'
@@ -48,7 +48,7 @@ class Formatter implements IFormatter {
 			switch (type) {
 			case 'DATE':
 				typeValue = ';VALUE=DATE'
-				values = dates ? dates.map(date => moment(date).format('YYYYMMDD')).join(',') : ''
+				values = dates ? dates.map(date => dayjs(date).format('YYYYMMDD')).join(',') : ''
 				break
 
 			case 'PERIOD':
@@ -212,16 +212,16 @@ class Formatter implements IFormatter {
 		if (typeof date === 'string') {
 			const isUTC = date.endsWith('Z')
 			const [ dateString, ] = date.split('Z')
-			return moment(dateString).format('YYYYMMDDTHHmmss') + `${isUTC ? 'Z' : ''}`
+			return dayjs(dateString).format('YYYYMMDDTHHmmss') + `${isUTC ? 'Z' : ''}`
 		} else {
 			const { value, type } = date
             
 			if (type && type === 'DATE') {
-				return moment(value).format('YYYYMMDD')
+				return dayjs(value).format('YYYYMMDD')
 			} else {
 				const isUTC = value.endsWith('Z')
 				const [ dateString, ] = value.split('Z')
-				return moment(dateString).format('YYYYMMDDTHHmmss') + `${isUTC ? 'Z' : ''}`
+				return dayjs(dateString).format('YYYYMMDDTHHmmss') + `${isUTC ? 'Z' : ''}`
 			}
 		}
 	}

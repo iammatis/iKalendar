@@ -32,7 +32,7 @@
   "author": "Matej Vilk <matej.vilk@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "moment": "^2.24.0",
+    "dayjs": "^1.8.20",
     "rrule": "^2.6.3"
   },
   "devDependencies": {
