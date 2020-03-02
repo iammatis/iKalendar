@@ -49,7 +49,18 @@ describe('Test Formatter Class', () => {
 			expect(data).toEqual('ATTRNAME;TZID=Europe/Bratislava:19971102T154000')
 		})
 
-		it('Test format complex date', () => {
+		it('Test format complex date-time America/Los_Angeles', () => {
+			const data = fmt.formatDate('ATTRNAME', { value: '2020-02-17T02:54:36-08:00', tzId: 'America/Los_Angeles' })
+			expect(data).toEqual('ATTRNAME;TZID=America/Los_Angeles:20200217T025436')
+		})
+
+		// TODO: How to handle this?
+		// it('Test format complex date', () => {
+		// 	const data = fmt.formatDate('ATTRNAME', { value: '1997-11-02T22:54:36-08:00', type: 'DATE', tzId: 'Europe/Bratislava' })
+		// 	expect(data).toEqual('ATTRNAME;VALUE=DATE;TZID=Europe/Bratislava:19971102')
+		// })
+
+		it('Test format complex date2', () => {
 			const data = fmt.formatDate('ATTRNAME', { value: '19971102', type: 'DATE', tzId: 'Europe/Bratislava' })
 			expect(data).toEqual('ATTRNAME;VALUE=DATE;TZID=Europe/Bratislava:19971102')
 		})
@@ -110,6 +121,22 @@ describe('Test Formatter Class', () => {
 			}
 			const data = fmt.formatTrigger(trigger)
 			expect(data).toEqual('TRIGGER:19980403T120000Z')
+		})
+
+		it('Test format ISO (UTC time) datetime trigger', () => {
+			const trigger: Trigger = {
+				value: '2020-02-05T09:00:00+0000'
+			}
+			const data = fmt.formatTrigger(trigger)
+			expect(data).toEqual('TRIGGER:20200205T090000Z')
+		})
+
+		it('Test format ISO (UTC +2 time) datetime trigger', () => {
+			const trigger: Trigger = {
+				value: '2020-02-05T09:00:00+0200'
+			}
+			const data = fmt.formatTrigger(trigger)
+			expect(data).toEqual('TRIGGER:20200205T070000Z')
 		})
     
 		it('Test format simple duration trigger', () => {

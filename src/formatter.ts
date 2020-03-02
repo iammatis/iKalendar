@@ -1,4 +1,4 @@
-import * as moment from 'moment'
+import * as moment from 'moment-timezone'
 import IFormatter from './types/classes/iformatter'
 import { Attachment, Attendee, ComplexDate, Duration, GeoPosition, Organizer, RecurrenceDate, Relation, Trigger, XProp } from './types/general'
 import RRule from 'rrule'
@@ -92,7 +92,7 @@ class Formatter implements IFormatter {
 		return ''
 	}
     
-	public formatDuration(duration?: Duration): string {
+	public formatDuration(duration?: Duration, attrName?: string): string {
 		if (duration) {
 			const { isNegative, weeks, days, hours, minutes, seconds } = duration
 			const line = [
@@ -105,7 +105,7 @@ class Formatter implements IFormatter {
 				minutes ? `${minutes}M` : '',
 				seconds ? `${seconds}S` : '',
 			].filter(Boolean).join('')
-			return this.foldLine(line)
+			return this.foldLine(attrName ? `${attrName}:${line}`: line)
 		}
 		return ''
 	}
@@ -209,19 +209,22 @@ class Formatter implements IFormatter {
 	}
 
 	private formatDateTime(date: string | ComplexDate): string {
+		const ICAL_FORMAT = 'YYYYMMDDTHHmmss'
 		if (typeof date === 'string') {
-			const isUTC = date.endsWith('Z')
-			const [ dateString, ] = date.split('Z')
-			return moment(dateString).format('YYYYMMDDTHHmmss') + `${isUTC ? 'Z' : ''}`
+			const islocalDate = /^[0-9]{8}T[0-9]{6}$/
+			if (islocalDate.test(date)) {
+				return date
+			} else { // Conver every other date to UTC
+				const [ dateString, ] = date.split('Z')
+				return moment.utc(dateString).format(ICAL_FORMAT) + 'Z'
+			}
 		} else {
-			const { value, type } = date
+			const { value, type, tzId } = date
             
 			if (type && type === 'DATE') {
 				return moment(value).format('YYYYMMDD')
 			} else {
-				const isUTC = value.endsWith('Z')
-				const [ dateString, ] = value.split('Z')
-				return moment(dateString).format('YYYYMMDDTHHmmss') + `${isUTC ? 'Z' : ''}`
+				return tzId ? moment.tz(value, tzId).format(ICAL_FORMAT) : moment.utc(value).format(ICAL_FORMAT) + 'Z'
 			}
 		}
 	}
