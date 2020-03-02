@@ -85,6 +85,54 @@ parser.parse()
 // }
 ```
 
+## Types
+
+### Date
+
+iCal format supports multiple different [Date](https://tools.ietf.org/html/rfc5545#section-3.3.4)/[Date-Time](https://tools.ietf.org/html/rfc5545#section-3.3.5) formats, iKalendar gives you opportunity to use any of them with some restrictions.
+
+I'll use `DTSTART` property for this example. You can create this property multiple ways:
+
+1. Plain string:
+    * In iCal local time format `'YYYYMMDDTHHmmss'`
+        ```js
+        start:'19980118T230000'
+        // DTSTART:19980118T230000
+        ```
+    * Any other [moment.js](https://momentjs.com/docs/) recognizable format, gets parsed to UTC
+        ```js
+        start:'1998-01-18T09:00:00+0200'
+        // DTSTART:19980118T070000Z
+        ```
+2. Object ([ComplexDate](https://github.com/iammatis/iKalendar/blob/master/src/types/general.ts#L45)) with following attributes: 
+    ```ts
+    type ComplexDate = {
+        type?: 'DATE-TIME' | 'DATE'
+        tzId?: string
+        value: string
+    }
+    ```
+    * Passing `tzId` keeps time in that timezone
+    ```js
+    start:{value: '1998-01-18T02:54:36-08:00', tzId: 'America/Los_Angeles'}
+    // DTSTART;TZID=America/Los_Angeles:20200217T025436
+    ```
+    * Passing only `value` converts it once again to UTC
+    ```js
+    start:{value: '1998-01-18T09:00:00+0200'}
+    // DTSTART:19980118T070000Z
+    ```
+    * You can also specify `type: 'DATE'`
+    ```js
+    start:{value: '1998-01-18T23:00:00', type: 'DATE'}
+    // DTSTART:19980118
+    ```
+    * Or use all three attributes:
+    ```js
+    start:{value: '1998-03-01T09:00:00+0100', type: 'DATE-TIME', tzId: 'Europe/Bratislava'}
+    // DTSTART;VALUE=DATE-TIME;TZID=Europe/Bratislava:19980301T090000
+    ```
+
 ## License
 
 This project is licensed under the ISC License - see the [LICENSE.md](LICENSE.md) file for details
