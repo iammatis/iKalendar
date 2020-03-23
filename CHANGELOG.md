@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.3] - 2020-03-23
+
+### Fixed
+
+- Incorrect attribute name for RRule when parsing
+
 ## [0.2.1] - 2020-03-23
 
 ### Fixed
