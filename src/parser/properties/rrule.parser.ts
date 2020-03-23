@@ -1,8 +1,9 @@
 import IPropertyParser from '../../types/classes/parsers/property.parser'
+import RRule from 'rrule'
 
-class RRuleParser implements IPropertyParser<any> {
-	public parse(iCalValue: string): any {
-		return iCalValue
+class RRuleParser implements IPropertyParser<RRule> {
+	public parse(iCalValue: string): RRule {
+		return RRule.fromString(iCalValue)
 	}
 }
 
