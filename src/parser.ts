@@ -65,7 +65,7 @@ export class Parser implements IParser {
 					this.addValue(componentObject, calName, parsedVal)
 				}
 			} else {
-				if (line === `END:${subComponentName}`) {
+				if (line.trim() === `END:${subComponentName}`) {
 					const subComponent = component.slice(subComponentIndex + 1, index)
 
 					const compName = subComponentName in componentsRegistry ?  componentsRegistry[subComponentName] : ''
@@ -105,18 +105,23 @@ export class Parser implements IParser {
 		const VALUE = '.*'
 		const LINE = `(?<name>${NAME})(?<params>(?:;${PARAM})*):(?<value>${VALUE})`
 
-		const match = line.match(LINE)
-		if (match && match.groups) {
-			const { groups } = match
-			return {
-				name: groups.name,
-				params: groups.params,
-				// params: groups.params.split(';'),
-				value: groups.value
+		let match;
+		try {
+			match = line.match(LINE)
+		} finally {
+			if (match && match.groups) {
+				const { groups } = match
+				return {
+					name: groups.name,
+					params: groups.params,
+					// params: groups.params.split(';'),
+					value: groups.value
+				}
+			} else {
+				throw new Error(`Invalid iCalendar line: ${line}`)
 			}
-		} else {
-			throw new Error(`Invalid iCalendar line: ${line}`)
 		}
+
 	}
 
 	private getPropertyParser(property: string): any {
@@ -194,9 +199,11 @@ export class Parser implements IParser {
 		}
 	}
 
-	private splitLines(object: string): string[] {
-		return object
+	private splitLines(iCal: string): string[] {
+		// TODO: Why the f*ck does this have to be like this?
+		return iCal
 			.replace(/\r\n\s/g, '')
+			.replace(/\r/g, '')
 			.replace(/\\n/g, ' ')
 			.replace(/  +/g, ' ')
 			.replace(/\\/g, '')
@@ -223,4 +230,3 @@ export class Parser implements IParser {
 		return res
 	}
 }
-
