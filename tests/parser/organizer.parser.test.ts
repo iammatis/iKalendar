@@ -18,7 +18,7 @@ describe('Test Organizer Parser', () => {
 		const organizer = parser.parse('mailto:hcabot@example.com')
 
 		expect(organizer).toEqual({
-			address: 'mailto:hcabot@example.com'
+			address: 'hcabot@example.com'
 		})
 	})
 
@@ -27,7 +27,7 @@ describe('Test Organizer Parser', () => {
 
 		expect(organizer).toEqual({
 			cn: 'Henry Cabot',
-			address: 'mailto:hcabot@example.com'
+			address: 'hcabot@example.com'
 		})
 	})
 
@@ -37,7 +37,7 @@ describe('Test Organizer Parser', () => {
 		expect(organizer).toEqual({
 			cn: 'Jane Doe',
 			dir: '"ldap://example.com:6666/o=DC%20Associates,c=US???(cn=John%20Smith)"',
-			address: 'mailto:ildoit@example.com'
+			address: 'ildoit@example.com'
 		})
 	})
 

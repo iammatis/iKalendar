@@ -22,6 +22,8 @@ class AttendeeParser extends BaseParser<Attendee> {
 			throw new ParsingError('Empty iCalendar attendee value')
 		}
 
+		value = value.replace('mailto:', '')
+
 		return {
 			address: value,
 			...this.parseParams('attendee', params, validParameters),

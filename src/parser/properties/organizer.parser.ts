@@ -15,6 +15,8 @@ class OrganizerParser extends BaseParser<Organizer> {
 			throw new ParsingError('Empty iCalendar organizer value')
 		}
 
+		value = value.replace('mailto:', '')
+
 		return {
 			address: value,
 			...this.parseParams('organizer', params, validParameters),

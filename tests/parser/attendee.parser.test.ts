@@ -18,7 +18,7 @@ describe('Test Attendee Parser', () => {
 		const attendee = parser.parse('mailto:hcabot@example.com')
 
 		expect(attendee).toEqual({
-			address: 'mailto:hcabot@example.com'
+			address: 'hcabot@example.com'
 		})
 	})
 
@@ -27,7 +27,7 @@ describe('Test Attendee Parser', () => {
 
 		expect(attendee).toEqual({
 			cn: 'Henry Cabot',
-			address: 'mailto:hcabot@example.com'
+			address: 'hcabot@example.com'
 		})
 	})
 
@@ -37,7 +37,7 @@ describe('Test Attendee Parser', () => {
 		expect(attendee).toEqual({
 			cn: 'Henry Cabot',
 			role: 'REQ-PARTICIPANT',
-			address: 'mailto:hcabot@example.com'
+			address: 'hcabot@example.com'
 		})
 	})
 
@@ -49,7 +49,7 @@ describe('Test Attendee Parser', () => {
 			role: 'REQ-PARTICIPANT',
 			partstat: 'ACCEPTED',
 			delegatedFrom: '"mailto:bob@example.com"',
-			address: 'mailto:ildoit@example.com'
+			address: 'ildoit@example.com'
 		})
 	})
 
