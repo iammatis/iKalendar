@@ -200,10 +200,8 @@ export class Parser implements IParser {
 	}
 
 	private splitLines(iCal: string): string[] {
-		// TODO: Why the f*ck does this have to be like this?
 		return iCal
-			.replace(/\r\n\s/g, '')
-			.replace(/\r/g, '')
+			.replace(/\r?\n\s|\r/g, '')
 			.replace(/\\n/g, ' ')
 			.replace(/  +/g, ' ')
 			.replace(/\\/g, '')
