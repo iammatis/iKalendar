@@ -5,7 +5,7 @@ import RRule from 'rrule'
 
 class Formatter implements IFormatter {
 	public formatString(attrName: string, value?: string | number): string {
-		return value !== undefined && value !== ''
+		return value !== undefined && value !== '' && value !== null
 			? this.foldLine(`${attrName}:${value}`)
 			: ''
 	}
