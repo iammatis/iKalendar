@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.3.2] - 2020-04-21
+
+### Fixed
+
+- Fixed null string formatting
+
 ## [0.2.3] - 2020-03-23
 
 ### Fixed
