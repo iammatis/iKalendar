@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased]
+
+### Fixed
+
+- Fixed event start to support ComplexDate
+
 ## [0.3.2] - 2020-04-21
 
 ### Fixed
