@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased]
+
+### Fixed
+
+- Fixed newlines and escape chars formatting and parsing
+
 ## [0.3.2] - 2020-04-21
 
 ### Fixed
@@ -16,7 +22,7 @@
 
 ### Fixed
 
-- Return RRule when parsin iCal data
+- Return RRule when parsing iCal data
 
 ## [0.1.0] - 2020-02-04
 

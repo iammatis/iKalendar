@@ -7,6 +7,10 @@ class StringParser extends BaseParser<string> {
 			throw new ParsingError(`Invalid iCalendar string value: ${iCalValue}`)
 		}
 		return iCalValue
+			.replace(/\\n/g, '\n')
+			.replace(/\\;/g, ';')
+			.replace(/\\,/g, ',')
+			.replace(/\\\\/g, '\\');
 	}
 }
 

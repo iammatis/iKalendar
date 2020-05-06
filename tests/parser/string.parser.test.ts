@@ -20,4 +20,10 @@ describe('Test String Parser', () => {
 		expect(str).toEqual('Event\'s summary')
 	})
 
+	it('String with semicolon', () => {
+		const str = parser.parse('Event \\; summary')
+
+		expect(str).toEqual('Event ; summary')
+	})
+
 })
