@@ -1,6 +1,14 @@
 # Changelog
 
-## [Unreleased]
+## [0.4.0] - Unreleased
+
+### Added
+
+- Added github actions workflows for testing and publishing
+
+### Removed
+
+- Removed travis ci
 
 ### Fixed
 
