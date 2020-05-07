@@ -1,0 +1,10 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Example Corp.//CalDAV Client//EN
+BEGIN:VEVENT
+DTSTAMP:20041210T183904Z
+UID:uid1@example.com
+SUMMARY:Summary with \n\n multiple \n newlines
+DESCRIPTION:Description with \n newlines
+END:VEVENT
+END:VCALENDAR

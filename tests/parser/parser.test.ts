@@ -55,6 +55,24 @@ describe('Test Parser', () => {
 		})
 	})
 
+	it('Parse iCal file with newlines', () => {
+		const iCal = loadFile('events/newlines.ics')
+		const calendar = parser.parse(iCal)
+
+		expect(calendar).toEqual({
+			version: '2.0',
+			prodId: '-//Example Corp.//CalDAV Client//EN',
+			events: [
+				{
+					dtStamp: '20041210T183904Z',
+					uid: 'uid1@example.com',
+					summary: 'Summary with \n\n multiple \n newlines',
+					description: 'Description with \n newlines'
+				}
+			]
+		})
+	})
+
 	it('Parse iCal file from expanded query', () => {
 		const iCal = loadFile('events/expanded_event.ics')
 		const calendar = parser.parse(iCal)

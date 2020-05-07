@@ -21,7 +21,11 @@ describe('Test Builder Class', () => {
 				events: [
 					{
 						dtStamp: '20101231T083000Z',
-						uid: 'uid1@example.com'
+						uid: 'uid1@example.com',
+						start: {
+							value: '20101231',
+							type: 'DATE'
+						}
 					}
 				]
 			})
@@ -108,6 +112,27 @@ describe('Test Builder Class', () => {
 				]
 			})
 			const data = builder.build()
+			expect(data).toEqual(file)
+		})
+
+		it('Test event with newlines', () => {
+
+			const file = loadFile('events/newlines.ics')
+
+			const builder = new Builder({
+				version: '2.0',
+				prodId: '-//Example Corp.//CalDAV Client//EN',
+				events: [
+					{
+						dtStamp: '20041210T183904Z',
+						uid: 'uid1@example.com',
+						summary: 'Summary with \n\n multiple \n newlines',
+						description: 'Description with \n newlines'
+					}
+				]
+			})
+			const data = builder.build()
+
 			expect(data).toEqual(file)
 		})
 

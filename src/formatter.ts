@@ -6,7 +6,7 @@ import RRule from 'rrule'
 class Formatter implements IFormatter {
 	public formatString(attrName: string, value?: string | number): string {
 		return value !== undefined && value !== '' && value !== null
-			? this.foldLine(`${attrName}:${value}`)
+			? this.foldLine(`${attrName}:${this.escapeChars(value)}`)
 			: ''
 	}
     
@@ -200,6 +200,7 @@ class Formatter implements IFormatter {
 	private foldLine(line: string): string {
 		const MAX_LENGTH = 75
 		const lines = []
+
 		while (line.length > MAX_LENGTH) {
 			lines.push(line.slice(0, MAX_LENGTH))
 			line = line.slice(MAX_LENGTH)
@@ -227,6 +228,18 @@ class Formatter implements IFormatter {
 				return tzId ? moment.tz(value, tzId).format(ICAL_FORMAT) : moment.utc(value).format(ICAL_FORMAT) + 'Z'
 			}
 		}
+	}
+
+	private escapeChars(value: string | number): string | number {
+		if (typeof value === 'number') {
+			return value;
+		}
+		
+		return value
+			.replace(/\\/g, '\\\\')
+			.replace(/;/g, '\\;')
+			.replace(/,/g, '\\,')
+			.replace(/r?\n/g, '\\n')	
 	}
 }
 

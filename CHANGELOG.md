@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.4.0] - 2020-05-07
+
+### Added
+
+- Added github actions workflows for testing and publishing
+
+### Removed
+
+- Removed travis ci
+
+### Fixed
+
+- Fixed newlines and escape chars formatting and parsing
+- Fixed event start to support ComplexDate
+
 ## [0.3.2] - 2020-04-21
 
 ### Fixed
@@ -16,7 +31,7 @@
 
 ### Fixed
 
-- Return RRule when parsin iCal data
+- Return RRule when parsing iCal data
 
 ## [0.1.0] - 2020-02-04
 
