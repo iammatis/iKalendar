@@ -1,10 +1,19 @@
 # Changelog
 
-## [Unreleased]
+## [0.4.0] - Unreleased
+
+### Added
+
+- Added github actions workflows for testing and publishing
+
+### Removed
+
+- Removed travis ci
 
 ### Fixed
 
 - Fixed newlines and escape chars formatting and parsing
+- Fixed event start to support ComplexDate
 
 ## [0.3.2] - 2020-04-21
 
