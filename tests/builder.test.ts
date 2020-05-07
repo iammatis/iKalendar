@@ -115,6 +115,27 @@ describe('Test Builder Class', () => {
 			expect(data).toEqual(file)
 		})
 
+		it('Test event with newlines', () => {
+
+			const file = loadFile('events/newlines.ics')
+
+			const builder = new Builder({
+				version: '2.0',
+				prodId: '-//Example Corp.//CalDAV Client//EN',
+				events: [
+					{
+						dtStamp: '20041210T183904Z',
+						uid: 'uid1@example.com',
+						summary: 'Summary with \n\n multiple \n newlines',
+						description: 'Description with \n newlines'
+					}
+				]
+			})
+			const data = builder.build()
+
+			expect(data).toEqual(file)
+		})
+
 		it('Fails with end and duration at the same time', () => {
 			const builder = new Builder({
 				version: '2.0',

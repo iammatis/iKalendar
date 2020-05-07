@@ -20,6 +20,17 @@ describe('Test Formatter Class', () => {
 			const data = fmt.formatString('ATTRNAME', 'string')
 			expect(data).toEqual('ATTRNAME:string')
 		})
+
+		it('Format string with newlines', () => {
+			const data = fmt.formatString('ATTRNAME', 'string \n with \n\n newlines')
+			expect(data).toEqual('ATTRNAME:string \\n with \\n\\n newlines')
+		})
+
+
+		it('Format string with semicolon', () => {
+			const data = fmt.formatString('ATTRNAME', 'string ; with semicolon')
+			expect(data).toEqual('ATTRNAME:string \\; with semicolon')
+		})
     
 		it('Test format multiple empty strings', () => {
 			const data = fmt.formatStrings('ATTRNAME', [])

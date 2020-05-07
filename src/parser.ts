@@ -201,10 +201,8 @@ export class Parser implements IParser {
 
 	private splitLines(iCal: string): string[] {
 		return iCal
-			.replace(/\r?\n\s|\r/g, '')
-			.replace(/\\n/g, ' ')
+			.replace(/\r?\n( |\t)/g, '')
 			.replace(/  +/g, ' ')
-			.replace(/\\/g, '')
 			.split('\n')
 	}
 
