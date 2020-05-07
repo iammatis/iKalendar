@@ -21,7 +21,11 @@ describe('Test Builder Class', () => {
 				events: [
 					{
 						dtStamp: '20101231T083000Z',
-						uid: 'uid1@example.com'
+						uid: 'uid1@example.com',
+						start: {
+							value: '20101231',
+							type: 'DATE'
+						}
 					}
 				]
 			})
