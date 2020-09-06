@@ -34,14 +34,16 @@ describe('Test Parser', () => {
 						{
 							cn: 'Henry Cabot',
 							role: 'REQ-PARTICIPANT',
-							address: 'hcabot@example.com'
+							address: 'hcabot@example.com',
+							scheduleStatus: '2.0'
 						},
 						{
 							cn: 'Jane Doe',
 							role: 'REQ-PARTICIPANT',
 							partstat: 'ACCEPTED',
-							delegatedFrom: '"mailto:bob@example.com"',
-							address: 'ildoit@example.com'
+							delegatedFrom: 'mailto:bob@example.com',
+							address: 'ildoit@example.com',
+							scheduleStatus: [ '2.0', '2.4' ]
 						}
 					],
 					xProps: [

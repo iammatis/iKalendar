@@ -4,9 +4,11 @@ PRODID:-//xyz Corp//NONSGML PDA Calendar Version 1.0//EN
 BEGIN:VEVENT
 DTSTAMP:20101231T083000Z
 UID:uid1@example.com
-ATTENDEE;CN=Henry Cabot;ROLE=REQ-PARTICIPANT:mailto:hcabot@example.com
+ATTENDEE;CN=Henry Cabot;ROLE=REQ-PARTICIPANT;SCHEDULE-STATUS="2.0":mailto:h
+ cabot@example.com
 ATTENDEE;CN=Jane Doe;ROLE=REQ-PARTICIPANT;PARTSTAT=ACCEPTED;DELEGATED-FROM=
- "mailto:bob@example.com":mailto:ildoit@example.com
+ "mailto:bob@example.com";SCHEDULE-STATUS="2.0,2.4":mailto:ildoit@example.co
+ m
 X-TESTNAME:random xprop value
 END:VEVENT
 END:VCALENDAR

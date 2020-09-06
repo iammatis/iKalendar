@@ -14,6 +14,7 @@ const validParameters: Parameters = {
 	'RSVP': 'rsvp',
 	'DELEGATED-TO': 'delegatedTo',
 	'DELEGATED-FROM': 'delegatedFrom',
+	'SCHEDULE-STATUS': { name: 'scheduleStatus', lambda: (text: string): string | string[] => text.includes(',') ? text.split(',') : text }
 }
 
 class AttendeeParser extends BaseParser<Attendee> {
