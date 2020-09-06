@@ -12,8 +12,8 @@ const validParameters: Parameters = {
 	'ROLE': 'role',
 	'PARTSTAT': 'partstat',
 	'RSVP': 'rsvp',
-	'DELEGATED-TO': 'delegatedTo',
-	'DELEGATED-FROM': 'delegatedFrom',
+	'DELEGATED-TO': { name: 'delegatedTo', lambda: (text: string): string => text.replace('mailto:', '') },
+	'DELEGATED-FROM': { name: 'delegatedFrom', lambda: (text: string): string => text.replace('mailto:', '') },
 	'SCHEDULE-STATUS': { name: 'scheduleStatus', lambda: (text: string): string | string[] => text.includes(',') ? text.split(',') : text }
 }
 
