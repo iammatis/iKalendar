@@ -69,7 +69,7 @@ describe('Test Attendee Parser', () => {
 			cn: 'Jane Doe',
 			role: 'REQ-PARTICIPANT',
 			partstat: 'ACCEPTED',
-			delegatedFrom: 'mailto:bob@example.com',
+			delegatedFrom: 'bob@example.com',
 			address: 'ildoit@example.com'
 		})
 	})
