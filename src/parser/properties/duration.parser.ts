@@ -42,7 +42,7 @@ class DurationParser extends BaseParser<Duration> {
 
 			const [ , value, attribute ] = matchArr
 			if (!(attribute in parameters)) {
-				throw new ParsingError(`Invalid iCalendar duration\'s parameter '${dur}'`)
+				throw new ParsingError(`Invalid iCalendar duration\'s parameter '${attribute}'`)
 			}
 
 			const parameter = parameters[attribute]
