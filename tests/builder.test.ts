@@ -136,6 +136,24 @@ describe('Test Builder Class', () => {
 			expect(data).toEqual(file)
 		})
 
+		it('Creates dtStamp when not set', () => {
+			const builder = new Builder({
+				version: '2.0',
+				prodId: '-//Example Corp.//CalDAV Client//EN',
+				events: [
+					{
+						uid: '1@example.com',
+						start: '20041207T120000Z',
+						end: '20041207T130000Z'
+					}
+				]
+			})
+
+			const data = builder.build()
+
+			expect(data).toContain('DTSTAMP');
+		})
+
 		it('Fails with end and duration at the same time', () => {
 			const builder = new Builder({
 				version: '2.0',
