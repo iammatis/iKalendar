@@ -37,7 +37,7 @@ const propertiesRegistry: Record<string, string> = {
 	'EXDATE': 'exdate',
 	'EXRULE': 'exRule',
 	'RDATE': 'rDate',
-	'RRULE': 'rRule',
+	'RRULE': 'rrule',
 	'ACTION': 'action',
 	'REPEAT': 'repeat',
 	'TRIGGER': 'trigger',

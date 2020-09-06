@@ -20,6 +20,17 @@ describe('Test Formatter Class', () => {
 			const data = fmt.formatString('ATTRNAME', 'string')
 			expect(data).toEqual('ATTRNAME:string')
 		})
+
+		it('Format string with newlines', () => {
+			const data = fmt.formatString('ATTRNAME', 'string \n with \n\n newlines')
+			expect(data).toEqual('ATTRNAME:string \\n with \\n\\n newlines')
+		})
+
+
+		it('Format string with semicolon', () => {
+			const data = fmt.formatString('ATTRNAME', 'string ; with semicolon')
+			expect(data).toEqual('ATTRNAME:string \\; with semicolon')
+		})
     
 		it('Test format multiple empty strings', () => {
 			const data = fmt.formatStrings('ATTRNAME', [])
@@ -49,7 +60,18 @@ describe('Test Formatter Class', () => {
 			expect(data).toEqual('ATTRNAME;TZID=Europe/Bratislava:19971102T154000')
 		})
 
-		it('Test format complex date', () => {
+		it('Test format complex date-time America/Los_Angeles', () => {
+			const data = fmt.formatDate('ATTRNAME', { value: '2020-02-17T18:54:36.000Z', tzId: 'America/Los_Angeles' })
+			expect(data).toEqual('ATTRNAME;TZID=America/Los_Angeles:20200217T105436')
+		})
+
+		// TODO: How to handle this?
+		// it('Test format complex date', () => {
+		// 	const data = fmt.formatDate('ATTRNAME', { value: '1997-11-02T22:54:36-08:00', type: 'DATE', tzId: 'Europe/Bratislava' })
+		// 	expect(data).toEqual('ATTRNAME;VALUE=DATE;TZID=Europe/Bratislava:19971102')
+		// })
+
+		it('Test format complex date2', () => {
 			const data = fmt.formatDate('ATTRNAME', { value: '19971102', type: 'DATE', tzId: 'Europe/Bratislava' })
 			expect(data).toEqual('ATTRNAME;VALUE=DATE;TZID=Europe/Bratislava:19971102')
 		})
@@ -110,6 +132,22 @@ describe('Test Formatter Class', () => {
 			}
 			const data = fmt.formatTrigger(trigger)
 			expect(data).toEqual('TRIGGER:19980403T120000Z')
+		})
+
+		it('Test format ISO (UTC time) datetime trigger', () => {
+			const trigger: Trigger = {
+				value: '2020-02-05T09:00:00+0000'
+			}
+			const data = fmt.formatTrigger(trigger)
+			expect(data).toEqual('TRIGGER:20200205T090000Z')
+		})
+
+		it('Test format ISO datetime trigger', () => {
+			const trigger: Trigger = {
+				value: '2020-02-05T09:00:00.000Z'
+			}
+			const data = fmt.formatTrigger(trigger)
+			expect(data).toEqual('TRIGGER:20200205T090000Z')
 		})
     
 		it('Test format simple duration trigger', () => {

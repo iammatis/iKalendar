@@ -18,7 +18,7 @@ describe('Test Attendee Parser', () => {
 		const attendee = parser.parse('mailto:hcabot@example.com')
 
 		expect(attendee).toEqual({
-			address: 'mailto:hcabot@example.com'
+			address: 'hcabot@example.com'
 		})
 	})
 
@@ -27,7 +27,7 @@ describe('Test Attendee Parser', () => {
 
 		expect(attendee).toEqual({
 			cn: 'Henry Cabot',
-			address: 'mailto:hcabot@example.com'
+			address: 'hcabot@example.com'
 		})
 	})
 
@@ -37,7 +37,28 @@ describe('Test Attendee Parser', () => {
 		expect(attendee).toEqual({
 			cn: 'Henry Cabot',
 			role: 'REQ-PARTICIPANT',
-			address: 'mailto:hcabot@example.com'
+			address: 'hcabot@example.com'
+		})
+	})
+	
+	it('Test simple attendee with schedule status', () => {
+		const attendee = parser.parse('mailto:hcabot@example.com', 'CN=Henry Cabot;ROLE=REQ-PARTICIPANT;SCHEDULE-STATUS="2.0"')
+
+		expect(attendee).toEqual({
+			cn: 'Henry Cabot',
+			role: 'REQ-PARTICIPANT',
+			address: 'hcabot@example.com',
+			scheduleStatus: '2.0'
+		})
+	})
+
+	it('Test simple attendee with array of schedule statuses', () => {
+		const attendee = parser.parse('mailto:hcabot@example.com', 'CN=Henry Cabot;ROLE=REQ-PARTICIPANT;SCHEDULE-STATUS="2.0,2.4"')
+		expect(attendee).toEqual({
+			cn: 'Henry Cabot',
+			role: 'REQ-PARTICIPANT',
+			address: 'hcabot@example.com',
+			scheduleStatus: [ '2.0', '2.4' ]
 		})
 	})
 
@@ -48,8 +69,8 @@ describe('Test Attendee Parser', () => {
 			cn: 'Jane Doe',
 			role: 'REQ-PARTICIPANT',
 			partstat: 'ACCEPTED',
-			delegatedFrom: '"mailto:bob@example.com"',
-			address: 'mailto:ildoit@example.com'
+			delegatedFrom: 'bob@example.com',
+			address: 'ildoit@example.com'
 		})
 	})
 

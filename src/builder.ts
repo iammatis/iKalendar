@@ -2,6 +2,7 @@ import Formatter from './formatter'
 import { Calendar, Alarm, Event } from './types'
 import IBuilder from './types/classes/ibuilder'
 import BuildingError from './exceptions/builder.error'
+import moment = require('moment-timezone')
 
 const defaultCalendar: Calendar = {
 	prodId: 'iKalendar',
@@ -54,6 +55,7 @@ export class Builder implements IBuilder {
     	this.add(fmt.formatDate('DTSTART', event.start))
     	this.add(fmt.formatString('CLASS', event.class))
     	this.add(fmt.formatDate('CREATED', event.created))
+    	this.add(fmt.formatString('SUMMARY', event.summary))
     	this.add(fmt.formatString('DESCRIPTION', event.description))
     	this.add(fmt.formatGeo(event.geo))
     	this.add(fmt.formatDate('LAST-MODIFIED', event.lastModified))
@@ -62,14 +64,12 @@ export class Builder implements IBuilder {
     	this.add(fmt.formatString('PRIORITY', event.priority))
     	this.add(fmt.formatString('SEQUENCE', event.sequnce))
     	this.add(fmt.formatString('STATUS', event.status))
-    	this.add(fmt.formatString('SUMMARY', event.summary))
     	this.add(fmt.formatString('TRANSP', event.transp))
     	this.add(fmt.formatString('URL', event.url))
     	this.add(fmt.formatString('RECURRENCE-ID', event.recurrenceId))
     	this.add(fmt.formatRRule(event.rrule))
     	this.add(fmt.formatDate('DTEND', event.end))
-    	// TODO: Redo this
-    	this.add(fmt.formatString('DURATION', event.duration ? fmt.formatDuration(event.duration) : ''))
+    	this.add(fmt.formatDuration(event.duration, 'DURATION'))
     	this.add(fmt.formatAttachments(event.attachments))
     	this.add(fmt.formatAttendees(event.attendees))
     	this.add(fmt.formatStrings('CATEGORIES', event.categories))
@@ -88,7 +88,7 @@ export class Builder implements IBuilder {
     	this.add('BEGIN:VALARM')
     	this.add(fmt.formatString('ACTION', alarm.action))
     	this.add(fmt.formatTrigger(alarm.trigger))
-    	this.add(fmt.formatDuration(alarm.duration))
+    	this.add(fmt.formatDuration(alarm.duration, 'DURATION'))
     	this.add(fmt.formatString('REPEAT', alarm.repeat))
     	this.add(fmt.formatString('DESCRIPTION', alarm.description))
     	this.add(fmt.formatString('SUMMARY', alarm.summary))
@@ -103,6 +103,11 @@ export class Builder implements IBuilder {
     		if (event.end && event.duration) {
     			throw new BuildingError('Event can\'t contain \'end\' and \'duration\' at the same time!')
     		}
+			
+    		if (!event.dtStamp) {
+    			event.dtStamp = moment().toISOString()
+    		}
+			
     		this.addEvent(event, this.formatter)
     	})
     }

@@ -44,19 +44,4 @@ describe('Test Date Parser', () => {
 		})
 	})
 
-	describe('ISO time', () => {
-		it('Test simple date in ISO format', () => {
-			const date = parser.parse('2020-02-07T11:04:25+0000')
-	
-			expect(date).toEqual('20200207T110425Z')
-		})
-
-		it('Test simple date in ISO format 2', () => {
-			const date = parser.parse('2020-02-07T11:04:25+0600')
-	
-			expect(date).toEqual('20200207T110425Z')
-		})
-	})
-
-
 })

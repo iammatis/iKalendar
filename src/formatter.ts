@@ -1,12 +1,17 @@
 import * as dayjs from 'dayjs'
 import IFormatter from './types/classes/iformatter'
 import { Attachment, Attendee, ComplexDate, Duration, GeoPosition, Organizer, RecurrenceDate, Relation, Trigger, XProp } from './types/general'
+import * as utc from 'dayjs/plugin/utc'
+import * as timezone from 'dayjs/plugin/timezone'
 import RRule from 'rrule'
+
+dayjs.extend(utc)
+dayjs.extend(timezone)
 
 class Formatter implements IFormatter {
 	public formatString(attrName: string, value?: string | number): string {
-		return value !== undefined && value !== ''
-			? this.foldLine(`${attrName}:${value}`)
+		return value !== undefined && value !== '' && value !== null
+			? this.foldLine(`${attrName}:${this.escapeChars(value)}`)
 			: ''
 	}
     
@@ -77,11 +82,12 @@ class Formatter implements IFormatter {
     
 	public formatOrganizer(organizer?: Organizer): string {
 		if (organizer) {
-			const { address, cn, dir, sentBy } = organizer
+			const { address, cn, dir, sentBy, scheduleStatus } = organizer
 			const optionals = [
 				cn ? `CN=${cn}` : '',
 				dir ? `DIR="${dir}"` : '',
-				sentBy ? `SENT-BY="mailto:${sentBy}"` : ''
+				sentBy ? `SENT-BY="mailto:${sentBy}"` : '',
+				scheduleStatus ? `SCHEDULE-STATUS="${(Array.isArray(scheduleStatus) ? scheduleStatus : [ scheduleStatus ]).join(',')}"` : ''
 			].filter(Boolean).join(';')
 
 			const line = optionals
@@ -92,7 +98,7 @@ class Formatter implements IFormatter {
 		return ''
 	}
     
-	public formatDuration(duration?: Duration): string {
+	public formatDuration(duration?: Duration, attrName?: string): string {
 		if (duration) {
 			const { isNegative, weeks, days, hours, minutes, seconds } = duration
 			const line = [
@@ -105,7 +111,7 @@ class Formatter implements IFormatter {
 				minutes ? `${minutes}M` : '',
 				seconds ? `${seconds}S` : '',
 			].filter(Boolean).join('')
-			return this.foldLine(line)
+			return this.foldLine(attrName ? `${attrName}:${line}`: line)
 		}
 		return ''
 	}
@@ -126,7 +132,7 @@ class Formatter implements IFormatter {
     
 	public formatAttendee(attendee?: Attendee): string {
 		if (attendee) {
-			const { address, cn, dir, sentBy, cu, member, role, partstat, rsvp, delegatedTo, delegatedFrom } = attendee
+			const { address, cn, dir, sentBy, cu, member, role, partstat, rsvp, delegatedTo, delegatedFrom, scheduleStatus } = attendee
 			const optionals = [
 				cn ? `CN=${cn}` : '',
 				dir ? `DIR=${dir}` : '',
@@ -137,7 +143,8 @@ class Formatter implements IFormatter {
 				partstat ? `PARTSTAT=${partstat}` : '',
 				rsvp ? `RSVP=${rsvp}` : '',
 				delegatedTo ? `DELEGATED-TO=${delegatedTo.map(del => `"mailto:${del}"`).join(',')}` : '',
-				delegatedFrom ? `DELEGATED-FROM=${delegatedFrom.map(del => `"mailto:${del}"`).join(',')}` : ''
+				delegatedFrom ? `DELEGATED-FROM=${delegatedFrom.map(del => `"mailto:${del}"`).join(',')}` : '',
+				scheduleStatus ? `SCHEDULE-STATUS="${(Array.isArray(scheduleStatus) ? scheduleStatus : [ scheduleStatus ]).join(',')}"` : ''
 			].filter(Boolean).join(';')
 
 			const line = optionals
@@ -200,6 +207,7 @@ class Formatter implements IFormatter {
 	private foldLine(line: string): string {
 		const MAX_LENGTH = 75
 		const lines = []
+
 		while (line.length > MAX_LENGTH) {
 			lines.push(line.slice(0, MAX_LENGTH))
 			line = line.slice(MAX_LENGTH)
@@ -209,21 +217,32 @@ class Formatter implements IFormatter {
 	}
 
 	private formatDateTime(date: string | ComplexDate): string {
+		const ICAL_FORMAT = 'YYYYMMDDTHHmmss'
 		if (typeof date === 'string') {
-			const isUTC = date.endsWith('Z')
+			const isLocalDate = /^[0-9]{8}T[0-9]{6}$/.test(date)
 			const [ dateString, ] = date.split('Z')
-			return dayjs(dateString).format('YYYYMMDDTHHmmss') + `${isUTC ? 'Z' : ''}`
+			return dayjs(dateString).format('YYYYMMDDTHHmmss') + `${isLocalDate ? '' : 'Z'}`
 		} else {
-			const { value, type } = date
+			const { value, type, tzId } = date
             
 			if (type && type === 'DATE') {
 				return dayjs(value).format('YYYYMMDD')
 			} else {
-				const isUTC = value.endsWith('Z')
-				const [ dateString, ] = value.split('Z')
-				return dayjs(dateString).format('YYYYMMDDTHHmmss') + `${isUTC ? 'Z' : ''}`
+				return tzId ? dayjs(value).tz(tzId).format(ICAL_FORMAT) : dayjs.utc(value).format(ICAL_FORMAT) + 'Z'
 			}
 		}
+	}
+
+	private escapeChars(value: string | number): string | number {
+		if (typeof value === 'number') {
+			return value;
+		}
+		
+		return value
+			.replace(/\\/g, '\\\\')
+			.replace(/;/g, '\\;')
+			.replace(/,/g, '\\,')
+			.replace(/r?\n/g, '\\n')	
 	}
 }
 

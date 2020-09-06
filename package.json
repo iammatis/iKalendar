@@ -1,6 +1,6 @@
 {
   "name": "ikalendar",
-  "version": "0.1.0",
+  "version": "0.4.1",
   "description": "iKalendar iCal (ics) generator and parser",
   "repository": {
     "type": "git",
@@ -32,12 +32,13 @@
   "author": "Matej Vilk <matej.vilk@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "dayjs": "^1.8.20",
+    "dayjs": "^1.8.35",
     "rrule": "^2.6.3"
   },
   "devDependencies": {
     "@types/common-tags": "^1.8.0",
     "@types/jest": "^24.0.23",
+    "@types/moment-timezone": "^0.5.12",
     "@types/node": "^12.12.11",
     "@typescript-eslint/eslint-plugin": "^2.8.0",
     "@typescript-eslint/parser": "^2.8.0",

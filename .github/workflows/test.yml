@@ -1,0 +1,19 @@
+name: Run tests and lint
+
+on: [pull_request]
+
+jobs:
+  # Job name
+  test_pull_request:
+    runs-on: ubuntu-latest
+    steps:
+      # Get source code to VM
+      - uses: actions/checkout@v2
+      # Install node
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - run: npm ci
+      - run: npm test
+      - run: npm run lint
+      - run: npm run build

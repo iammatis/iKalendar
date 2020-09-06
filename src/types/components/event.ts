@@ -3,9 +3,9 @@ import Alarm from './alarm'
 import { RRule } from 'rrule'
 
 type Event = {
-    dtStamp: string | ComplexDate
+    dtStamp?: string | ComplexDate
     uid: string
-    start?: string
+    start?: string | ComplexDate
     class?: Classification
     created?: string
     description?: string
