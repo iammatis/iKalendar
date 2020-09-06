@@ -2,6 +2,7 @@ import Formatter from './formatter'
 import { Calendar, Alarm, Event } from './types'
 import IBuilder from './types/classes/ibuilder'
 import BuildingError from './exceptions/builder.error'
+import moment = require('moment-timezone')
 
 const defaultCalendar: Calendar = {
 	prodId: 'iKalendar',
@@ -102,6 +103,11 @@ export class Builder implements IBuilder {
     		if (event.end && event.duration) {
     			throw new BuildingError('Event can\'t contain \'end\' and \'duration\' at the same time!')
     		}
+			
+    		if (!event.dtStamp) {
+    			event.dtStamp = moment().toISOString()
+    		}
+			
     		this.addEvent(event, this.formatter)
     	})
     }
