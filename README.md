@@ -14,6 +14,9 @@ Parser and builder for iCalendar data format
 - [Usage](#usage)
     - [Builder](#builder)
     - [Parser](#parser)
+- [Types](#types)
+- [License](#license)
+- [Credits](#credits)
 
 ## Install
 
@@ -132,6 +135,10 @@ I'll use `DTSTART` property for this example. You can create this property multi
     start:{value: '1998-03-01T09:00:00+0100', type: 'DATE-TIME', tzId: 'Europe/Bratislava'}
     // DTSTART;VALUE=DATE-TIME;TZID=Europe/Bratislava:19980301T090000
     ```
+
+## Credits
+
+This library uses regex used in [iCalendar Ruby library](https://github.com/icalendar/icalendar).
 
 ## License
 

@@ -97,6 +97,10 @@ export class Parser implements IParser {
 	}
 
 	private decomposeLine(line: string): DecomposedLine {
+		/**
+		 * Regex credit
+		 * https://github.com/icalendar/icalendar
+		 */
 		const NAME = '[-a-zA-Z0-9]+'
 		const QSTR = '"[^"]*"'
 		const PTEXT = '[^";:,]*'
