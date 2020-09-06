@@ -6,7 +6,7 @@
 
 **IMPORTANT: This is an early stage release and project structure can change greatly!**
 
-Parser and builder for iCalendar data format
+Parser and builder for iCalendar ([RFC 5545](https://tools.ietf.org/html/rfc5545)) data format
 
 ## Table of Contents
 
