@@ -77,11 +77,12 @@ class Formatter implements IFormatter {
     
 	public formatOrganizer(organizer?: Organizer): string {
 		if (organizer) {
-			const { address, cn, dir, sentBy } = organizer
+			const { address, cn, dir, sentBy, scheduleStatus } = organizer
 			const optionals = [
 				cn ? `CN=${cn}` : '',
 				dir ? `DIR="${dir}"` : '',
-				sentBy ? `SENT-BY="mailto:${sentBy}"` : ''
+				sentBy ? `SENT-BY="mailto:${sentBy}"` : '',
+				scheduleStatus ? `SCHEDULE-STATUS="${(Array.isArray(scheduleStatus) ? scheduleStatus : [ scheduleStatus ]).join(',')}"` : ''
 			].filter(Boolean).join(';')
 
 			const line = optionals
@@ -126,7 +127,7 @@ class Formatter implements IFormatter {
     
 	public formatAttendee(attendee?: Attendee): string {
 		if (attendee) {
-			const { address, cn, dir, sentBy, cu, member, role, partstat, rsvp, delegatedTo, delegatedFrom } = attendee
+			const { address, cn, dir, sentBy, cu, member, role, partstat, rsvp, delegatedTo, delegatedFrom, scheduleStatus } = attendee
 			const optionals = [
 				cn ? `CN=${cn}` : '',
 				dir ? `DIR=${dir}` : '',
@@ -137,7 +138,8 @@ class Formatter implements IFormatter {
 				partstat ? `PARTSTAT=${partstat}` : '',
 				rsvp ? `RSVP=${rsvp}` : '',
 				delegatedTo ? `DELEGATED-TO=${delegatedTo.map(del => `"mailto:${del}"`).join(',')}` : '',
-				delegatedFrom ? `DELEGATED-FROM=${delegatedFrom.map(del => `"mailto:${del}"`).join(',')}` : ''
+				delegatedFrom ? `DELEGATED-FROM=${delegatedFrom.map(del => `"mailto:${del}"`).join(',')}` : '',
+				scheduleStatus ? `SCHEDULE-STATUS="${(Array.isArray(scheduleStatus) ? scheduleStatus : [ scheduleStatus ]).join(',')}"` : ''
 			].filter(Boolean).join(';')
 
 			const line = optionals

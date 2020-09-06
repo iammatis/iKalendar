@@ -74,6 +74,7 @@ export type Person = {
     cn?: string
     dir?: string
     sentBy?: string
+    scheduleStatus?: string | string[]
 }
 
 export type CUType = 'INDIVIDUAL' | 'GROUP' | 'RESOURCE' | 'ROOM' | 'UNKNOWN'

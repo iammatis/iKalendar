@@ -48,14 +48,16 @@ describe('Test Builder Class', () => {
 							{
 								cn: 'Henry Cabot',
 								address: 'hcabot@example.com',
-								role: 'REQ-PARTICIPANT'
+								role: 'REQ-PARTICIPANT',
+								scheduleStatus: '2.0'
 							},
 							{
 								address: 'ildoit@example.com',
 								role: 'REQ-PARTICIPANT',
 								delegatedFrom: [ 'bob@example.com' ],
 								partstat: 'ACCEPTED',
-								cn: 'Jane Doe'
+								cn: 'Jane Doe',
+								scheduleStatus: [ '2.0', '2.4' ]
 							}
 						],
 						xProps: [

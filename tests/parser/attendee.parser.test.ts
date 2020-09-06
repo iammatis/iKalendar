@@ -40,6 +40,27 @@ describe('Test Attendee Parser', () => {
 			address: 'hcabot@example.com'
 		})
 	})
+	
+	it('Test simple attendee with schedule status', () => {
+		const attendee = parser.parse('mailto:hcabot@example.com', 'CN=Henry Cabot;ROLE=REQ-PARTICIPANT;SCHEDULE-STATUS="2.0"')
+
+		expect(attendee).toEqual({
+			cn: 'Henry Cabot',
+			role: 'REQ-PARTICIPANT',
+			address: 'hcabot@example.com',
+			scheduleStatus: '2.0'
+		})
+	})
+
+	it('Test simple attendee with array of schedule statuses', () => {
+		const attendee = parser.parse('mailto:hcabot@example.com', 'CN=Henry Cabot;ROLE=REQ-PARTICIPANT;SCHEDULE-STATUS="2.0,2.4"')
+		expect(attendee).toEqual({
+			cn: 'Henry Cabot',
+			role: 'REQ-PARTICIPANT',
+			address: 'hcabot@example.com',
+			scheduleStatus: [ '2.0', '2.4' ]
+		})
+	})
 
 	it('Test simple attendee with multiple mails', () => {
 		const attendee = parser.parse('mailto:ildoit@example.com', 'CN=Jane Doe;ROLE=REQ-PARTICIPANT;PARTSTAT=ACCEPTED;DELEGATED-FROM="mailto:bob@example.com"')
@@ -48,7 +69,7 @@ describe('Test Attendee Parser', () => {
 			cn: 'Jane Doe',
 			role: 'REQ-PARTICIPANT',
 			partstat: 'ACCEPTED',
-			delegatedFrom: '"mailto:bob@example.com"',
+			delegatedFrom: 'mailto:bob@example.com',
 			address: 'ildoit@example.com'
 		})
 	})
