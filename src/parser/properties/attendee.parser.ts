@@ -1,9 +1,9 @@
 import ParsingError from '../../exceptions/parser.error'
-import { Parameters } from '../../types/classes/parsers/property.parser'
+import { InputParameters } from '../../types/classes/parsers/property.parser'
 import { Attendee } from '../../types/general'
 import BaseParser from './base.parser'
 
-const validParameters: Parameters = {
+const validParameters: InputParameters = {
 	'CN': 'cn',
 	'DIR': 'dir',
 	'SENT-BY': 'sentBy',

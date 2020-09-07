@@ -1,4 +1,4 @@
-import IPropertyParser, { Parameters } from '../../types/classes/parsers/property.parser'
+import IPropertyParser, { InputParameters, OutputParameters } from '../../types/classes/parsers/property.parser'
 
 const DQUOTES = /^"(?<value>.*)"$/
 
@@ -7,8 +7,8 @@ class BaseParser<Property> implements IPropertyParser<Property> {
 		throw new Error('Method not implemented.')
 	}
 
-	protected parseParams(compName: string, parameters: string, validParams: Parameters): Parameters {
-		const paramsParsed: Parameters = {}
+	protected parseParams(compName: string, parameters: string, validParams: InputParameters): OutputParameters {
+		const parsed: OutputParameters = {}
 		if (parameters === '') {
 			return {}
 		}
@@ -23,9 +23,9 @@ class BaseParser<Property> implements IPropertyParser<Property> {
 
 				const parameter = validParams[key];
 				if (typeof parameter === 'object') {
-					paramsParsed[parameter.name]  = parameter.lambda(groups.value || value)
+					parsed[parameter.name]  = parameter.lambda(groups.value || value)
 				} else {
-					paramsParsed[parameter] = groups.value || value
+					parsed[parameter] = groups.value || value
 				}
 
 			} else {
@@ -34,7 +34,7 @@ class BaseParser<Property> implements IPropertyParser<Property> {
 			}
 		}
 
-		return paramsParsed
+		return parsed
 	}
 
 }

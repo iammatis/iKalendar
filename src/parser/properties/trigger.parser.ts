@@ -1,10 +1,10 @@
 import ParsingError from '../../exceptions/parser.error'
-import { Parameters } from '../../types/classes/parsers/property.parser'
+import { InputParameters } from '../../types/classes/parsers/property.parser'
 import { Duration, Trigger } from '../../types/general'
 import BaseParser from './base.parser'
 import DurationParser from './duration.parser'
 
-const validParameters: Parameters = {
+const validParameters: InputParameters = {
 	'VALUE': 'type',
 	'RELATED': 'related'
 }

@@ -1,9 +1,9 @@
 import ParsingError from '../../exceptions/parser.error'
-import { Parameters } from '../../types/classes/parsers/property.parser'
+import { InputParameters, OutputParameters } from '../../types/classes/parsers/property.parser'
 import { Duration } from '../../types/general'
 import BaseParser from './base.parser'
 
-const parameters: Parameters = {
+const parameters: InputParameters = {
 	'W': 'weeks',
 	'H': 'hours',
 	'M': 'minutes',
@@ -26,8 +26,8 @@ class DurationParser extends BaseParser<Duration> {
 		}
 	}
 
-	private parseTypes(duration: string): Parameters<number> {
-		const result: Parameters<number> = {}
+	private parseTypes(duration: string): OutputParameters<number> {
+		const result: OutputParameters<number> = {}
 		const matches = duration.match(/\d*(W|D|H|M|S)/g)
 
 		if (!matches) {

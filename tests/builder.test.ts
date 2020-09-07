@@ -20,7 +20,7 @@ describe('Test Builder Class', () => {
 				prodId: '-//xyz Corp//NONSGML PDA Calendar Version 1.0//EN',
 				events: [
 					{
-						dtStamp: '20101231T083000Z',
+						dtStamp: '2010-12-31T08:30:00.000Z',
 						uid: 'uid1@example.com',
 						start: {
 							value: '20101231',
@@ -42,7 +42,7 @@ describe('Test Builder Class', () => {
 				prodId: '-//xyz Corp//NONSGML PDA Calendar Version 1.0//EN',
 				events: [
 					{
-						dtStamp: '20101231T083000Z',
+						dtStamp: '2010-12-31T08:30:00.000Z',
 						uid: 'uid1@example.com',
 						attendees: [
 							{
@@ -89,25 +89,25 @@ describe('Test Builder Class', () => {
 				prodId: '-//Example Corp.//CalDAV Client//EN',
 				events: [
 					{
-						dtStamp: '20041210T183904Z',
+						dtStamp: '2004-12-10T18:39:04.000Z',
 						uid: '1@example.com',
-						start: '20041207T120000Z',
-						end: '20041207T130000Z',
+						start: '2004-12-07T12:00:00.000Z',
+						end: '2004-12-07T13:00:00.000Z',
 						summary: 'One-off Meeting'
 					},
 					{
-						dtStamp: '20041210T183838Z',
+						dtStamp: '2004-12-10T18:38:38.000Z',
 						uid: '2@example.com',
-						start: '20041206T120000Z',
-						end: '20041206T130000Z',
+						start: '2004-12-06T12:00:00.000Z',
+						end: '2004-12-06T13:00:00.000Z',
 						rrule,
 						summary: 'Weekly Meeting'
 					},
 					{
-						dtStamp: '20041210T183838Z',
+						dtStamp: '2004-12-10T18:38:38.000Z',
 						uid: '2@example.com',
-						start: '20041213T130000Z',
-						end: '20041213T140000Z',
+						start: '2004-12-13T13:00:00.000Z',
+						end: '2004-12-13T14:00:00.000Z',
 						summary: 'Weekly Meeting',
 						recurrenceId: '20041213T120000Z'
 					}
@@ -126,7 +126,7 @@ describe('Test Builder Class', () => {
 				prodId: '-//Example Corp.//CalDAV Client//EN',
 				events: [
 					{
-						dtStamp: '20041210T183904Z',
+						dtStamp: '2004-12-10T18:39:04.000Z',
 						uid: 'uid1@example.com',
 						summary: 'Summary with \n\n multiple \n newlines',
 						description: 'Description with \n newlines'

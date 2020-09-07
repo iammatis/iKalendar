@@ -8,6 +8,9 @@ import RRule from 'rrule'
 dayjs.extend(utc)
 dayjs.extend(timezone)
 
+const ICAL_FORMAT = 'YYYYMMDDTHHmmss'
+const ICAL_DATE = 'YYYYMMDD'
+
 class Formatter implements IFormatter {
 	public formatString(attrName: string, value?: string | number): string {
 		return value !== undefined && value !== '' && value !== null
@@ -60,8 +63,8 @@ class Formatter implements IFormatter {
 				typeValue = ';VALUE=PERIOD'
 				values = periods ? periods.map(period => {
 					const { start, end, duration } = period
-					const startValue = this.formatDateTime(start)
-					const endValue = end ? this.formatDateTime(end) : this.formatDuration(duration)
+					const startValue = this.formatDateTime({value: start, tzId})
+					const endValue = end ? this.formatDateTime({value: end, tzId}) : this.formatDuration(duration)
 					return `${startValue}/${endValue}`
 				}).join(',') : ''
 				break
@@ -217,18 +220,15 @@ class Formatter implements IFormatter {
 	}
 
 	private formatDateTime(date: string | ComplexDate): string {
-		const ICAL_FORMAT = 'YYYYMMDDTHHmmss'
 		if (typeof date === 'string') {
-			const isLocalDate = /^[0-9]{8}T[0-9]{6}$/.test(date)
-			const [ dateString, ] = date.split('Z')
-			return dayjs(dateString).format('YYYYMMDDTHHmmss') + `${isLocalDate ? '' : 'Z'}`
+			return dayjs.utc(date).format(ICAL_FORMAT) + 'Z'
 		} else {
 			const { value, type, tzId } = date
             
 			if (type && type === 'DATE') {
-				return dayjs(value).format('YYYYMMDD')
+				return dayjs(value).format(ICAL_DATE)
 			} else {
-				return tzId ? dayjs(value).tz(tzId).format(ICAL_FORMAT) : dayjs.utc(value).format(ICAL_FORMAT) + 'Z'
+				return tzId ? dayjs(value).tz(tzId).format(ICAL_FORMAT) : (dayjs.utc(value).format(ICAL_FORMAT) + 'Z')
 			}
 		}
 	}

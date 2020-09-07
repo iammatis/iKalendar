@@ -28,7 +28,7 @@ describe('Test Parser', () => {
 			prodId: '-//xyz Corp//NONSGML PDA Calendar Version 1.0//EN',
 			events: [
 				{
-					dtStamp: '20101231T083000Z',
+					dtStamp: '2010-12-31T08:30:00.000Z',
 					uid: 'uid1@example.com',
 					attendees: [
 						{
@@ -66,7 +66,7 @@ describe('Test Parser', () => {
 			prodId: '-//Example Corp.//CalDAV Client//EN',
 			events: [
 				{
-					dtStamp: '20041210T183904Z',
+					dtStamp: '2004-12-10T18:39:04.000Z',
 					uid: 'uid1@example.com',
 					summary: 'Summary with \n\n multiple \n newlines',
 					description: 'Description with \n newlines'
@@ -84,8 +84,8 @@ describe('Test Parser', () => {
 			prodId: '-//Touch4IT//CalDAV Client//EN',
 			events: [
 				{
-					dtStamp: '20200317T164533Z',
-					start: '20200323T091500Z',
+					dtStamp: '2020-03-17T16:45:33.000Z',
+					start: '2020-03-23T09:15:00.000Z',
 					uid: '12345678910111',
 					description: 'Rezervacka produktu',
 					duration: {
@@ -126,8 +126,8 @@ describe('Test Parser', () => {
 			calscale: 'GREGORIAN',
 			events: [
 				{
-					dtStamp: '20200317T164533Z',
-					start: '20200323T091500Z',
+					dtStamp: '2020-03-17T16:45:33.000Z',
+					start: '2020-03-23T09:15:00.000Z',
 					uid: '12345678910111',
 					description: 'Rezervacka produktu',
 					duration: {

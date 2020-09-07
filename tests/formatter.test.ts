@@ -99,7 +99,7 @@ describe('Test Formatter Class', () => {
 		it('Test format simple recurring period', () => {
 			const data = fmt.formatRDate({
 				type: 'PERIOD',
-				periods: [ { start: '19960403T020000Z', end: '19960403T040000Z' } ]
+				periods: [ { start: '1996-04-03T02:00:00.000Z', end: '1996-04-03T04:00:00.000Z' } ]
 			})
 			expect(data).toEqual('RDATE;VALUE=PERIOD:19960403T020000Z/19960403T040000Z')
 		})
@@ -109,11 +109,11 @@ describe('Test Formatter Class', () => {
 				type: 'PERIOD',
 				tzId: 'Europe/Bratislava',
 				periods: [
-					{ start: '19960403T020000', end: '19960403T040000' },
-					{ start: '19960404T010000', duration: { hours: 3 } }
+					{ start: '1996-04-03T02:00:00.000Z', end: '1996-04-03T04:00:00.000Z' },
+					{ start: '1996-04-04T01:00:00.000Z', duration: { hours: 3 } }
 				]
 			})
-			expect(data).toEqual('RDATE;TZID=Europe/Bratislava;VALUE=PERIOD:19960403T020000/19960403T040000,1\r\n 9960404T010000/PT3H')
+			expect(data).toEqual('RDATE;TZID=Europe/Bratislava;VALUE=PERIOD:19960403T040000/19960403T060000,1\r\n 9960404T030000/PT3H')
 		})
 
 		it('Test format duration', () => {
@@ -128,7 +128,7 @@ describe('Test Formatter Class', () => {
 
 		it('Test format simple datetime trigger', () => {
 			const trigger: Trigger = {
-				value: '19980403T120000Z'
+				value: '1998-04-03T12:00:00.000Z'
 			}
 			const data = fmt.formatTrigger(trigger)
 			expect(data).toEqual('TRIGGER:19980403T120000Z')
@@ -164,7 +164,7 @@ describe('Test Formatter Class', () => {
 		it('Test format complex datetime trigger', () => {
 			const trigger: Trigger = {
 				related: 'START',
-				value: '19980403T120000Z'
+				value: '1998-04-03T12:00:00.000Z'
 			}
 			const data = fmt.formatTrigger(trigger)
 			expect(data).toEqual('TRIGGER;RELATED=START:19980403T120000Z')
