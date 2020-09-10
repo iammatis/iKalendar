@@ -212,24 +212,7 @@ class Formatter implements IFormatter {
 	}
 
 	private formatDateTime(date: string | ComplexDate): string {
-		const ICAL_FORMAT = 'YYYYMMDDTHHmmss'
-		if (typeof date === 'string') {
-			const islocalDate = /^[0-9]{8}T[0-9]{6}$/
-			if (islocalDate.test(date)) {
-				return date
-			} else { // Conver every other date to UTC
-				const [ dateString, ] = date.split('Z')
-				return moment.utc(dateString).format(ICAL_FORMAT) + 'Z'
-			}
-		} else {
-			const { value, type, tzId } = date
-            
-			if (type && type === 'DATE') {
-				return moment(value).format('YYYYMMDD')
-			} else {
-				return tzId ? moment.tz(value, tzId).format(ICAL_FORMAT) : moment.utc(value).format(ICAL_FORMAT) + 'Z'
-			}
-		}
+		return typeof date === 'string' ? date : date.value
 	}
 
 	private escapeChars(value: string | number): string | number {
