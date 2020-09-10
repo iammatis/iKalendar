@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.5.0] - unreleased
+## [1.0.0] - 2020-09-10
 
 - Added citation for regex from Ruby iCalendar library
 - Added rfc link to readme
