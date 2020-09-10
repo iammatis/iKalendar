@@ -7,6 +7,7 @@
 - Updated dtStamp as optional, current UTC time used when not set
 - Added schedule status event parameter, dquote parsing
 - Updated delegatedTo/From parsing to remove 'mailto:'
+- Updated datetime to expect iCalendar formatted strings
 
 ## [0.4.0] - 2020-05-07
 
