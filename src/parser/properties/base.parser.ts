@@ -1,5 +1,7 @@
 import IPropertyParser, { Parameters } from '../../types/classes/parsers/property.parser'
 
+const DQUOTES = /^"(?<value>.*)"$/
+
 class BaseParser<Property> implements IPropertyParser<Property> {
 	public parse(value: string, params = ''): Property {
 		throw new Error('Method not implemented.')
@@ -17,9 +19,17 @@ class BaseParser<Property> implements IPropertyParser<Property> {
 			const [ key, value ] = param.split(/=(.+)?/)
 
 			if (key in validParams) {
-				paramsParsed[validParams[key]] = value
+				const { groups = {} } = value.match(DQUOTES) || {};
+
+				const parameter = validParams[key];
+				if (typeof parameter === 'object') {
+					paramsParsed[parameter.name]  = parameter.lambda(groups.value || value)
+				} else {
+					paramsParsed[parameter] = groups.value || value
+				}
+
 			} else {
-				// Don't throw an error, just dicard the parameter
+				// Don't throw an error, just discard the parameter
 				console.log(`Discarding not recognized parameter '${key}'.`)
 			}
 		}

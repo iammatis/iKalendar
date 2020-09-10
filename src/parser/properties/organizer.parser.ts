@@ -6,7 +6,8 @@ import BaseParser from './base.parser'
 const validParameters: Parameters = {
 	'CN': 'cn',
 	'DIR': 'dir',
-	'SENT-BY': 'sentBy'
+	'SENT-BY': 'sentBy',
+	'SCHEDULE-STATUS': { name: 'scheduleStatus', lambda: (text: string): string | string[] => text.includes(',') ? text.split(',') : text }
 }
 
 class OrganizerParser extends BaseParser<Organizer> {

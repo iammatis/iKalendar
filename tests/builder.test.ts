@@ -48,14 +48,16 @@ describe('Test Builder Class', () => {
 							{
 								cn: 'Henry Cabot',
 								address: 'hcabot@example.com',
-								role: 'REQ-PARTICIPANT'
+								role: 'REQ-PARTICIPANT',
+								scheduleStatus: '2.0'
 							},
 							{
 								address: 'ildoit@example.com',
 								role: 'REQ-PARTICIPANT',
 								delegatedFrom: [ 'bob@example.com' ],
 								partstat: 'ACCEPTED',
-								cn: 'Jane Doe'
+								cn: 'Jane Doe',
+								scheduleStatus: [ '2.0', '2.4' ]
 							}
 						],
 						xProps: [
@@ -134,6 +136,24 @@ describe('Test Builder Class', () => {
 			const data = builder.build()
 
 			expect(data).toEqual(file)
+		})
+
+		it('Creates dtStamp when not set', () => {
+			const builder = new Builder({
+				version: '2.0',
+				prodId: '-//Example Corp.//CalDAV Client//EN',
+				events: [
+					{
+						uid: '1@example.com',
+						start: '20041207T120000Z',
+						end: '20041207T130000Z'
+					}
+				]
+			})
+
+			const data = builder.build()
+
+			expect(data).toContain('DTSTAMP');
 		})
 
 		it('Fails with end and duration at the same time', () => {

@@ -40,18 +40,19 @@ class DurationParser extends BaseParser<Duration> {
 				throw new ParsingError(`Invalid iCalendar duration '${duration}'`)
 			}
 
-			const [ , value, dur ] = matchArr
-			if (!(dur in parameters)) {
-				throw new ParsingError(`Invalid iCalendar duration\'s parameter '${dur}'`)
+			const [ , value, attribute ] = matchArr
+			if (!(attribute in parameters)) {
+				throw new ParsingError(`Invalid iCalendar duration\'s parameter '${attribute}'`)
 			}
 
-			const type = parameters[dur]
+			const parameter = parameters[attribute]
 			const amount = Number(value)
 			if (isNaN(amount)) {
 				throw new ParsingError(`Invalid iCalendar duration '${duration}'`)
 			}
 
-			result[type] = amount
+			const key = typeof parameter === 'object' ? parameter.name : parameter
+			result[key] = amount
 		}
 
 		return result

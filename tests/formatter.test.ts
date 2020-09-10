@@ -51,7 +51,7 @@ describe('Test Formatter Class', () => {
 	describe('Test date properties', () => {
     
 		it('Test format simple date-time', () => {
-			const data = fmt.formatDate('ATTRNAME', '2019-11-06T16:08:03Z')
+			const data = fmt.formatDate('ATTRNAME', '20191106T160803Z')
 			expect(data).toEqual('ATTRNAME:20191106T160803Z')
 		})
 
@@ -61,7 +61,7 @@ describe('Test Formatter Class', () => {
 		})
 
 		it('Test format complex date-time America/Los_Angeles', () => {
-			const data = fmt.formatDate('ATTRNAME', { value: '2020-02-17T02:54:36-08:00', tzId: 'America/Los_Angeles' })
+			const data = fmt.formatDate('ATTRNAME', { value: '20200217T025436', tzId: 'America/Los_Angeles' })
 			expect(data).toEqual('ATTRNAME;TZID=America/Los_Angeles:20200217T025436')
 		})
 
@@ -77,12 +77,12 @@ describe('Test Formatter Class', () => {
 		})
 
 		it('Test format simple recurring date-time', () => {
-			const data = fmt.formatRDate({ dates: [ '2019-11-06T16:08:03Z' ] })
+			const data = fmt.formatRDate({ dates: [ '20191106T160803Z' ] })
 			expect(data).toEqual('RDATE:20191106T160803Z')
 		})
 
 		it('Test format multiple recurring date-times with timezone', () => {
-			const data = fmt.formatRDate({ dates: [ '2019-11-06T16:08:03', '2018-12-16T11:18:23' ], tzId: 'Europe/Bratislava' })
+			const data = fmt.formatRDate({ dates: [ '20191106T160803', '20181216T111823' ], tzId: 'Europe/Bratislava' })
 			expect(data).toEqual('RDATE;TZID=Europe/Bratislava:20191106T160803,20181216T111823')
 		})
 
@@ -136,7 +136,7 @@ describe('Test Formatter Class', () => {
 
 		it('Test format ISO (UTC time) datetime trigger', () => {
 			const trigger: Trigger = {
-				value: '2020-02-05T09:00:00+0000'
+				value: '20200205T090000Z'
 			}
 			const data = fmt.formatTrigger(trigger)
 			expect(data).toEqual('TRIGGER:20200205T090000Z')
@@ -144,7 +144,7 @@ describe('Test Formatter Class', () => {
 
 		it('Test format ISO (UTC +2 time) datetime trigger', () => {
 			const trigger: Trigger = {
-				value: '2020-02-05T09:00:00+0200'
+				value: '20200205T070000Z'
 			}
 			const data = fmt.formatTrigger(trigger)
 			expect(data).toEqual('TRIGGER:20200205T070000Z')
