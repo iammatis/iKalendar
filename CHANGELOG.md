@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.0.1] - unreleased
+## [1.0.1] - 2020-09-11
 
 - Removed moment.js completely
 
