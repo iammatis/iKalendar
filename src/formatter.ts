@@ -1,4 +1,3 @@
-import * as moment from 'moment-timezone'
 import IFormatter from './types/classes/iformatter'
 import { Attachment, Attendee, ComplexDate, Duration, GeoPosition, Organizer, RecurrenceDate, Relation, Trigger, XProp } from './types/general'
 import RRule from 'rrule'
@@ -48,7 +47,7 @@ class Formatter implements IFormatter {
 			switch (type) {
 			case 'DATE':
 				typeValue = ';VALUE=DATE'
-				values = dates ? dates.map(date => moment(date).format('YYYYMMDD')).join(',') : ''
+				values = dates ? dates.join(',') : ''
 				break
 
 			case 'PERIOD':
