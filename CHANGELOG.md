@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.0.1] - 2020-09-11
+
+- Removed moment.js completely
+
 ## [1.0.0] - 2020-09-10
 
 - Added citation for regex from Ruby iCalendar library

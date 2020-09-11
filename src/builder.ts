@@ -2,7 +2,6 @@ import Formatter from './formatter'
 import { Calendar, Alarm, Event } from './types'
 import IBuilder from './types/classes/ibuilder'
 import BuildingError from './exceptions/builder.error'
-import moment = require('moment-timezone')
 
 const defaultCalendar: Calendar = {
 	prodId: 'iKalendar',
@@ -105,11 +104,21 @@ export class Builder implements IBuilder {
     		}
 			
     		if (!event.dtStamp) {
-    			event.dtStamp = moment().toISOString()
+    			event.dtStamp = this.now()
     		}
 			
     		this.addEvent(event, this.formatter)
     	})
+    }
+
+    private now(): string {
+    	const now = new Date();
+    	// Beautiful JS date formatting
+    	return `${now.getFullYear()}${this.pad(now.getMonth() + 1)}${this.pad(now.getDate())}T${this.pad(now.getHours())}${this.pad(now.getMinutes())}${this.pad(now.getSeconds())}Z`
+    }
+	
+    private pad(number: number): string {
+    	return ('00' + number).substr(-2, 2)
     }
     
     private addAlarms(alarms: Alarm[] = []): void {
