@@ -176,5 +176,34 @@ describe('Test Builder Class', () => {
 
 			expect(() => {builder.build()}).toThrow(BuildingError);
 		})
+
+		it('Create freebusy component', () => {
+			const file = loadFile('freebusy/simple.ics')
+
+			const builder = new Builder({
+				version: '2.0',
+				prodId: '-//Example Corp.//CalDAV Client//EN',
+				freebusy: [
+					{
+						uid: '19970901T082949Z-FA43EF@example.com',
+						attendees: [
+							{
+								address: 'john_public@example.com'
+							}
+						],
+						organizer: {
+							address: 'jane_doe@example.com'
+						},
+						start: '19971015T050000Z',
+						end: '19971016T050000Z',
+						dtStamp: '19970901T083000Z'
+					}
+				]
+			})
+
+			const data = builder.build()
+
+			expect(data).toEqual(file)
+		})
 	})
 })
