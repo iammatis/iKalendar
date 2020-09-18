@@ -1,16 +1,16 @@
-import { Attendee, FreeBusyType, Organizer, Period, XProp } from '../general'
+import { Attendee, ComplexDate, FreeBusyProperty, FreeBusyType, Organizer, Period, XProp } from '../general'
 
 type FreeBusy = {
-    dtStamp?: Date
+    dtStamp?: string | ComplexDate
     uid?: string
     contact?: string
-    start?: Date
-    end?: Date
+    start?: string | ComplexDate
+    end?: string | ComplexDate
     organizer?: Organizer
     url?: string
     attendees?: Attendee[]
     comment?: string
-    freebusy?: { type?: FreeBusyType; value: Period[] }
+    freebusy?: FreeBusyProperty[]
     rStatus?: string
     xProps?: XProp[]
 }

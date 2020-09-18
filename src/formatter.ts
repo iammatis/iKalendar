@@ -1,5 +1,5 @@
 import IFormatter from './types/classes/iformatter'
-import { Attachment, Attendee, ComplexDate, Duration, GeoPosition, Organizer, RecurrenceDate, Relation, Trigger, XProp } from './types/general'
+import { Attachment, Attendee, ComplexDate, Duration, FreeBusyProperty, GeoPosition, Organizer, Period, RecurrenceDate, Relation, Trigger, XProp } from './types/general'
 import RRule from 'rrule'
 
 class Formatter implements IFormatter {
@@ -52,12 +52,7 @@ class Formatter implements IFormatter {
 
 			case 'PERIOD':
 				typeValue = ';VALUE=PERIOD'
-				values = periods ? periods.map(period => {
-					const { start, end, duration } = period
-					const startValue = this.formatDateTime(start)
-					const endValue = end ? this.formatDateTime(end) : this.formatDuration(duration)
-					return `${startValue}/${endValue}`
-				}).join(',') : ''
+				values = periods ? periods.map(period => this.formatPeriod(period)).join(',') : ''
 				break
             
 			default: // DATE-TIME
@@ -198,6 +193,18 @@ class Formatter implements IFormatter {
 		return xProps.map(xProp => this.formatXprop(xProp)).join('\r\n')
 	}
 
+	public formatFBProperty(freebusy: FreeBusyProperty): string {
+		const { type, value } = freebusy
+		const periods = value.map(period => this.formatPeriod(period))
+		const line = `FREEBUSY;FBTYPE=${type}:${periods}`
+
+		return this.foldLine(line)
+	}
+
+	public formatFBProperties(fBProperties: FreeBusyProperty[] = []): string {
+		return fBProperties.map(freebusy => this.formatFBProperty(freebusy)).join('\r\n')
+	}
+
 	private foldLine(line: string): string {
 		const MAX_LENGTH = 75
 		const lines = []
@@ -207,7 +214,16 @@ class Formatter implements IFormatter {
 			line = line.slice(MAX_LENGTH)
 		}
 		lines.push(line)
+		
 		return lines.join('\r\n ')
+	}
+
+	private formatPeriod(period: Period): string {
+		const { start, end, duration } = period
+		const startValue = this.formatDateTime(start)
+		const endValue = end ? this.formatDateTime(end) : this.formatDuration(duration)
+
+		return `${startValue}/${endValue}`
 	}
 
 	private formatDateTime(date: string | ComplexDate): string {

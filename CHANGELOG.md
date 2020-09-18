@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.0] - unreleased
+
+## Added
+
+- Added FreeBusy component, property and period parser/formatter
+
 ## [1.0.1] - 2020-09-11
 
 - Removed moment.js completely

@@ -1,11 +1,7 @@
-import { readFileSync } from 'fs'
-import { join } from 'path'
-
 import { Parser } from '../../src/parser'
+import { loadFile } from '../utils'
 
 let parser: Parser
-
-const loadFile = (name: string): string => readFileSync(join(__dirname, `../fixtures/${name}`), 'utf-8')
 
 describe('Test Parser', () => {
 
