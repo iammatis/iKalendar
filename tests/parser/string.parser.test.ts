@@ -9,9 +9,7 @@ describe('Test String Parser', () => {
 	})
 
 	it('Test fail - empty string', () => {
-		expect(() => {
-			parser.parse('')
-		}).toThrow()
+		expect(parser.parse('')).toEqual('')
 	})
 
 	it('Test simple string', () => {
