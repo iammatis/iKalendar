@@ -1,5 +1,5 @@
 import Formatter from './formatter'
-import { Calendar, Alarm, Event } from './types'
+import { Calendar, Alarm, Event, FreeBusy } from './types'
 import IBuilder from './types/classes/ibuilder'
 import BuildingError from './exceptions/builder.error'
 
@@ -21,12 +21,12 @@ export class Builder implements IBuilder {
 
     public build(): string {
         
-    	const { version, prodId, calscale, method, events } = this.calendar
+    	const { version, prodId, calscale, method, events, freebusy } = this.calendar
     	// this.addTimeZones(timezones)
     	this.addEvents(events)
     	// this.addJournals(journals)
     	// this.addTodos(todos)
-    	// this.addFreeBusyTimes(freebusy)
+    	this.addFreeBusyTimes(freebusy)
         
     	const data = this.data.join('\r\n')
 
@@ -109,6 +109,29 @@ export class Builder implements IBuilder {
 			
     		this.addEvent(event, this.formatter)
     	})
+    }
+	
+    private addFreeBusy(freebusy: FreeBusy, fmt: Formatter): void {
+    	this.add('BEGIN:VFREEBUSY')
+    	this.add(fmt.formatDate('DTSTAMP', freebusy.dtStamp))
+    	this.add(fmt.formatString('UID', freebusy.uid))
+    	this.add(fmt.formatString('CONTACT', freebusy.contact))
+    	this.add(fmt.formatDate('DTSTART', freebusy.start))
+    	this.add(fmt.formatDate('DTEND', freebusy.end))
+    	this.add(fmt.formatOrganizer(freebusy.organizer))
+    	this.add(fmt.formatString('URL', freebusy.url))
+    	this.add(fmt.formatAttendees(freebusy.attendees))
+    	this.add(fmt.formatString('COMMENT', freebusy.comment))
+    	this.add(fmt.formatFBProperties(freebusy.freebusy))
+    	this.add(fmt.formatString('REQUEST-STATUS', freebusy.rStatus))
+    	this.add(fmt.formatXprops(freebusy.xProps))
+    	this.add('END:VFREEBUSY')
+    }
+	
+    private addFreeBusyTimes(freebusy: FreeBusy[] = []): void {
+    	freebusy.forEach(component => {
+    		this.addFreeBusy(component, this.formatter)
+    	});
     }
 
     private now(): string {

@@ -132,3 +132,8 @@ export type XProp = {
 // Other Properties
 
 export type FreeBusyType = 'FREE' | 'BUSY' | 'BUSY-UNAVAILABLE' | 'BUSY-TENTATIVE'
+
+export type FreeBusyProperty = {
+    type?: FreeBusyType
+    value: Period[]
+}

@@ -12,6 +12,7 @@ import {
 	StringArrayParser,
 	TriggerParser,
 } from './parser/properties'
+import FreeBusyParser from './parser/properties/freebusy.parser'
 import StringParser from './parser/properties/string.parser'
 import { Calendar, XProp } from './types'
 import IParser from './types/classes/iparser'
@@ -180,7 +181,7 @@ export class Parser implements IParser {
 			return new DurationParser()
 
 		case 'FREEBUSY':
-			return new DurationParser()
+			return new FreeBusyParser()
 
 		case 'TZOFFSETFROM':
 		case 'TZOFFSETTO':
