@@ -71,8 +71,8 @@ END:VEVENT
 END:VCALENDAR
 `
 
-const parser = new Parser(str)
-parser.parse()
+const parser = new Parser()
+parser.parse(str)
 
 // Returns:
 // 
@@ -86,6 +86,131 @@ parser.parse()
 //         }
 //     ]
 // }
+```
+
+## Components
+
+**iKalendar** can generate `event`, `alarm` and `timezone` component.
+
+### Timezone
+
+Timezone component can be generated two ways:
+
+1. By supplying all the necessary timezone information
+
+```javascript
+const builder = new Builder({
+    version: '2.0',
+    prodId: '-//RDU Software//NONSGML HandCal//EN',
+    timezone: {
+        tzId: 'America/New_York',
+        tzUrl: 'http://tzurl.org/zoneinfo-outlook/America/New_York',
+        standard: [
+            {
+                start: '19701101T020000',
+                offsetFrom: '-0400',
+                offsetTo: '-0500',
+                tzName: 'EST',
+                rrule: new RRule({
+                    freq: RRule.YEARLY,
+                    bymonth: 11,
+                    byweekday: [ RRule.SU.nth(1) ]
+                })
+            }
+        ],
+        daylight: [
+            {
+                start: '19700308T020000',
+                offsetFrom: '-0500',
+                offsetTo: '-0400',
+                tzName: 'EDT',
+                rrule: new RRule({
+                    freq: RRule.YEARLY,
+                    bymonth: 3,
+                    byweekday: [ RRule.SU.nth(2) ]
+                })
+            }
+        ],
+        xProps: [
+            {
+                name: 'LIC-LOCATION',
+                value: 'America/New_York'
+            }
+        ]
+    },
+    events: [
+        {
+            uid: 'guid-1.example.com',
+            description: 'Project XYZ Review Meeting',
+            summary: 'XYZ Project Review',
+            categories: [ 'MEETING' ],
+            class: 'PUBLIC',
+            dtStamp: '19980309T231000Z',
+            created: '19980309T130000Z',
+            start: { value: '19980312T083000', tzId: 'America/New_York' },
+            end: { value: '19980312T093000', tzId: 'America/New_York' }
+        }
+    ]
+})
+```
+
+2. By mentioning `tzId` in the event `start` attribute and not supplying any timezone information
+```javascript
+const builder = new Builder({
+    version: '2.0',
+    prodId: '-//RDU Software//NONSGML HandCal//EN',
+    events: [
+        {
+            uid: 'guid-1.example.com',
+            description: 'Project XYZ Review Meeting',
+            summary: 'XYZ Project Review',
+            categories: [ 'MEETING' ],
+            class: 'PUBLIC',
+            dtStamp: '19980309T231000Z',
+            created: '19980309T130000Z',
+            start: { value: '19980312T083000', tzId: 'America/New_York' },
+            end: { value: '19980312T093000', tzId: 'America/New_York' }
+        }
+    ]
+})
+```
+
+Both will generate the same output:
+```
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//RDU Software//NONSGML HandCal//EN
+BEGIN:VTIMEZONE
+TZID:America/New_York
+TZURL:http://tzurl.org/zoneinfo-outlook/America/New_York
+X-LIC-LOCATION:America/New_York
+BEGIN:DAYLIGHT
+TZOFFSETFROM:-0500
+TZOFFSETTO:-0400
+TZNAME:EDT
+DTSTART:19700308T020000
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=2SU
+END:DAYLIGHT
+BEGIN:STANDARD
+TZOFFSETFROM:-0400
+TZOFFSETTO:-0500
+TZNAME:EST
+DTSTART:19701101T020000
+RRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+DTSTAMP:19980309T231000Z
+UID:guid-1.example.com
+DTSTART;TZID=America/New_York:19980312T083000
+CLASS:PUBLIC
+CREATED:19980309T130000Z
+SUMMARY:XYZ Project Review
+DESCRIPTION:Project XYZ Review Meeting
+DTEND;TZID=America/New_York:19980312T093000
+CATEGORIES:MEETING
+END:VEVENT
+END:VCALENDAR
 ```
 
 ## Types

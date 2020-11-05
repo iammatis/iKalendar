@@ -2,9 +2,14 @@
 
 ## [1.1.0] - unreleased
 
-## Added
+### Added
 
 - Added FreeBusy component, property and period parser/formatter
+- Added Timezone component
+
+### Updated
+
+- Readme with timezone component documentation
 
 ## [1.0.1] - 2020-09-11
 
