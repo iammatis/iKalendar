@@ -32,6 +32,7 @@
   "author": "Matej Vilk <matej.vilk@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "@touch4it/ical-timezones": "^1.4.1",
     "rrule": "^2.6.3"
   },
   "devDependencies": {

@@ -12,5 +12,5 @@ export type Calendar = {
     todos?: Todo[]
     journals?: Journal[]
     freebusy?: FreeBusy[]
-    timezones?: TimeZone[]
+    timezone?: TimeZone
 }

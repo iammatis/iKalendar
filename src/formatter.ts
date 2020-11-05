@@ -185,12 +185,12 @@ class Formatter implements IFormatter {
 		return rrule ? this.foldLine(rrule.toString()) : ''
 	}
     
-	public formatXprop(xProp?: XProp): string {
+	public formatXProp(xProp?: XProp): string {
 		return xProp ? this.foldLine(`X-${xProp.name.toUpperCase()}:${xProp.value}`) : ''
 	}
     
-	public formatXprops(xProps: XProp[] = []): string {
-		return xProps.map(xProp => this.formatXprop(xProp)).join('\r\n')
+	public formatXProps(xProps: XProp[] = []): string {
+		return xProps.map(xProp => this.formatXProp(xProp)).join('\r\n')
 	}
 
 	public formatFBProperty(freebusy: FreeBusyProperty): string {

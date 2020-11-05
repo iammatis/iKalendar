@@ -24,8 +24,8 @@ const propertiesRegistry: Record<string, string> = {
 	'TRANSP': 'transp',
 	'TZID': 'tzId',
 	'TZNAME': 'tzName',
-	'TZOFFSETFROM': 'tzOffsetFrom',
-	'TZOFFSETTO': 'tzOffsetTo',
+	'TZOFFSETFROM': 'offsetFrom',
+	'TZOFFSETTO': 'offsetTo',
 	'TZURL': 'tzUrl',
 	'ATTENDEE': 'attendees',
 	'CONTACT': 'contact',
@@ -54,7 +54,8 @@ const arrayAttributes = [
 	'alarms',
 	'todos',
 	'journals',
-	'timezones',
+	'standard',
+	'daylight',
 	'freebusy',
 	'attendees',
 	'xProps'
@@ -65,7 +66,9 @@ const componentsRegistry: Record<string, string> = {
 	'VALARM': 'alarms',
 	'VTODO': 'todos',
 	'VJOURNAL': 'journals',
-	'VTIMEZONE': 'timezones',
+	'VTIMEZONE': 'timezone',
+	'STANDARD': 'standard',
+	'DAYLIGHT': 'daylight',
 	'VFREEBUSY': 'freebusy'
 }
 
