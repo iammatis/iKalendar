@@ -20,7 +20,7 @@ describe('Test TimeZone Component Parsing', () => {
 			version: '2.0',
 			prodId: '-//Touch4IT//CalDAV Client//EN',
 			timezone: {
-				tzid: 'Europe/Bratislava',
+				tzId: 'Europe/Bratislava',
 				tzUrl: 'http://tzurl.org/zoneinfo-outlook/Europe/Bratislava',
 				xProps: [
 					{

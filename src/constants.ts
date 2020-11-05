@@ -22,7 +22,7 @@ const propertiesRegistry: Record<string, string> = {
 	'DURATION': 'duration',
 	'FREEBUSY': 'freebusy',
 	'TRANSP': 'transp',
-	'TZID': 'tzid',
+	'TZID': 'tzId',
 	'TZNAME': 'tzName',
 	'TZOFFSETFROM': 'offsetFrom',
 	'TZOFFSETTO': 'offsetTo',

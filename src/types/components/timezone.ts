@@ -2,7 +2,7 @@ import { ComplexDate, RecurrenceDate, XProp } from '../general'
 import { RRule } from 'rrule'
 
 type TimeZone = {
-    tzid: string
+    tzId: string
     lastModified?: string
     tzUrl?: string
     standard?: TzProp[]

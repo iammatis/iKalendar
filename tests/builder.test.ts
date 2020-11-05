@@ -217,7 +217,7 @@ describe('Test Builder Class', () => {
 				version: '2.0',
 				prodId: '-//Touch4IT//CalDAV Client//EN',
 				timezone: {
-					tzid: 'Europe/Bratislava',
+					tzId: 'Europe/Bratislava',
 					tzUrl: 'http://tzurl.org/zoneinfo-outlook/Europe/Bratislava',
 					xProps: [
 						{
@@ -252,6 +252,32 @@ describe('Test Builder Class', () => {
 						}
 					]
 				}
+			})
+
+			const data = builder.build()
+
+			expect(data).toEqual(file)
+		})
+
+		it('Generate timezone component', () => {
+			const file = loadFile('events/event_with_timezone.ics')
+
+			const builder = new Builder({
+				version: '2.0',
+				prodId: '-//RDU Software//NONSGML HandCal//EN',
+				events: [
+					{
+						uid: 'guid-1.example.com',
+						description: 'Project XYZ Review Meeting',
+						summary: 'XYZ Project Review',
+						categories: [ 'MEETING' ],
+						class: 'PUBLIC',
+						dtStamp: '19980309T231000Z',
+						created: '19980309T130000Z',
+						start: { value: '19980312T083000', tzId: 'America/New_York' },
+						end: { value: '19980312T093000', tzId: 'America/New_York' }
+					}
+				]
 			})
 
 			const data = builder.build()

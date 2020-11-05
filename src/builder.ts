@@ -2,6 +2,8 @@ import Formatter from './formatter'
 import { Calendar, Alarm, Event, FreeBusy, TimeZone, TzProp } from './types'
 import IBuilder from './types/classes/ibuilder'
 import BuildingError from './exceptions/builder.error'
+import { getVtimezoneComponent } from '@touch4it/ical-timezones'
+import { time } from 'console'
 
 const defaultCalendar: Calendar = {
 	prodId: 'iKalendar',
@@ -84,6 +86,14 @@ export class Builder implements IBuilder {
     }
 	
     private addEvents(events: Event[] = []): void {
+    	/* If there is a timezone id provided in start property 
+		 * and there is no timezone component we generate the timezone
+		*/
+    	const timezone = this.getTimezone(events)
+    	if (timezone && !this.calendar.timezone) {
+    		this.addTimeZoneString(timezone)
+    	}
+
     	events.forEach(event => {
     		if (event.end && event.duration) {
     			throw new BuildingError('Event can\'t contain \'end\' and \'duration\' at the same time!')
@@ -95,6 +105,20 @@ export class Builder implements IBuilder {
 			
     		this.addEvent(event, this.formatter)
     	})
+    }
+	
+    private getTimezone(events: Event[]): string | null {
+    	for (const event of events) {
+    		if (event.start && typeof event.start !== 'string' && event.start.tzId) {
+    			return event.start.tzId
+    		}
+    	}
+
+    	return null
+    }
+	
+    private addTimeZoneString(timezone: string): void {
+    	getVtimezoneComponent(timezone)?.split('\r\n').forEach(line => this.add(line))
     }
 
     private addAlarm(alarm: Alarm, fmt: Formatter): void {
@@ -116,11 +140,11 @@ export class Builder implements IBuilder {
     }
 
     public addTimeZone(timezone: TimeZone, fmt: Formatter): void {
-    	this.add(fmt.formatString('TZID', timezone.tzid))
+    	this.add(fmt.formatString('TZID', timezone.tzId))
     	this.add(fmt.formatString('LAST-MODIFIED', timezone.lastModified))
     	this.add(fmt.formatString('TZURL', timezone.tzUrl))
 		
-    	const { standard = [], daylight = [] } = timezone;
+    	const { standard = [], daylight = [] } = timezone
     	standard.forEach(standardProp => this.addTzProp(standardProp, 'STANDARD', fmt))
     	daylight.forEach(daylightProp => this.addTzProp(daylightProp, 'DAYLIGHT', fmt))
 		
@@ -168,11 +192,11 @@ export class Builder implements IBuilder {
     private addFreeBusyTimes(freebusy: FreeBusy[] = []): void {
     	freebusy.forEach(component => {
     		this.addFreeBusy(component, this.formatter)
-    	});
+    	})
     }
 
     private now(): string {
-    	const now = new Date();
+    	const now = new Date()
     	// Beautiful JS date formatting
     	return `${now.getFullYear()}${this.pad(now.getMonth() + 1)}${this.pad(now.getDate())}T${this.pad(now.getHours())}${this.pad(now.getMinutes())}${this.pad(now.getSeconds())}Z`
     }
