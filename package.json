@@ -1,6 +1,6 @@
 {
   "name": "ikalendar",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "iKalendar iCal (ics) generator and parser",
   "repository": {
     "type": "git",
@@ -32,6 +32,7 @@
   "author": "Matej Vilk <matej.vilk@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "@touch4it/ical-timezones": "^1.4.1",
     "rrule": "^2.6.3"
   },
   "devDependencies": {

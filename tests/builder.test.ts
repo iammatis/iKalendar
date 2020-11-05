@@ -177,4 +177,112 @@ describe('Test Builder Class', () => {
 			expect(() => {builder.build()}).toThrow(BuildingError);
 		})
 	})
+
+	describe('Test FreeBusy', () => {
+		it('Create freebusy component', () => {
+			const file = loadFile('freebusy/simple.ics')
+
+			const builder = new Builder({
+				version: '2.0',
+				prodId: '-//Example Corp.//CalDAV Client//EN',
+				freebusy: [
+					{
+						uid: '19970901T082949Z-FA43EF@example.com',
+						attendees: [
+							{
+								address: 'john_public@example.com'
+							}
+						],
+						organizer: {
+							address: 'jane_doe@example.com'
+						},
+						start: '19971015T050000Z',
+						end: '19971016T050000Z',
+						dtStamp: '19970901T083000Z'
+					}
+				]
+			})
+
+			const data = builder.build()
+
+			expect(data).toEqual(file)
+		})
+	})
+
+	describe('Test TimeZone', () => {
+		it('Create timezone component', () => {
+			const file = loadFile('timezones/europe_bratislava.ics')
+
+			const builder = new Builder({
+				version: '2.0',
+				prodId: '-//Touch4IT//CalDAV Client//EN',
+				timezone: {
+					tzId: 'Europe/Bratislava',
+					tzUrl: 'http://tzurl.org/zoneinfo-outlook/Europe/Bratislava',
+					xProps: [
+						{
+							name: 'lic-location',
+							value: 'Europe/Bratislava'
+						}
+					],
+					standard: [
+						{
+							offsetFrom: '+0200',
+							offsetTo: '+0100',
+							tzName: 'CET',
+							start: '19701025T030000',
+							rrule: new RRule({
+								freq: RRule.YEARLY,
+								bymonth: 10,
+								byweekday: [ RRule.SU.nth(-1) ]
+							})
+						}
+					],
+					daylight: [
+						{
+							offsetFrom: '+0100',
+							offsetTo: '+0200',
+							tzName: 'CEST',
+							start: '19700329T020000',
+							rrule: new RRule({
+								freq: RRule.YEARLY,
+								bymonth: 3,
+								byweekday: [ RRule.SU.nth(-1) ]
+							})
+						}
+					]
+				}
+			})
+
+			const data = builder.build()
+
+			expect(data).toEqual(file)
+		})
+
+		it('Generate timezone component', () => {
+			const file = loadFile('events/event_with_timezone.ics')
+
+			const builder = new Builder({
+				version: '2.0',
+				prodId: '-//RDU Software//NONSGML HandCal//EN',
+				events: [
+					{
+						uid: 'guid-1.example.com',
+						description: 'Project XYZ Review Meeting',
+						summary: 'XYZ Project Review',
+						categories: [ 'MEETING' ],
+						class: 'PUBLIC',
+						dtStamp: '19980309T231000Z',
+						created: '19980309T130000Z',
+						start: { value: '19980312T083000', tzId: 'America/New_York' },
+						end: { value: '19980312T093000', tzId: 'America/New_York' }
+					}
+				]
+			})
+
+			const data = builder.build()
+
+			expect(data).toEqual(file)
+		})
+	})
 })

@@ -12,6 +12,7 @@ import {
 	StringArrayParser,
 	TriggerParser,
 } from './parser/properties'
+import FreeBusyParser from './parser/properties/freebusy.parser'
 import StringParser from './parser/properties/string.parser'
 import { Calendar, XProp } from './types'
 import IParser from './types/classes/iparser'
@@ -149,6 +150,8 @@ export class Parser implements IParser {
 		case 'URL':
 		case 'UID':
 		case 'ACTION':
+		case 'TZOFFSETFROM':
+		case 'TZOFFSETTO':
 			return new StringParser()
 
 		case 'ATTACH':
@@ -180,11 +183,7 @@ export class Parser implements IParser {
 			return new DurationParser()
 
 		case 'FREEBUSY':
-			return new DurationParser()
-
-		case 'TZOFFSETFROM':
-		case 'TZOFFSETTO':
-			return new DurationParser()
+			return new FreeBusyParser()
 
 		case 'ATTENDEE':
 			return new AttendeeParser()
