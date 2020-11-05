@@ -1,5 +1,5 @@
 import Formatter from './formatter'
-import { Calendar, Alarm, Event, FreeBusy } from './types'
+import { Calendar, Alarm, Event, FreeBusy, TimeZone, TzProp } from './types'
 import IBuilder from './types/classes/ibuilder'
 import BuildingError from './exceptions/builder.error'
 
@@ -21,8 +21,8 @@ export class Builder implements IBuilder {
 
     public build(): string {
         
-    	const { version, prodId, calscale, method, events, freebusy } = this.calendar
-    	// this.addTimeZones(timezones)
+    	const { version, prodId, calscale, method, events, freebusy, timezone } = this.calendar
+    	this.addTimeZones(timezone)
     	this.addEvents(events)
     	// this.addJournals(journals)
     	// this.addTodos(todos)
@@ -78,25 +78,11 @@ export class Builder implements IBuilder {
     	this.add(fmt.formatRelations(event.relatedTo))
     	this.add(fmt.formatStrings('RESOURCES', event.resources))
     	this.add(fmt.formatRDate(event.rdate))
-    	this.add(fmt.formatXprops(event.xProps))
+    	this.add(fmt.formatXProps(event.xProps))
     	this.addAlarms(event.alarms)
     	this.add('END:VEVENT')
     }
-
-    private addAlarm(alarm: Alarm, fmt: Formatter): void {
-    	this.add('BEGIN:VALARM')
-    	this.add(fmt.formatString('ACTION', alarm.action))
-    	this.add(fmt.formatTrigger(alarm.trigger))
-    	this.add(fmt.formatDuration(alarm.duration, 'DURATION'))
-    	this.add(fmt.formatString('REPEAT', alarm.repeat))
-    	this.add(fmt.formatString('DESCRIPTION', alarm.description))
-    	this.add(fmt.formatString('SUMMARY', alarm.summary))
-    	this.add(fmt.formatAttendees(alarm.attendees))
-    	this.add(fmt.formatAttachments(alarm.attachments))
-    	this.add(fmt.formatXprops(alarm.xProps))
-    	this.add('END:VALARM')
-    }
-
+	
     private addEvents(events: Event[] = []): void {
     	events.forEach(event => {
     		if (event.end && event.duration) {
@@ -109,6 +95,57 @@ export class Builder implements IBuilder {
 			
     		this.addEvent(event, this.formatter)
     	})
+    }
+
+    private addAlarm(alarm: Alarm, fmt: Formatter): void {
+    	this.add('BEGIN:VALARM')
+    	this.add(fmt.formatString('ACTION', alarm.action))
+    	this.add(fmt.formatTrigger(alarm.trigger))
+    	this.add(fmt.formatDuration(alarm.duration, 'DURATION'))
+    	this.add(fmt.formatString('REPEAT', alarm.repeat))
+    	this.add(fmt.formatString('DESCRIPTION', alarm.description))
+    	this.add(fmt.formatString('SUMMARY', alarm.summary))
+    	this.add(fmt.formatAttendees(alarm.attendees))
+    	this.add(fmt.formatAttachments(alarm.attachments))
+    	this.add(fmt.formatXProps(alarm.xProps))
+    	this.add('END:VALARM')
+    }
+	
+    private addAlarms(alarms: Alarm[] = []): void {
+    	alarms.forEach(alarm => this.addAlarm(alarm, this.formatter))
+    }
+
+    public addTimeZone(timezone: TimeZone, fmt: Formatter): void {
+    	this.add(fmt.formatString('TZID', timezone.tzid))
+    	this.add(fmt.formatString('LAST-MODIFIED', timezone.lastModified))
+    	this.add(fmt.formatString('TZURL', timezone.tzUrl))
+		
+    	const { standard = [], daylight = [] } = timezone;
+    	standard.forEach(standardProp => this.addTzProp(standardProp, 'STANDARD', fmt))
+    	daylight.forEach(daylightProp => this.addTzProp(daylightProp, 'DAYLIGHT', fmt))
+		
+    	this.add(fmt.formatXProps(timezone.xProps))
+    }
+	
+    private addTzProp(tzProp: TzProp, name: string, fmt: Formatter): void {
+    	this.add(`BEGIN:${name}`)
+    	this.add(fmt.formatDate('DTSTART', tzProp.start))
+    	this.add(fmt.formatString('TZNAME', tzProp.tzName))
+    	this.add(fmt.formatString('TZOFFSETFROM', tzProp.offsetFrom))
+    	this.add(fmt.formatString('TZOFFSETTO', tzProp.offsetTo))
+    	this.add(fmt.formatRRule(tzProp.rrule))
+    	this.add(fmt.formatString('COMMENT', tzProp.comment))
+    	this.add(fmt.formatRDate(tzProp.rDate))
+    	this.add(fmt.formatXProps(tzProp.xProps))
+    	this.add(`END:${name}`)
+    }
+	
+    public addTimeZones(timezone?: TimeZone): void {
+    	if (timezone) {
+    		this.add('BEGIN:VTIMEZONE')
+    		this.addTimeZone(timezone, this.formatter)
+    		this.add('END:VTIMEZONE')
+    	}
     }
 	
     private addFreeBusy(freebusy: FreeBusy, fmt: Formatter): void {
@@ -124,7 +161,7 @@ export class Builder implements IBuilder {
     	this.add(fmt.formatString('COMMENT', freebusy.comment))
     	this.add(fmt.formatFBProperties(freebusy.freebusy))
     	this.add(fmt.formatString('REQUEST-STATUS', freebusy.rStatus))
-    	this.add(fmt.formatXprops(freebusy.xProps))
+    	this.add(fmt.formatXProps(freebusy.xProps))
     	this.add('END:VFREEBUSY')
     }
 	
@@ -142,10 +179,6 @@ export class Builder implements IBuilder {
 	
     private pad(number: number): string {
     	return ('00' + number).substr(-2, 2)
-    }
-    
-    private addAlarms(alarms: Alarm[] = []): void {
-    	alarms.forEach(alarm => this.addAlarm(alarm, this.formatter))
     }
 }
 

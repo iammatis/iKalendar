@@ -1,12 +1,17 @@
-import { RecurrenceDate, XProp } from '../general'
+import { ComplexDate, RecurrenceDate, XProp } from '../general'
 import { RRule } from 'rrule'
 
 type TimeZone = {
     tzid: string
-    lastModified?: Date
+    lastModified?: string
     tzUrl?: string
-    type: 'STANDARD' | 'DAYLIGHT'
-    start: Date
+    standard?: TzProp[]
+    daylight?: TzProp[]
+    xProps?: XProp[]
+}
+
+type TzProp = {
+    start: string | ComplexDate
     offsetTo: string
     offsetFrom: string
     rrule?: RRule
@@ -16,4 +21,8 @@ type TimeZone = {
     xProps?: XProp[]
 }
 
-export default TimeZone
+export {
+	TimeZone,
+	TzProp
+}
+    

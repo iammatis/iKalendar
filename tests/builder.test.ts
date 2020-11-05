@@ -176,7 +176,9 @@ describe('Test Builder Class', () => {
 
 			expect(() => {builder.build()}).toThrow(BuildingError);
 		})
+	})
 
+	describe('Test FreeBusy', () => {
 		it('Create freebusy component', () => {
 			const file = loadFile('freebusy/simple.ics')
 
@@ -199,6 +201,57 @@ describe('Test Builder Class', () => {
 						dtStamp: '19970901T083000Z'
 					}
 				]
+			})
+
+			const data = builder.build()
+
+			expect(data).toEqual(file)
+		})
+	})
+
+	describe('Test TimeZone', () => {
+		it('Create timezone component', () => {
+			const file = loadFile('timezones/europe_bratislava.ics')
+
+			const builder = new Builder({
+				version: '2.0',
+				prodId: '-//Touch4IT//CalDAV Client//EN',
+				timezone: {
+					tzid: 'Europe/Bratislava',
+					tzUrl: 'http://tzurl.org/zoneinfo-outlook/Europe/Bratislava',
+					xProps: [
+						{
+							name: 'lic-location',
+							value: 'Europe/Bratislava'
+						}
+					],
+					standard: [
+						{
+							offsetFrom: '+0200',
+							offsetTo: '+0100',
+							tzName: 'CET',
+							start: '19701025T030000',
+							rrule: new RRule({
+								freq: RRule.YEARLY,
+								bymonth: 10,
+								byweekday: [ RRule.SU.nth(-1) ]
+							})
+						}
+					],
+					daylight: [
+						{
+							offsetFrom: '+0100',
+							offsetTo: '+0200',
+							tzName: 'CEST',
+							start: '19700329T020000',
+							rrule: new RRule({
+								freq: RRule.YEARLY,
+								bymonth: 3,
+								byweekday: [ RRule.SU.nth(-1) ]
+							})
+						}
+					]
+				}
 			})
 
 			const data = builder.build()
