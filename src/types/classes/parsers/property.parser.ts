@@ -1,5 +1,7 @@
 export type Parameters<T = string> = {
-    [key: string]: T | {name: T, lambda: () => string | string[]}
+    // TODO: Solve this eslint error
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    [key: string]: T | {name: T, lambda: Function}
 }
 
 interface IPropertyParser<Property> {

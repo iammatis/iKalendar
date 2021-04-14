@@ -1,4 +1,3 @@
-import ParsingError from '../../exceptions/parser.error'
 import BaseParser from './base.parser'
 
 class StringParser extends BaseParser<string> {
