@@ -1,5 +1,5 @@
 export type Parameters<T = string> = {
-    [key: string]: T | {name: T, lambda: Function}
+    [key: string]: T | {name: T, lambda: () => string | string[]}
 }
 
 interface IPropertyParser<Property> {
