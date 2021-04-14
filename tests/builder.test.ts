@@ -280,7 +280,10 @@ describe('Test Builder Class', () => {
 				]
 			})
 
+			
 			const data = builder.build()
+			console.log({file})
+			console.log({data})
 
 			expect(data).toEqual(file)
 		})
