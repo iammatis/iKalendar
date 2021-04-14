@@ -3,9 +3,6 @@ import BaseParser from './base.parser'
 
 class StringParser extends BaseParser<string> {
 	public parse(iCalValue: string, params = ''): string {
-		if (!iCalValue || !iCalValue.length) {
-			throw new ParsingError(`Invalid iCalendar string value: ${iCalValue}`)
-		}
 		return iCalValue
 			.replace(/\\n/g, '\n')
 			.replace(/\\;/g, ';')
