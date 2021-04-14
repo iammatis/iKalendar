@@ -117,7 +117,12 @@ export class Builder implements IBuilder {
     }
 	
     private addTimeZoneString(timezone: string): void {
-    	getVtimezoneComponent(timezone)?.trim().replace(/(?<!\\r)\\n/g, '\\r\\n').split('\r\n').forEach((line: string) => this.add(line))
+    	getVtimezoneComponent(timezone)
+    	// Replaces all \n with \r\n
+    		?.replace(/(?<!\r)\n/gm, '\r\n')
+    		.trim()
+    		.split('\r\n')
+    		.forEach((line: string) => this.add(line))
     }
 
     private addAlarm(alarm: Alarm, fmt: Formatter): void {
