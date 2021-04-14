@@ -24,8 +24,8 @@ interface IFormatter {
 
     formatTrigger(trigger?: Trigger): string
 
-    formatXprop(xProp?: XProp): string
-    formatXprops(xProps: XProp[]): string
+    formatXProp(xProp?: XProp): string
+    formatXProps(xProps: XProp[]): string
 }
 
 export default IFormatter

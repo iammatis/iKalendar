@@ -2,7 +2,7 @@ import Alarm from './alarm'
 import Event from './event'
 import FreeBusy from './freebusy'
 import Journal from './journal'
-import TimeZone from './timezone'
+import { TimeZone, TzProp } from './timezone'
 import Todo from './todo'
 
 export {
@@ -11,5 +11,6 @@ export {
 	Journal,
 	FreeBusy,
 	TimeZone,
+	TzProp,
 	Alarm
 }

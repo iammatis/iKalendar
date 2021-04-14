@@ -150,6 +150,8 @@ export class Parser implements IParser {
 		case 'URL':
 		case 'UID':
 		case 'ACTION':
+		case 'TZOFFSETFROM':
+		case 'TZOFFSETTO':
 			return new StringParser()
 
 		case 'ATTACH':
@@ -182,10 +184,6 @@ export class Parser implements IParser {
 
 		case 'FREEBUSY':
 			return new FreeBusyParser()
-
-		case 'TZOFFSETFROM':
-		case 'TZOFFSETTO':
-			return new DurationParser()
 
 		case 'ATTENDEE':
 			return new AttendeeParser()

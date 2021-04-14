@@ -317,7 +317,7 @@ describe('Test Formatter Class', () => {
 				name: 'IKALENDAR-PROP',
 				value: 'Matej Vilk'
 			}
-			const data = fmt.formatXprop(xProp)
+			const data = fmt.formatXProp(xProp)
 			expect(data).toEqual('X-IKALENDAR-PROP:Matej Vilk')
 		})
     
@@ -332,7 +332,7 @@ describe('Test Formatter Class', () => {
 					value: 'Matej Vilk'
 				}
 			]
-			const data = fmt.formatXprops(xProps)
+			const data = fmt.formatXProps(xProps)
 			expect(data).toEqual(
 				'X-IKALENDAR-PROP1:Matej Vilk\r\nX-IKALENDAR-PROP2:Matej Vilk'
 			)
