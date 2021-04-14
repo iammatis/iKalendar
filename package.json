@@ -29,7 +29,11 @@
     "journals",
     "typescript"
   ],
-  "author": "Matej Vilk <matej.vilk@gmail.com>",
+  "author": "Matej Vilk <matej@vilk.sk>",
+  "contributors": [
+    "BlueskyFR <hugo.cartigny@gmail.com>",
+    "vsulak <sulak@touch4it.com>"
+  ],
   "license": "ISC",
   "dependencies": {
     "@touch4it/ical-timezones": "^1.4.1",
