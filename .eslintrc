@@ -9,7 +9,7 @@
   "extends": [
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
-    "prettier/@typescript-eslint"
+    "prettier"
   ],
   "plugins": ["@typescript-eslint"],
   "rules": {
@@ -28,7 +28,7 @@
     "indent": ["error", "tab"],
     "object-curly-spacing": ["error", "always"],
     "array-bracket-spacing": ["error", "always"],
-    "no-unused-vars": ["off", { "args": "none" }],
+    "@typescript-eslint/no-unused-vars": ["warn", { "args": "none" }],
     "@typescript-eslint/interface-name-prefix": 0
   }
 }

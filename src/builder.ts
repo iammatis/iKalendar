@@ -3,7 +3,6 @@ import { Calendar, Alarm, Event, FreeBusy, TimeZone, TzProp } from './types'
 import IBuilder from './types/classes/ibuilder'
 import BuildingError from './exceptions/builder.error'
 import { getVtimezoneComponent } from '@touch4it/ical-timezones'
-import { time } from 'console'
 
 const defaultCalendar: Calendar = {
 	prodId: 'iKalendar',
@@ -118,7 +117,12 @@ export class Builder implements IBuilder {
     }
 	
     private addTimeZoneString(timezone: string): void {
-    	getVtimezoneComponent(timezone)?.split('\r\n').forEach(line => this.add(line))
+    	getVtimezoneComponent(timezone)
+    	// Replaces all \n with \r\n
+    		?.replace(/(?<!\r)\n/gm, '\r\n')
+    		.trim()
+    		.split('\r\n')
+    		.forEach((line: string) => this.add(line))
     }
 
     private addAlarm(alarm: Alarm, fmt: Formatter): void {
