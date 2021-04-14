@@ -1,4 +1,4 @@
-import { Attendee, ComplexDate, FreeBusyProperty, FreeBusyType, Organizer, Period, XProp } from '../general'
+import { Attendee, ComplexDate, FreeBusyProperty, Organizer, XProp } from '../general'
 
 type FreeBusy = {
     dtStamp?: string | ComplexDate
