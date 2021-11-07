@@ -46,6 +46,7 @@ const propertiesRegistry: Record<string, string> = {
 	'LAST-MODIFIED': 'lastModified',
 	'SEQUENCE': 'sequence',
 	'REQUEST-STATUS': 'rStatus',
+	'REFRESH-INTERVAL': 'refreshInterval',
 	'X-PROPS': 'xProps'
 }
 
