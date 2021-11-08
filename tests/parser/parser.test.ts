@@ -141,4 +141,24 @@ describe('Test Parser', () => {
 		})
 	})
 
+	it('Parse iCal export from nextcloud', () => {
+		const iCal = loadFile('calendar/nextcloud-calendar-export.ics')
+		const calendar = parser.parse(iCal)
+
+		expect(calendar).toEqual({
+			version: '2.0',
+			prodId: '-//SabreDAV//SabreDAV//EN',
+			calscale: 'GREGORIAN',
+			refreshInterval: {
+				'hours': 4,
+				'isNegative': false
+			},
+			xProps: [
+				{ name: 'WR-CALNAME', value: 'default' },
+				{ name: 'APPLE-CALENDAR-COLOR', value: '#31CC7C' },
+				{ name: 'PUBLISHED-TTL', value: 'PT4H' },
+			]
+		})
+	})
+
 })

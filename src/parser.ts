@@ -180,6 +180,7 @@ export class Parser implements IParser {
 			return new DateParser()
 
 		case 'DURATION':
+		case 'REFRESH-INTERVAL':
 			return new DurationParser()
 
 		case 'FREEBUSY':

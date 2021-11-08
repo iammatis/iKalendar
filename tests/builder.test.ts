@@ -18,6 +18,7 @@ describe('Test Builder Class', () => {
 			const builder = new Builder({
 				version: '2.0',
 				prodId: '-//xyz Corp//NONSGML PDA Calendar Version 1.0//EN',
+				refreshInterval: { hours: 12 },
 				events: [
 					{
 						dtStamp: '20101231T083000Z',
