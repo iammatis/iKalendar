@@ -18,6 +18,7 @@ describe('Test Builder Class', () => {
 			const builder = new Builder({
 				version: '2.0',
 				prodId: '-//xyz Corp//NONSGML PDA Calendar Version 1.0//EN',
+				refreshInterval: { hours: 12 },
 				events: [
 					{
 						dtStamp: '20101231T083000Z',
@@ -278,6 +279,54 @@ describe('Test Builder Class', () => {
 						end: { value: '19980312T093000', tzId: 'America/New_York' }
 					}
 				]
+			})
+
+			const data = builder.build()
+
+			expect(data).toEqual(file)
+		})
+	})
+
+	describe('Test VCALENDAR component', () => {
+		it('Some xProps', () => {
+			const file = loadFile('calendar/nextcloud-calendar-export.ics')
+
+			const builder = new Builder({
+				version: '2.0',
+				prodId: '-//SabreDAV//SabreDAV//EN',
+				calscale: 'GREGORIAN',
+				refreshInterval: {
+					isNegative: false,
+					hours: 4
+				},
+				xProps: [ {
+					name: 'WR-CALNAME',
+					value: 'default'
+				}, {
+					name: 'APPLE-CALENDAR-COLOR',
+					value: '#31CC7C'
+				}, {
+					name: 'PUBLISHED-TTL',
+					value: 'PT4H'
+				} ]
+			})
+
+			const data = builder.build()
+
+			expect(data).toEqual(file)
+		})
+
+		it('None xProps', () => {
+			const file = loadFile('calendar/calendar_no_xprops.ics')
+
+			const builder = new Builder({
+				version: '2.0',
+				prodId: '-//SabreDAV//SabreDAV//EN',
+				calscale: 'GREGORIAN',
+				refreshInterval: {
+					isNegative: false,
+					hours: 4
+				}
 			})
 
 			const data = builder.build()
