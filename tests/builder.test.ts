@@ -286,4 +286,52 @@ describe('Test Builder Class', () => {
 			expect(data).toEqual(file)
 		})
 	})
+
+	describe('Test VCALENDAR component', () => {
+		it('Some xProps', () => {
+			const file = loadFile('calendar/nextcloud-calendar-export.ics')
+
+			const builder = new Builder({
+				version: '2.0',
+				prodId: '-//SabreDAV//SabreDAV//EN',
+				calscale: 'GREGORIAN',
+				refreshInterval: {
+					isNegative: false,
+					hours: 4
+				},
+				xProps: [ {
+					name: 'WR-CALNAME',
+					value: 'default'
+				}, {
+					name: 'APPLE-CALENDAR-COLOR',
+					value: '#31CC7C'
+				}, {
+					name: 'PUBLISHED-TTL',
+					value: 'PT4H'
+				} ]
+			})
+
+			const data = builder.build()
+
+			expect(data).toEqual(file)
+		})
+
+		it('None xProps', () => {
+			const file = loadFile('calendar/calendar_no_xprops.ics')
+
+			const builder = new Builder({
+				version: '2.0',
+				prodId: '-//SabreDAV//SabreDAV//EN',
+				calscale: 'GREGORIAN',
+				refreshInterval: {
+					isNegative: false,
+					hours: 4
+				}
+			})
+
+			const data = builder.build()
+
+			expect(data).toEqual(file)
+		})
+	})
 })

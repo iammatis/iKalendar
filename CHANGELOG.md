@@ -1,6 +1,12 @@
 # Changelog
 
-## [1.1.0] - unreleased
+## [1.4.0] - unreleased
+
+### Added
+
+- Added xProps to VCALENDAR component
+
+## [1.1.0] - 2020-11-05
 
 ### Added
 
