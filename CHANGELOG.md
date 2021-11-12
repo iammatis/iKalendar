@@ -1,10 +1,11 @@
 # Changelog
 
-## [1.4.0] - unreleased
+## [1.4.0] - 2021-11-12
 
 ### Added
 
 - Added xProps to VCALENDAR component
+- Added refreshInterval to VCALENDAR component from [@ccoenen](https://github.com/ccoenen)
 
 ## [1.1.0] - 2020-11-05
 
