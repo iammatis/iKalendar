@@ -21,7 +21,7 @@ Parser and builder for iCalendar ([RFC 5545](https://tools.ietf.org/html/rfc5545
 ## Install
 
 ```
-npm instal ikalendar
+npm install ikalendar
 ```
 
 ## Usage
