@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased]
+
+### Security
+
+- Updated dependencies
+
 ## [1.4.0] - 2021-11-12
 
 ### Added
