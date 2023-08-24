@@ -1,4 +1,4 @@
-import RRule from 'rrule'
+import { RRule } from 'rrule'
 import { Parser } from '../../../src/parser'
 import { loadFile } from '../../utils'
 
