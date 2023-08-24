@@ -1,6 +1,6 @@
 import IFormatter from './types/classes/iformatter'
 import { Attachment, Attendee, ComplexDate, Duration, FreeBusyProperty, GeoPosition, Organizer, Period, RecurrenceDate, Relation, Trigger, XProp } from './types/general'
-import RRule from 'rrule'
+import { RRule } from 'rrule'
 
 class Formatter implements IFormatter {
 	public formatString(attrName: string, value?: string | number): string {

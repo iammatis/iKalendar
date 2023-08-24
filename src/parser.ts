@@ -1,3 +1,5 @@
+// TODO: Fix `any` types
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { arrayAttributes, componentsRegistry, propertiesRegistry } from './constants'
 import ParsingError from './exceptions/parser.error'
 import {

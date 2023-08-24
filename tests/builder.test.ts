@@ -2,7 +2,7 @@ import { readFileSync } from 'fs'
 import { join } from 'path'
 
 import Builder from '../src/builder'
-import RRule from 'rrule'
+import { RRule } from 'rrule'
 import BuildingError from '../src/exceptions/builder.error'
 
 const loadFile = (name: string): string => readFileSync(join(__dirname, `./fixtures/${name}`), 'utf-8')
