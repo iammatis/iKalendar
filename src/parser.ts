@@ -154,6 +154,7 @@ export class Parser implements IParser {
 		case 'ACTION':
 		case 'TZOFFSETFROM':
 		case 'TZOFFSETTO':
+		case 'COLOR':
 			return new StringParser()
 
 		case 'ATTACH':
