@@ -1,0 +1,5 @@
+version: 2
+updates:
+  - assignees:
+    - "iammatis"
+  target-branch: "develop"

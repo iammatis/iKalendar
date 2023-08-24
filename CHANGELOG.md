@@ -18,6 +18,7 @@
 ### Security
 
 - Updated dependencies
+- Added dependabot.yml with `assignees` and `target-branch`
 
 ## [1.4.0] - 2021-11-12
 
