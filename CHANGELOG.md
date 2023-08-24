@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- Fixed lint errors
+
+### Updated
+
+- Updated Node version in workflows
+- Updated named imports for `RRule` dependency
+
 ### Security
 
 - Updated dependencies
