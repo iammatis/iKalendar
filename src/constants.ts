@@ -33,6 +33,7 @@ const propertiesRegistry: Record<string, string> = {
 	'RECURRENCE-ID': 'reccurenceId',
 	'RELATED-TO': 'relatedTo',
 	'URL': 'url',
+	'COLOR': 'color',
 	'UID': 'uid',
 	'EXDATE': 'exdate',
 	'EXRULE': 'exRule',

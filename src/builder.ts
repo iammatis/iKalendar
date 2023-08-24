@@ -22,7 +22,7 @@ export class Builder implements IBuilder {
 
 	public build(): string {
         
-    	const { version, prodId, calscale, refreshInterval, method, events, freebusy, timezone, xProps } = this.calendar
+    	const { version, prodId, calscale, refreshInterval, method, events, freebusy, timezone, xProps, color } = this.calendar
     	this.addTimeZones(timezone)
     	this.addEvents(events)
     	// this.addJournals(journals)
@@ -35,6 +35,7 @@ export class Builder implements IBuilder {
     		'BEGIN:VCALENDAR',
     		`VERSION:${version}`,
     		`PRODID:${prodId}`,
+    		color ? `COLOR:${color}` : '',
     		refreshInterval ? `REFRESH-INTERVAL;VALUE=DURATION:${this.formatter.formatDuration(refreshInterval)}`: '',
     		calscale ? `CALSCALE:${calscale}` : '',
     		method ? `METHOD:${method}` : '',
@@ -68,6 +69,7 @@ export class Builder implements IBuilder {
     	this.add(fmt.formatString('STATUS', event.status))
     	this.add(fmt.formatString('TRANSP', event.transp))
     	this.add(fmt.formatString('URL', event.url))
+    	this.add(fmt.formatString('COLOR', event.color))
     	this.add(fmt.formatString('RECURRENCE-ID', event.recurrenceId))
     	this.add(fmt.formatRRule(event.rrule))
     	this.add(fmt.formatDate('DTEND', event.end))

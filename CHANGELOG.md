@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- Added `COLOR` property to iCalendar object and VEVENT component
+
 ### Fixed
 
 - Fixed lint errors

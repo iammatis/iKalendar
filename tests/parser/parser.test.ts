@@ -161,4 +161,30 @@ describe('Test Parser', () => {
 		})
 	})
 
+	it('Parse iCal containing COLOR property', () => {
+		const iCal = loadFile('calendar/issue_93.ics')
+		const calendar = parser.parse(iCal)
+
+		expect(calendar).toEqual({
+			version: '2.0',
+			prodId: '-//SabreDAV//SabreDAV//EN',
+			color: 'turquoise',
+			refreshInterval: {
+				'hours': 12,
+				'isNegative': false
+			},
+			events: [
+				{				
+					dtStamp: '20101231T083000Z',
+					start: {
+						type: 'DATE',
+						value: '20101231'
+					},
+					uid: 'uid1@example.com',
+					color: 'red'
+				}
+			]
+		})
+	})
+
 })
