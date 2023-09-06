@@ -10,19 +10,19 @@ const defaultCalendar: Calendar = {
 }
 
 export class Builder implements IBuilder {
-    private calendar: Calendar
-    private formatter: Formatter
-    private data: string[]
+	private calendar: Calendar
+	private formatter: Formatter
+	private data: string[]
 
-    constructor(calendar: Calendar = defaultCalendar) {
+	constructor(calendar: Calendar = defaultCalendar) {
     	this.calendar = calendar
     	this.formatter = new Formatter()
     	this.data = []
-    }
+	}
 
-    public build(): string {
+	public build(): string {
         
-    	const { version, prodId, calscale, refreshInterval, method, events, freebusy, timezone, xProps } = this.calendar
+    	const { version, prodId, calscale, refreshInterval, method, events, freebusy, timezone, xProps, color } = this.calendar
     	this.addTimeZones(timezone)
     	this.addEvents(events)
     	// this.addJournals(journals)
@@ -35,6 +35,7 @@ export class Builder implements IBuilder {
     		'BEGIN:VCALENDAR',
     		`VERSION:${version}`,
     		`PRODID:${prodId}`,
+    		color ? `COLOR:${color}` : '',
     		refreshInterval ? `REFRESH-INTERVAL;VALUE=DURATION:${this.formatter.formatDuration(refreshInterval)}`: '',
     		calscale ? `CALSCALE:${calscale}` : '',
     		method ? `METHOD:${method}` : '',
@@ -42,15 +43,15 @@ export class Builder implements IBuilder {
     		this.formatter.formatXProps(xProps),
     		'END:VCALENDAR\r\n',
     	].filter(Boolean).join('\r\n')
-    }
+	}
 
-    private add(value: string): void {
+	private add(value: string): void {
     	if (value !== '') {
     		this.data.push(value)
     	}
-    }
+	}
 
-    private addEvent(event: Event, fmt: Formatter): void {
+	private addEvent(event: Event, fmt: Formatter): void {
     	this.add('BEGIN:VEVENT')
     	this.add(fmt.formatDate('DTSTAMP', event.dtStamp))
     	this.add(fmt.formatString('UID', event.uid))
@@ -68,6 +69,7 @@ export class Builder implements IBuilder {
     	this.add(fmt.formatString('STATUS', event.status))
     	this.add(fmt.formatString('TRANSP', event.transp))
     	this.add(fmt.formatString('URL', event.url))
+    	this.add(fmt.formatString('COLOR', event.color))
     	this.add(fmt.formatString('RECURRENCE-ID', event.recurrenceId))
     	this.add(fmt.formatRRule(event.rrule))
     	this.add(fmt.formatDate('DTEND', event.end))
@@ -84,9 +86,9 @@ export class Builder implements IBuilder {
     	this.add(fmt.formatXProps(event.xProps))
     	this.addAlarms(event.alarms)
     	this.add('END:VEVENT')
-    }
+	}
 	
-    private addEvents(events: Event[] = []): void {
+	private addEvents(events: Event[] = []): void {
     	/* If there is a timezone id provided in start property 
 		 * and there is no timezone component we generate the timezone
 		*/
@@ -106,9 +108,9 @@ export class Builder implements IBuilder {
 			
     		this.addEvent(event, this.formatter)
     	})
-    }
+	}
 	
-    private getTimezone(events: Event[]): string | null {
+	private getTimezone(events: Event[]): string | null {
     	for (const event of events) {
     		if (event.start && typeof event.start !== 'string' && event.start.tzId) {
     			return event.start.tzId
@@ -116,18 +118,18 @@ export class Builder implements IBuilder {
     	}
 
     	return null
-    }
+	}
 	
-    private addTimeZoneString(timezone: string): void {
+	private addTimeZoneString(timezone: string): void {
     	getVtimezoneComponent(timezone)
     	// Replaces all \n with \r\n
     		?.replace(/(?<!\r)\n/gm, '\r\n')
     		.trim()
     		.split('\r\n')
     		.forEach((line: string) => this.add(line))
-    }
+	}
 
-    private addAlarm(alarm: Alarm, fmt: Formatter): void {
+	private addAlarm(alarm: Alarm, fmt: Formatter): void {
     	this.add('BEGIN:VALARM')
     	this.add(fmt.formatString('ACTION', alarm.action))
     	this.add(fmt.formatTrigger(alarm.trigger))
@@ -139,13 +141,13 @@ export class Builder implements IBuilder {
     	this.add(fmt.formatAttachments(alarm.attachments))
     	this.add(fmt.formatXProps(alarm.xProps))
     	this.add('END:VALARM')
-    }
+	}
 	
-    private addAlarms(alarms: Alarm[] = []): void {
+	private addAlarms(alarms: Alarm[] = []): void {
     	alarms.forEach(alarm => this.addAlarm(alarm, this.formatter))
-    }
+	}
 
-    public addTimeZone(timezone: TimeZone, fmt: Formatter): void {
+	public addTimeZone(timezone: TimeZone, fmt: Formatter): void {
     	this.add(fmt.formatString('TZID', timezone.tzId))
     	this.add(fmt.formatString('LAST-MODIFIED', timezone.lastModified))
     	this.add(fmt.formatString('TZURL', timezone.tzUrl))
@@ -155,9 +157,9 @@ export class Builder implements IBuilder {
     	daylight.forEach(daylightProp => this.addTzProp(daylightProp, 'DAYLIGHT', fmt))
 		
     	this.add(fmt.formatXProps(timezone.xProps))
-    }
+	}
 	
-    private addTzProp(tzProp: TzProp, name: string, fmt: Formatter): void {
+	private addTzProp(tzProp: TzProp, name: string, fmt: Formatter): void {
     	this.add(`BEGIN:${name}`)
     	this.add(fmt.formatDate('DTSTART', tzProp.start))
     	this.add(fmt.formatString('TZNAME', tzProp.tzName))
@@ -168,17 +170,17 @@ export class Builder implements IBuilder {
     	this.add(fmt.formatRDate(tzProp.rDate))
     	this.add(fmt.formatXProps(tzProp.xProps))
     	this.add(`END:${name}`)
-    }
+	}
 	
-    public addTimeZones(timezone?: TimeZone): void {
+	public addTimeZones(timezone?: TimeZone): void {
     	if (timezone) {
     		this.add('BEGIN:VTIMEZONE')
     		this.addTimeZone(timezone, this.formatter)
     		this.add('END:VTIMEZONE')
     	}
-    }
+	}
 	
-    private addFreeBusy(freebusy: FreeBusy, fmt: Formatter): void {
+	private addFreeBusy(freebusy: FreeBusy, fmt: Formatter): void {
     	this.add('BEGIN:VFREEBUSY')
     	this.add(fmt.formatDate('DTSTAMP', freebusy.dtStamp))
     	this.add(fmt.formatString('UID', freebusy.uid))
@@ -193,23 +195,23 @@ export class Builder implements IBuilder {
     	this.add(fmt.formatString('REQUEST-STATUS', freebusy.rStatus))
     	this.add(fmt.formatXProps(freebusy.xProps))
     	this.add('END:VFREEBUSY')
-    }
+	}
 	
-    private addFreeBusyTimes(freebusy: FreeBusy[] = []): void {
+	private addFreeBusyTimes(freebusy: FreeBusy[] = []): void {
     	freebusy.forEach(component => {
     		this.addFreeBusy(component, this.formatter)
     	})
-    }
+	}
 
-    private now(): string {
+	private now(): string {
     	const now = new Date()
     	// Beautiful JS date formatting
     	return `${now.getFullYear()}${this.pad(now.getMonth() + 1)}${this.pad(now.getDate())}T${this.pad(now.getHours())}${this.pad(now.getMinutes())}${this.pad(now.getSeconds())}Z`
-    }
+	}
 	
-    private pad(number: number): string {
+	private pad(number: number): string {
     	return ('00' + number).substr(-2, 2)
-    }
+	}
 }
 
 export default Builder

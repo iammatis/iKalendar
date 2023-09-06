@@ -19,6 +19,7 @@ type Event = {
     summary?: string
     transp?: Transparency
     url?: string
+    color?: string
     recurrenceId?: string
     rrule?: RRule
     end?: string | ComplexDate

@@ -1,3 +1,5 @@
+// TODO: Fix `any` types
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { arrayAttributes, componentsRegistry, propertiesRegistry } from './constants'
 import ParsingError from './exceptions/parser.error'
 import {
@@ -152,6 +154,7 @@ export class Parser implements IParser {
 		case 'ACTION':
 		case 'TZOFFSETFROM':
 		case 'TZOFFSETTO':
+		case 'COLOR':
 			return new StringParser()
 
 		case 'ATTACH':

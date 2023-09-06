@@ -8,6 +8,7 @@ export type Calendar = {
     calscale?: string
     method?: string
     xProps?: XProp[]
+    color?: string
     
     events?: Event[]
     todos?: Todo[]

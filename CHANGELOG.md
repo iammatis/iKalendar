@@ -1,5 +1,27 @@
 # Changelog
 
+## [Unreleased]
+
+## [1.5.0] - 2023-09-06
+
+### Added
+
+- Added `COLOR` property to iCalendar object and VEVENT component
+
+### Fixed
+
+- Fixed lint errors
+
+### Updated
+
+- Updated Node version in workflows
+- Updated named imports for `RRule` dependency
+
+### Security
+
+- Updated dependencies
+- Added dependabot.yml with `assignees` and `target-branch`
+
 ## [1.4.0] - 2021-11-12
 
 ### Added
