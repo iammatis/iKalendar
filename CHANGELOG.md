@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.5.0] - 2023-09-06
+
 ### Added
 
 - Added `COLOR` property to iCalendar object and VEVENT component
